@@ -1,0 +1,108 @@
+Renesas Optimizing Linker (W2.08.00 )             26-Nov-2019 16:19:06
+
+*** Options ***
+
+-subcommand=LinkerProva_motori.tmp
+-noprelink
+-input=".\generate/r_bsp/board/rdkrx63n\lowlvl.obj"
+-input=".\generate/r_bsp/board/rdkrx63n\dbsct.obj"
+-input=".\generate/r_bsp/board/rdkrx63n\flash_options.obj"
+-input=".\generate/r_bsp/board/rdkrx63n\hwsetup.obj"
+-input=".\generate/r_bsp/board/rdkrx63n\lcd.obj"
+-input=".\generate/r_bsp/board/rdkrx63n\lowsrc.obj"
+-input=".\generate/r_bsp/board/rdkrx63n\resetprg.obj"
+-input=".\generate/r_bsp/board/rdkrx63n\sbrk.obj"
+-input=".\generate/r_bsp/board/rdkrx63n\vecttbl.obj"
+-input=".\generate/r_glyph/src/glyph/drivers\st7579_lcd.obj"
+-input=".\generate/r_glyph/src/glyph/fonts\bitmap_font.obj"
+-input=".\generate/r_glyph/src/glyph/fonts\font_8x16.obj"
+-input=".\generate/r_glyph/src/glyph/fonts\font_8x8.obj"
+-input=".\generate/r_glyph/src/glyph/fonts\font_helvr10.obj"
+-input=".\generate/r_glyph/src/glyph/fonts\font_winfreesystem14x16.obj"
+-input=".\generate/r_glyph/src/glyph/fonts\font_x5x7.obj"
+-input=".\generate/r_glyph/src/glyph/fonts\font_x6x13.obj"
+-input=".\generate/r_glyph/src/glyph\glyph.obj"
+-input=".\generate/r_glyph/src\r_glyph.obj"
+-input=".\generate/r_glyph/src\r_glyph_register.obj"
+-input=".\generate/r_riic_rx600/src\r_riic_rx600.obj"
+-input=".\generate/r_riic_rx600/src\r_riic_rx600_master.obj"
+-input=".\generate/r_rspi_rx600/src\r_rspi_rx600.obj"
+-input=".\generate/r_switches/src\r_switches.obj"
+-input=".\src\Altimetro.obj"
+-input=".\src/Ducted_Drivers\Motor.obj"
+-input=".\src/Ducted_Drivers\PID.obj"
+-input=".\src/Ducted_Drivers\map.obj"
+-input=".\src\I2C_new.obj"
+-input=".\src/LowLevelDrivers\CMT.obj"
+-input=".\src/LowLevelDrivers\I2C.obj"
+-input=".\src/LowLevelDrivers\MTU_C3.obj"
+-input=".\src/LowLevelDrivers\MTU_C4.obj"
+-input=".\src/LowLevelDrivers\MTU_C5U.obj"
+-input=".\src/LowLevelDrivers\MTU_C5W.obj"
+-input=".\src\S12ADC.obj"
+-input=".\src\main.obj"
+-library=".\Prova_motori.lib"
+-start=SI,SU,B_1,R_1,B_2,R_2,B,R/0,C_1,C_2,C,C$*,L*,D*,P,W*/0FFF80000,FIXEDVECT/0FFFFFF90
+-output="Prova_motori.abs"
+-form=absolute
+-nomessage
+-list=Prova_motori.map
+-nooptimize
+-rom=D=R,D_1=R_1,D_2=R_2
+-nologo
+
+*** Error information ***
+
+*** Mapping List ***
+
+SECTION                            START      END         SIZE   ALIGN
+SI
+                                  00000000  000003ff       400   4
+SU
+                                  00000400  000013ff      1000   4
+B_1
+                                  00001400  00001490        91   1
+R_1
+                                  00001491  000014e8        58   1
+B_2
+                                  000014ea  000014eb         2   2
+R_2
+                                  000014ec  000014ec         0   1
+B
+                                  000014ec  00001fff       b14   4
+R
+                                  00002000  00003e9f      1ea0   4
+$ADDR_C_FF7FFFE8
+                                  ff7fffe8  ff7fffff        18   1
+C_1
+                                  fff80000  fff8354d      354e   1
+C_2
+                                  fff8354e  fff83751       204   2
+C
+                                  fff83754  fff837ff        ac   4
+C$DSEC
+                                  fff83800  fff83823        24   4
+C$BSEC
+                                  fff83824  fff8383b        18   4
+C$VECT
+                                  fff8383c  fff83c3b       400   4
+L
+                                  fff83c3c  fff83eac       271   4
+D
+                                  fff83eb0  fff85d4f      1ea0   4
+D_1
+                                  fff85d50  fff85da7        58   1
+D_2
+                                  fff85da8  fff85da8         0   1
+P
+                                  fff85da8  fff8bf85      61de   1
+W
+                                  fff8bf88  fff8bf88         0   4
+W_1
+                                  fff8bf88  fff8bf88         0   1
+W_2
+                                  fff8bf88  fff8bfab        24   2
+$ADDR_C_FFFFFF80
+                                  ffffff80  ffffff8f        10   1
+FIXEDVECT
+                                  ffffff90  ffffffff        70   4

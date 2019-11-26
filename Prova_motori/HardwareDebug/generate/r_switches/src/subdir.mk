@@ -1,0 +1,27 @@
+################################################################################
+# Automatically-generated file. Do not edit!
+################################################################################
+
+# Add inputs and outputs from these tool invocations to the build variables
+C_SRCS += \
+../generate/r_switches/src/r_switches.c 
+
+COMPILER_OBJS += \
+generate/r_switches/src/r_switches.obj 
+
+C_DEPS += \
+generate/r_switches/src/r_switches.d 
+
+# Each subdirectory must supply rules for building sources it contributes
+generate/r_switches/src/%.obj: ../generate/r_switches/src/%.c generate/r_switches/src/Compiler.sub
+	@echo 'Scanning and building file: $<'
+	@echo 'Invoking: Scanner and Compiler'
+	@echo generate\r_switches\src\cDepSubCommand.tmp=
+	@sed -e "s/^/ /" "generate\r_switches\src\cDepSubCommand.tmp"
+	ccrx -subcommand="generate\r_switches\src\cDepSubCommand.tmp" -output=dep="$(@:%.obj=%.d)"  -MT="$(@:%.d=%.obj)"  -MT="$(@:%.obj=%.d)" "$<"
+	@echo generate\r_switches\src\cSubCommand.tmp=
+	@sed -e "s/^/ /" "generate\r_switches\src\cSubCommand.tmp"
+	ccrx -subcommand="generate\r_switches\src\cSubCommand.tmp" "$<"
+	@echo 'Finished Scanning and building: $<'
+	@echo.
+
