@@ -46,12 +46,16 @@ void Set_MTU_U0_C3(void) {
 
 	PORTC.PDR.BIT.B1 = 1;
 	PORTC.PDR.BIT.B0 = 1;*/
-	//settaggio pin 15 della j8(PORT J bit 3)
-	//settaggio pin 1 della jp17(PORT 1 bit 7)
+	
+	//setting pin 15 of J8(PORT J bit 3)
+	//setting pin 1 of JP17(PORT 1 bit 7)
+	
 	PORTJ.PMR.BIT.B3=1;
 	PORT1.PMR.BIT.B7=1;
+	
 	MPC.PJ3PFS.BYTE= 0x01;
 	MPC.P17PFS.BYTE= 0x01;
+	
 	PORTJ.PDR.BIT.B3=1;
 	PORT1.PDR.BIT.B7=1;
 }
