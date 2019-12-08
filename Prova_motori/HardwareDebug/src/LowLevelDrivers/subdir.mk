@@ -28,7 +28,7 @@ src/LowLevelDrivers/MTU_C5U.d \
 src/LowLevelDrivers/MTU_C5W.d 
 
 # Each subdirectory must supply rules for building sources it contributes
-src/LowLevelDrivers/%.obj: ../src/LowLevelDrivers/%.c src/LowLevelDrivers/Compiler.sub
+src/LowLevelDrivers/%.obj: ../src/LowLevelDrivers/%.c 
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
 	@echo src\LowLevelDrivers\cDepSubCommand.tmp=

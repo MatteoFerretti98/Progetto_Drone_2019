@@ -13,7 +13,7 @@ C_DEPS += \
 generate/r_rspi_rx600/src/r_rspi_rx600.d 
 
 # Each subdirectory must supply rules for building sources it contributes
-generate/r_rspi_rx600/src/%.obj: ../generate/r_rspi_rx600/src/%.c generate/r_rspi_rx600/src/Compiler.sub
+generate/r_rspi_rx600/src/%.obj: ../generate/r_rspi_rx600/src/%.c 
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
 	@echo generate\r_rspi_rx600\src\cDepSubCommand.tmp=

@@ -13,7 +13,7 @@ C_DEPS += \
 generate/r_glyph/src/glyph/glyph.d 
 
 # Each subdirectory must supply rules for building sources it contributes
-generate/r_glyph/src/glyph/%.obj: ../generate/r_glyph/src/glyph/%.c generate/r_glyph/src/glyph/Compiler.sub
+generate/r_glyph/src/glyph/%.obj: ../generate/r_glyph/src/glyph/%.c 
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
 	@echo generate\r_glyph\src\glyph\cDepSubCommand.tmp=

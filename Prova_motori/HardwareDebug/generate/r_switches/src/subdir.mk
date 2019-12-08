@@ -13,7 +13,7 @@ C_DEPS += \
 generate/r_switches/src/r_switches.d 
 
 # Each subdirectory must supply rules for building sources it contributes
-generate/r_switches/src/%.obj: ../generate/r_switches/src/%.c generate/r_switches/src/Compiler.sub
+generate/r_switches/src/%.obj: ../generate/r_switches/src/%.c 
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
 	@echo generate\r_switches\src\cDepSubCommand.tmp=

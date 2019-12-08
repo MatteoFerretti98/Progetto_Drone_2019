@@ -19,7 +19,7 @@ src/Ducted_Drivers/PID.d \
 src/Ducted_Drivers/map.d 
 
 # Each subdirectory must supply rules for building sources it contributes
-src/Ducted_Drivers/%.obj: ../src/Ducted_Drivers/%.c src/Ducted_Drivers/Compiler.sub
+src/Ducted_Drivers/%.obj: ../src/Ducted_Drivers/%.c 
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
 	@echo src\Ducted_Drivers\cDepSubCommand.tmp=
