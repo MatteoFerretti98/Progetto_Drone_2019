@@ -117,6 +117,7 @@ extern struct timerClocks timers;
 
 void main(void) {
 	/* One time initialize instructions */
+
 	Setup();
 	initialize();
 	while(!timers.timer_2000mS) {
@@ -178,8 +179,10 @@ void Setup() {
 	/* Turn on motors relay */
 	Motors_On();
 	/* Send arm signal to motors */
-	Motor_Arm(MOTOR_UPPER);
-	Motor_Arm(MOTOR_BOTTOM);
+	Motor_Arm(MOTOR_1);
+	Motor_Arm(MOTOR_2);
+	Motor_Arm(MOTOR_3);
+	Motor_Arm(MOTOR_4);
 	/* Setup Compare Match Timer */
 	CMT_init();
 	// Initialize PID structures used for PID properties
@@ -227,8 +230,10 @@ void Callback_50ms(){
 		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 
 		// Write new results to motors and servos
-		Motor_Write_up(MOTOR_UPPER, desiredState.key.avg_motor_us + desiredState.key.motor_diff_us);
-		Motor_Write_up(MOTOR_BOTTOM, desiredState.key.avg_motor_us - desiredState.key.motor_diff_us);
+		Motor_Write_up(MOTOR_1, desiredState.key.avg_motor_us + desiredState.key.motor_diff_us);
+		Motor_Write_up(MOTOR_2, desiredState.key.avg_motor_us - desiredState.key.motor_diff_us);// abbiamo cmabiato il - in +
+		Motor_Write_up(MOTOR_3, desiredState.key.avg_motor_us + desiredState.key.motor_diff_us);
+		Motor_Write_up(MOTOR_4, desiredState.key.avg_motor_us - desiredState.key.motor_diff_us);
 }
 
 void Callback_100ms(){
@@ -248,8 +253,10 @@ void Fallback() {
 	lcd_display(LCD_LINE3, " condition! ");
 
 	/* Turn off motors */
-	Motor_Write_up(MOTOR_UPPER, 0);
-	Motor_Write_up(MOTOR_BOTTOM, 0);
+	Motor_Write_up(MOTOR_1, 0);
+	Motor_Write_up(MOTOR_2, 0);
+	Motor_Write_up(MOTOR_3, 0);
+	Motor_Write_up(MOTOR_4, 0);
 	Motors_Off();
 
 	while(1)
