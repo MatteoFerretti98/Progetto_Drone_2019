@@ -33,19 +33,6 @@ void Set_MTU_U0_C3(void) {
 	//Set TGRB and TGRD
 	MTU3.TGRB = MTU_C3_DEFAULT_TGR_DUTY_VALUE;
 	MTU3.TGRD = MTU_C3_DEFAULT_TGR_DUTY_VALUE;
-
-	/*
-	 *VECCHIO CODICE CON LE PORTE 9 JN2 E 23 JN1
-	 * */
-	/*PORTC.PMR.BIT.B1 = 1;
-	PORTC.PMR.BIT.B0 = 1;*/
-
-
-	/*MPC.PC1PFS.BYTE = 0x01;
-	MPC.PC0PFS.BYTE = 0x01;
-
-	PORTC.PDR.BIT.B1 = 1;
-	PORTC.PDR.BIT.B0 = 1;*/
 	
 	//setting pin 15 of J8(PORT J bit 3)
 	//setting pin 1 of JP17(PORT 1 bit 7)
