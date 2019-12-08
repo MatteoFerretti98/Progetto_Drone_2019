@@ -13,18 +13,20 @@
 #include "../LowLevelDrivers/MTU_C3.h"
 
 /*  -----------------------------------------------------------------------------------------------------
- * Description:	2 channels motor driver.
- * 				Default used timer channel is MTU3 with a PWM period of 20ms
+ * Description:	4 channels motor driver.
+ * 				Default used timer channel is MTU3 and MTU4 with a PWM period of 20ms
  * 				This driver uses an automatic generated (by Renesas PDG2-"Peripheral Driver Generator 2")
  * 					low-level driver to interact with board peripherals
  *
- * Usage: 	-Motors are assigned to the port PC1 (channel 1) and PC0 (channel 2)
+ * Usage: 	-Motors are assigned to the port PC1 (channel 1), PC0 (channel 2), PJ3 (channel 3) and P17 (channel 4)
  * 				respectively on board pin JN2-9 and JN1-23
  * 			-Relay port is PD0 on pin JN2-13 used for both motors
  *  ----------------------------------------------------------------------------------------------------- */
 
-#define MOTOR_UPPER 1	//TODO: it could be moved on the upper-level motor control driver
-#define MOTOR_BOTTOM 2	//TODO: it could be moved on the upper-level motor control driver
+#define MOTOR_1 1
+#define MOTOR_2 2
+#define MOTOR_3 3
+#define MOTOR_4 4
 #define MOTOR_PWM_SIGNAL_PERIOD_UP 20000.00	//20ms
 #define MOTOR_ARM_UP 950	//TODO: check if valid
 #define MOTOR_MIN_UP 1200	//TODO: check if valid

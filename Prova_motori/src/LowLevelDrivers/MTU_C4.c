@@ -37,11 +37,15 @@ void Set_MTU_U0_C4(void) {
 	PORTE.PMR.BIT.B2 = 1;
 		PORTE.PMR.BIT.B1 = 1;
 
+
 		MPC.PE2PFS.BYTE = 0x01;
 		MPC.PE1PFS.BYTE = 0x01;
+		MPC.PJ3PFS.BYTE= 0x01;
 
 		PORTE.PDR.BIT.B2 = 1;
 		PORTE.PDR.BIT.B1 = 1;
+		PORTJ.PDR.BIT.B3=1;
+
 }
 
 void StartCount_MTU_U0_C4(void) {
@@ -58,20 +62,20 @@ uint16_t GetTGR_A_MTU_U0_C4() {
 	return MTU4.TGRA;
 }
 
-void SetTGR_A_MTU_U0_C4(uint16_t tgr_a_val) {
+void SetTGR_A_MTU_U0_C4(uint16_t tgr_a_val4) {
 	SYSTEM.PRCR.WORD = 0xA50B; /* Protect off */
-	MTU4.TGRA = tgr_a_val;
+	MTU4.TGRA = tgr_a_val4;
 }
-void SetTGR_B_MTU_U0_C4(uint16_t tgr_b_val) {
+void SetTGR_B_MTU_U0_C4(uint16_t tgr_b_val4) {
 	SYSTEM.PRCR.WORD = 0xA50B; /* Protect off */
-	MTU4.TGRB = tgr_b_val;
+	MTU4.TGRB = tgr_b_val4;
 }
-void SetTGR_C_MTU_U0_C4(uint16_t tgr_c_val) {
+void SetTGR_C_MTU_U0_C4(uint16_t tgr_c_val4) {
 	SYSTEM.PRCR.WORD = 0xA50B; /* Protect off */
-	MTU4.TGRC = tgr_c_val;
+	MTU4.TGRC = tgr_c_val4;
 }
-void SetTGR_D_MTU_U0_C4(uint16_t tgr_d_val) {
+void SetTGR_D_MTU_U0_C4(uint16_t tgr_d_val4) {
 	SYSTEM.PRCR.WORD = 0xA50B; /* Protect off */
-	MTU4.TGRD = tgr_d_val;
+	MTU4.TGRD = tgr_d_val4;
 }
 
