@@ -137,5 +137,5 @@ clean:
 	@echo
 	@echo 'Clean complete.'
 
-.PHONY: all clean $(LINKER_OUTPUT_OUTPUTS)  $(LIBRARY_GENERATOR_OUTPUTTYPE_OUTPUTS)  
+.PHONY: all clean 
 -include ../makefile.targets
