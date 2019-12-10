@@ -118,6 +118,7 @@ extern struct timerClocks timers;
 void main(void) {
 	/* One time initialize instructions */
 
+
 	Setup();
 	initialize();
 	while(!timers.timer_2000mS) {
@@ -226,12 +227,12 @@ void Callback_50ms(){
 		//sprintf(result_string2,"%5.2f",outValue);
 		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
 		desiredState.key.avg_motor_us = map(outValue, 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
-		//sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
-		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
+		sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
+		lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 
 		// Write new results to motors and servos
 		Motor_Write_up(MOTOR_1, desiredState.key.avg_motor_us + desiredState.key.motor_diff_us);
-		Motor_Write_up(MOTOR_2, desiredState.key.avg_motor_us - desiredState.key.motor_diff_us);// abbiamo cmabiato il - in +
+		Motor_Write_up(MOTOR_2, desiredState.key.avg_motor_us - desiredState.key.motor_diff_us);
 		Motor_Write_up(MOTOR_3, desiredState.key.avg_motor_us + desiredState.key.motor_diff_us);
 		Motor_Write_up(MOTOR_4, desiredState.key.avg_motor_us - desiredState.key.motor_diff_us);
 }

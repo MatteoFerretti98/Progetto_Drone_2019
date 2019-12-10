@@ -33,18 +33,29 @@ void Set_MTU_U0_C3(void) {
 	//Set TGRB and TGRD
 	MTU3.TGRB = MTU_C3_DEFAULT_TGR_DUTY_VALUE;
 	MTU3.TGRD = MTU_C3_DEFAULT_TGR_DUTY_VALUE;
-	
+//**********************************************
 	//setting pin 15 of J8(PORT J bit 3)
 	//setting pin 1 of JP17(PORT 1 bit 7)
+	//PORTJ.PMR.BIT.B3=1;
+	//PORT1.PMR.BIT.B7=1;
 	
-	PORTJ.PMR.BIT.B3=1;
-	PORT1.PMR.BIT.B7=1;
-	
-	MPC.PJ3PFS.BYTE= 0x01;
-	MPC.P17PFS.BYTE= 0x01;
-	
-	PORTJ.PDR.BIT.B3=1;
-	PORT1.PDR.BIT.B7=1;
+	//MPC.PJ3PFS.BYTE= 0x01;
+	//MPC.P17PFS.BYTE= 0x01;
+
+	//PORTJ.PDR.BIT.B3=1;
+	//PORT1.PDR.BIT.B7=1;
+//************************************************
+	//setting pin 9 of JN2(PORT C bit 1)
+	//setting pin 23 of JN1(PORT C bit 0)
+	PORTC.PMR.BIT.B1=1;
+	PORTC.PMR.BIT.B0=1;
+
+	MPC.PC1PFS.BYTE= 0x01;
+	MPC.PC0PFS.BYTE= 0x01;
+
+	PORTC.PDR.BIT.B1
+	=1;
+	PORTC.PDR.BIT.B0=1;
 }
 
 void StartCount_MTU_U0_C3(void) {

@@ -9,10 +9,10 @@
 #define SRC_DUCTED_DRIVERS_PID_H_
 
 typedef struct {
-	float kp, kd, ki;
-	float dt;
-	float lastError;
-	float ITerm;
+	float kp, kd, ki; //coefficients of proportional, derivative, integral controller
+	float dt; //step for the discrete control
+	float lastError; //error at time t-1
+	float ITerm; //integral term
 	float outMax;
 	float outMin;
 } PID_config;

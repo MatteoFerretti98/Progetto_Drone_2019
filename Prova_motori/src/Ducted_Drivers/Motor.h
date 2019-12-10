@@ -18,8 +18,8 @@
  * 				This driver uses an automatic generated (by Renesas PDG2-"Peripheral Driver Generator 2")
  * 					low-level driver to interact with board peripherals
  *
- * Usage: 	-Motors are assigned to the port PC1 (channel 1), PC0 (channel 2), PJ3 (channel 3) and P17 (channel 4)
- * 				respectively on board pin JN2-9 and JN1-23
+ * Usage: 	-Motors are assigned to the port PC0 (channel 1), PC1 (channel 2), PE1 (channel 3) and PE2 (channel 4)
+ * 				respectively on board pin JN1-23, JN2-9, JN2 22 and JN2 23
  * 			-Relay port is PD0 on pin JN2-13 used for both motors
  *  ----------------------------------------------------------------------------------------------------- */
 
@@ -28,9 +28,9 @@
 #define MOTOR_3 3
 #define MOTOR_4 4
 #define MOTOR_PWM_SIGNAL_PERIOD_UP 20000.00	//20ms
-#define MOTOR_ARM_UP 950	//TODO: check if valid
-#define MOTOR_MIN_UP 1200	//TODO: check if valid
-#define MOTOR_MAX_UP 2000	//TODO: check if valid
+#define MOTOR_ARM_UP 950	//Duty cycle 4.75% to arm up the motor
+#define MOTOR_MIN_UP 1200	//Min value of duty cycle - 6% (min speed)
+#define MOTOR_MAX_UP 3000	//Max value of duty cycle - 15% (Max speed)
 
 void Motors_Init();
 void Motors_On();
