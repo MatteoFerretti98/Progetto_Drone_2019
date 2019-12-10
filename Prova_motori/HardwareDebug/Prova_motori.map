@@ -1,4 +1,4 @@
-Renesas Optimizing Linker (W2.08.00 )             10-Dec-2019 16:34:27
+Renesas Optimizing Linker (W2.08.00 )             10-Dec-2019 17:30:45
 
 *** Options ***
 
@@ -95,13 +95,13 @@ D_1
 D_2
                                   fff85db0  fff85db0         0   1
 P
-                                  fff85db0  fff8c06e      62bf   1
+                                  fff85db0  fff8c052      62a3   1
 W
-                                  fff8c070  fff8c070         0   4
+                                  fff8c054  fff8c054         0   4
 W_1
-                                  fff8c070  fff8c070         0   1
+                                  fff8c054  fff8c054         0   1
 W_2
-                                  fff8c070  fff8c093        24   2
+                                  fff8c054  fff8c077        24   2
 $ADDR_C_FFFFFF80
                                   ffffff80  ffffff8f        10   1
 FIXEDVECT

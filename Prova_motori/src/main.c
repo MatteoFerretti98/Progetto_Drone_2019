@@ -231,10 +231,16 @@ void Callback_50ms(){
 		lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 
 		// Write new results to motors and servos
-		Motor_Write_up(MOTOR_1, desiredState.key.avg_motor_us + desiredState.key.motor_diff_us);
+		//******************************************************************************************
+		/*Motor_Write_up(MOTOR_1, desiredState.key.avg_motor_us + desiredState.key.motor_diff_us);
 		Motor_Write_up(MOTOR_2, desiredState.key.avg_motor_us - desiredState.key.motor_diff_us);
 		Motor_Write_up(MOTOR_3, desiredState.key.avg_motor_us + desiredState.key.motor_diff_us);
-		Motor_Write_up(MOTOR_4, desiredState.key.avg_motor_us - desiredState.key.motor_diff_us);
+		Motor_Write_up(MOTOR_4, desiredState.key.avg_motor_us - desiredState.key.motor_diff_us);*/
+		Motor_Write_up(MOTOR_1, 1200);
+		Motor_Write_up(MOTOR_2, 1800);
+		Motor_Write_up(MOTOR_3, 2400);
+		Motor_Write_up(MOTOR_4, 3000);
+		//*******************************************************************************************
 }
 
 void Callback_100ms(){
