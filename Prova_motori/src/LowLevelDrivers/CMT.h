@@ -46,6 +46,7 @@ struct timerClocks {
 	uint8_t timer_500mS;
 	uint8_t timer_1000mS;
 	uint8_t timer_2000mS;
+	//uint8_t timer_4000mS; //TODO maybe useful for IMU instead of 2000ms
 };
 
 /*******************************************************************************

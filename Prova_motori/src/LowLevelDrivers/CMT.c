@@ -83,10 +83,10 @@ void CMT_init(void) {
 	CMT0.CMCR.WORD = 0x0042;
 
 	/* Set interrupt priority in ICU */
-	IPR(CMT0, CMI0)= 0x04;
+	IPR(CMT0, CMI0) = 0x04; //TODO it could be 0x01
 
 	/* Enable the interrupt in the ICU */
-	IEN(CMT0, CMI0)= 1;
+	IEN(CMT0, CMI0) = 1;
 
 	/* Start the clock running */
 	CMT.CMSTR0.BIT.STR0 = 1;

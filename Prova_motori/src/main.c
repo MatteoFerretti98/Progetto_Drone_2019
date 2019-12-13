@@ -1,8 +1,12 @@
+
+//general includes
 #include <stdint.h>
 #include <stdio.h>
 #include <machine.h>
 #include "platform.h"
 #include "s12adc.h"
+
+//altimeter includes
 #include "Ducted_Drivers/Motor.h"
 #include "Ducted_Drivers/PID.h"
 #include "LowLevelDrivers/CMT.h"
@@ -11,6 +15,11 @@
 #include "Altimetro.h"
 #include "Ducted_Drivers/map.h"
 #include "I2C_new.h"
+
+//IMU includes
+#include "CMT.h"
+#include "PrintOnScreen.h"
+#include "SetupAHRS.h"
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
  /******************************************************************************
@@ -27,11 +36,8 @@
 *			03.12.2018     1.0         Creazione File
 *******************************************************************************/
 /*
-#include <stdint.h>
-#include <stdio.h>
-#include "CMT.h"
-#include "PrintOnScreen.h"
-#include "SetupAHRS.h"
+
+
 
 
 main(void)
