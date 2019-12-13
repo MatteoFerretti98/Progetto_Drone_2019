@@ -1,0 +1,845 @@
+	._ltype	e,d,'  '
+	._lang	"MAC","0.00.00.000","REV.F"
+	._file	'C:\Users\DAVIDE~1\AppData\Local\Temp\$ccrx6428019\$ccrx\mag.src'
+;%% macrx V.0.00.00.000  DS-PC
+;%% COPYRIGHT(C) 2007 Renesas Technology Corp.
+;%% and Renesas Solutions Corp., All Rights Reserved.
+;%%  Thu May 09 13:07:09 2019
+	._ltype	e,e,'  '
+	._line	1
+;RX Family C/C++ Compiler (V2.08.00 [30 Nov 2017])  09-May-2019 13:07:09
+	._line	2
+
+	._line	3
+;*** CPU TYPE ***
+	._line	4
+
+	._line	5
+;-CPU=RX600
+	._line	6
+
+	._line	7
+;*** COMMAND PARAMETER ***
+	._line	8
+
+	._line	9
+;-output=src=mag.src
+	._line	10
+;-cpu=rx600
+	._line	11
+;-fpu
+	._line	12
+;-include=C:\PROGRA~2\Renesas\RX\2_8_0\include,D:\Templates\LabratorioAutomzione\AHRS\generate\r_glyph,D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp\mcu,D:\Templates\LabratorioAutomzione\AHRS\generate\r_riic_rx600,D:\Templates\LabratorioAutomzione\AHRS\generate,D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp\board,D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp\board\user,D:\Templates\LabratorioAutomzione\AHRS\generate\r_glyph\src,D:\Templates\LabratorioAutomzione\AHRS\generate\r_riic_rx600\src,D:\Templates\LabratorioAutomzione\AHRS\generate\r_rspi_rx600\src,D:\Templates\LabratorioAutomzione\AHRS\generate\r_rspi_rx600,D:\Templates\LabratorioAutomzione\AHRS\generate\r_glyph\src\glyph,D:\Templates\LabratorioAutomzione\AHRS\src\eMPL,D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp\board\rdkrx63n,D:\Templates\LabratorioAutomzione\AHRS\generate\r_glyph\src\glyph\fonts,D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp\mcu\rx63n,D:\Templates\LabratorioAutomzione\AHRS\src,D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp,D:\Templates\LabratorioAutomzione\AHRS\generate\r_glyph\src\glyph\drivers,D:\Templates\LabratorioAutomzione\AHRS\generate
+	._line	13
+;-define=EMPL_TARGET_RENESAS,DROTEK_IMU_10DOF_V2,__RX,MPU6050
+	._line	14
+;-lang=c99
+	._line	15
+;-utf8
+	._line	16
+;-nomessage
+	._line	17
+;-obj_path=src
+	._line	18
+;-debug
+	._line	19
+;-outcode=utf8
+	._line	20
+;-nologo
+	._line	21
+;mag.c
+	._line	22
+
+	._line	23
+		.glb	_mag_init
+	._line	24
+		.glb	_mpu_set_bypass
+	._line	25
+		.glb	_i2c_read
+	._line	26
+		.glb	_i2c_write
+	._line	27
+		.glb	_mag_read_raw
+	._line	28
+		.glb	_mag_read
+	._line	29
+		.glb	_magcal
+	._line	30
+		.glb	_delay_ms
+	._line	31
+		.SECTION	P,CODE
+	._line	32
+_mag_init:
+	._line	33
+		.STACK	_mag_init=16
+	._line	34
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",119
+	._line	35
+		PUSHM R6-R7
+	._line	36
+		MOV.L R1, R6
+	._line	37
+		MOV.L #00000001H, R7
+	._line	38
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",127
+	._line	39
+		MOV.L R7, R1
+	._line	40
+		SUB #04H, R0
+	._line	41
+		BSR _mpu_set_bypass
+	._line	42
+		CMP #00H, R1
+	._line	43
+		BNE L15
+	._line	44
+L11:	; if_break_bb
+	._line	45
+		MOV.L #0000001EH, R7
+	._line	46
+		ADD #03H, R0, R4
+	._line	47
+		MOV.L #00000001H, R3
+	._line	48
+		MOV.L #0000000AH, R2
+	._line	49
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",136
+	._line	50
+		MOV.L R7, R1
+	._line	51
+		BSR _i2c_read
+	._line	52
+		CMP #00H, R1
+	._line	53
+		STNZ #02H, R7
+	._line	54
+		BNE L15
+	._line	55
+L12:	; if_break_bb13
+	._line	56
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",138
+	._line	57
+		MOVU.B 03H[R0], R1
+	._line	58
+		CMP #48H, R1
+	._line	59
+		STNZ #03H, R7
+	._line	60
+		BNE L15
+	._line	61
+L13:	; if_break_bb21
+	._line	62
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",143
+	._line	63
+		MOV.B #00H, 03H[R0]
+	._line	64
+		ADD #03H, R0, R4
+	._line	65
+		MOV.L #00000001H, R3
+	._line	66
+		MOV.L #00000002H, R2
+	._line	67
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",144
+	._line	68
+		MOV.L R7, R1
+	._line	69
+		BSR _i2c_write
+	._line	70
+		CMP #00H, R1
+	._line	71
+		BEQ L16
+	._line	72
+L14:	; if_break_bb21.bb111_crit_edge
+	._line	73
+		MOV.L #00000004H, R7
+	._line	74
+L15:	; bb111
+	._line	75
+		MOV.L R7, R1
+	._line	76
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",180
+	._line	77
+		RTSD #0CH, R6-R7
+	._line	78
+L16:	; if_break_bb28
+	._line	79
+		ADD #03H, R0, R4
+	._line	80
+		MOV.L #00000001H, R3
+	._line	81
+		MOV.L #00000000H, R2
+	._line	82
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",147
+	._line	83
+		MOV.L R7, R1
+	._line	84
+		BSR _i2c_read
+	._line	85
+		CMP #00H, R1
+	._line	86
+		BNE L14
+	._line	87
+L17:	; if_break_bb35
+	._line	88
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",150
+	._line	89
+		MOVU.B 03H[R0], R1
+	._line	90
+		ADD #03H, R0, R4
+	._line	91
+		OR #1CH, R1
+	._line	92
+		MOV.B R1, 03H[R0]
+	._line	93
+		MOV.L #00000001H, R3
+	._line	94
+		MOV.L #00000000H, R2
+	._line	95
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",152
+	._line	96
+		MOV.L R7, R1
+	._line	97
+		BSR _i2c_write
+	._line	98
+		CMP #00H, R1
+	._line	99
+		STNZ #05H, R7
+	._line	100
+		BNE L15
+	._line	101
+L18:	; if_break_bb46
+	._line	102
+		MOV.L #00000001H, R2
+	._line	103
+		ADD #03H, R0, R4
+	._line	104
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",155
+	._line	105
+		MOV.L R7, R1
+	._line	106
+		MOV.L R2, R3
+	._line	107
+		BSR _i2c_read
+	._line	108
+		CMP #00H, R1
+	._line	109
+		MOV.L #00000006H, R7
+	._line	110
+		BNE L15
+	._line	111
+L19:	; if_break_bb53
+	._line	112
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",157
+	._line	113
+		MOVU.B 03H[R0], R7
+	._line	114
+		SHLR #05H, R7
+	._line	115
+		MOV.B R7, 03H[R0]
+	._line	116
+L20:	; if_break_bb53
+	._line	117
+		MOV.L #L30, R14
+	._line	118
+		.swmov L30, R7, R14, R14
+	._line	119
+L31:
+	._line	120
+		BRA.L R14
+	._line	121
+L21:	; switch_clause_bb
+	._line	122
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",159
+	._line	123
+		MOV.L #3F3AE148H, 14H[R6]
+	._line	124
+		BRA L29
+	._line	125
+L22:	; switch_clause_bb62
+	._line	126
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",160
+	._line	127
+		MOV.L #3F6B851FH, 14H[R6]
+	._line	128
+		BRA L29
+	._line	129
+L23:	; switch_clause_bb65
+	._line	130
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",161
+	._line	131
+		MOV.L #3F9C28F6H, 14H[R6]
+	._line	132
+		BRA L29
+	._line	133
+L24:	; switch_clause_bb68
+	._line	134
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",162
+	._line	135
+		MOV.L #3FC28F5CH, 14H[R6]
+	._line	136
+		BRA L29
+	._line	137
+L25:	; switch_clause_bb71
+	._line	138
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",163
+	._line	139
+		MOV.L #401147AEH, 14H[R6]
+	._line	140
+		BRA L29
+	._line	141
+L26:	; switch_clause_bb74
+	._line	142
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",164
+	._line	143
+		MOV.L #4023D70AH, 14H[R6]
+	._line	144
+		BRA L29
+	._line	145
+L27:	; switch_clause_bb77
+	._line	146
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",165
+	._line	147
+		MOV.L #4041EB85H, 14H[R6]
+	._line	148
+		BRA L29
+	._line	149
+L28:	; switch_clause_bb80
+	._line	150
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",166
+	._line	151
+		MOV.L #408B3333H, 14H[R6]
+	._line	152
+L29:	; switch_break_bb
+	._line	153
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",170
+	._line	154
+		MOV.L #3F70766CH, 24H[R6]
+	._line	155
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",171
+	._line	156
+		MOV.L #3F77C904H, 28H[R6]
+	._line	157
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",172
+	._line	158
+		MOV.L #3F8DDECEH, 2CH[R6]
+	._line	159
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",173
+	._line	160
+		MOV.L #0C33875C3H, 18H[R6]
+	._line	161
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",174
+	._line	162
+		MOV.L #430828F6H, 1CH[R6]
+	._line	163
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",175
+	._line	164
+		MOV.L #4358A8F6H, 20H[R6]
+	._line	165
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",176
+	._line	166
+		MOV.L #48489FA5H, 30H[R6]
+	._line	167
+		MOV.L #00000000H, R1
+	._line	168
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",178
+	._line	169
+		RTSD #0CH, R6-R7
+	._line	170
+_mag_read_raw:
+	._line	171
+		.STACK	_mag_read_raw=16
+	._line	172
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",182
+	._line	173
+		PUSH.L R6
+	._line	174
+		SUB #08H, R0
+	._line	175
+		MOV.L R1, R6
+	._line	176
+		ADD #02H, R0, R4
+	._line	177
+		MOV.L #00000006H, R3
+	._line	178
+		MOV.L #00000003H, R2
+	._line	179
+		MOV.L #0000001EH, R1
+	._line	180
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",185
+	._line	181
+		BSR _i2c_read
+	._line	182
+		CMP #00H, R1
+	._line	183
+		BNE L34
+	._line	184
+L33:	; if_break_bb
+	._line	185
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",188
+	._line	186
+		MOVU.B 02H[R0], R1
+	._line	187
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",189
+	._line	188
+		MOVU.B 04H[R0], R2
+	._line	189
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",190
+	._line	190
+		MOVU.B 06H[R0], R3
+	._line	191
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",188
+	._line	192
+		SHLL #08H, R1
+	._line	193
+		OR 03H[R0].UB, R1
+	._line	194
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",189
+	._line	195
+		SHLL #08H, R2
+	._line	196
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",190
+	._line	197
+		SHLL #08H, R3
+	._line	198
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",189
+	._line	199
+		OR 05H[R0].UB, R2
+	._line	200
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",188
+	._line	201
+		MOV.W R1, [R6]
+	._line	202
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",190
+	._line	203
+		OR 07H[R0].UB, R3
+	._line	204
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",189
+	._line	205
+		MOV.W R2, 04H[R6]
+	._line	206
+		MOV.L #00000000H, R1
+	._line	207
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",190
+	._line	208
+		MOV.W R3, 02H[R6]
+	._line	209
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",192
+	._line	210
+		BRA L35
+	._line	211
+L34:	; bb54
+	._line	212
+		MOV.L #00000001H, R1
+	._line	213
+L35:	; bb54
+	._line	214
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",194
+	._line	215
+		RTSD #0CH, R6-R6
+	._line	216
+_mag_read:
+	._line	217
+		.STACK	_mag_read=8
+	._line	218
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",196
+	._line	219
+		PUSH.L R6
+	._line	220
+		MOV.L R1, R6
+	._line	221
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",197
+	._line	222
+		BSR _mag_read_raw
+	._line	223
+		CMP #00H, R1
+	._line	224
+		BNE L38
+	._line	225
+L37:	; if_break_bb
+	._line	226
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",200
+	._line	227
+		MOV.L 14H[R6], R1
+	._line	228
+		ITOF [R6].W, R2
+	._line	229
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",201
+	._line	230
+		ITOF 02H[R6].W, R3
+	._line	231
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",202
+	._line	232
+		ITOF 04H[R6].W, R4
+	._line	233
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",200
+	._line	234
+		FMUL R1, R2
+	._line	235
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",201
+	._line	236
+		FMUL R1, R3
+	._line	237
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",202
+	._line	238
+		FMUL R1, R4
+	._line	239
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",200
+	._line	240
+		FSUB 18H[R6].L, R2
+	._line	241
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",201
+	._line	242
+		FSUB 1CH[R6].L, R3
+	._line	243
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",202
+	._line	244
+		FSUB 20H[R6].L, R4
+	._line	245
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",200
+	._line	246
+		FMUL 24H[R6].L, R2
+	._line	247
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",201
+	._line	248
+		FMUL 28H[R6].L, R3
+	._line	249
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",202
+	._line	250
+		FMUL 2CH[R6].L, R4
+	._line	251
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",200
+	._line	252
+		MOV.L R2, 08H[R6]
+	._line	253
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",201
+	._line	254
+		MOV.L R3, 0CH[R6]
+	._line	255
+		MOV.L #00000000H, R1
+	._line	256
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",202
+	._line	257
+		MOV.L R4, 10H[R6]
+	._line	258
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",204
+	._line	259
+		BRA L39
+	._line	260
+L38:	; bb79
+	._line	261
+		MOV.L #00000001H, R1
+	._line	262
+L39:	; bb79
+	._line	263
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",205
+	._line	264
+		RTSD #04H, R6-R6
+	._line	265
+_magcal:
+	._line	266
+		.STACK	_magcal=36
+	._line	267
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",207
+	._line	268
+		PUSHM R6-R13
+	._line	269
+		MOV.L R1, R6
+	._line	270
+		MOV.L #3F800000H, R1
+	._line	271
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",209
+	._line	272
+		MOV.L R1, 24H[R6]
+	._line	273
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",210
+	._line	274
+		MOV.L R1, 28H[R6]
+	._line	275
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",211
+	._line	276
+		MOV.L R1, 2CH[R6]
+	._line	277
+		MOV.L #00000000H, R7
+	._line	278
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",212
+	._line	279
+		MOV.L R7, 18H[R6]
+	._line	280
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",213
+	._line	281
+		MOV.L R7, 1CH[R6]
+	._line	282
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",214
+	._line	283
+		MOV.L R7, 20H[R6]
+	._line	284
+		MOV.L #00000FA0H, R1
+	._line	285
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",222
+	._line	286
+		BSR _delay_ms
+	._line	287
+		MOV.L #0C6FFFE00H, R8
+	._line	288
+		MOV.L #46FFFE00H, R9
+	._line	289
+		MOV.L R9, R13
+	._line	290
+		MOV.L R9, R12
+	._line	291
+		MOV.L R8, R11
+	._line	292
+		MOV.L R8, R10
+	._line	293
+L41:	; bb146
+	._line	294
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",224
+	._line	295
+		MOVU.W R7, R7
+	._line	296
+		CMP #0BB7H, R7
+	._line	297
+		BGT L55
+	._line	298
+L42:	; bb
+	._line	299
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",226
+	._line	300
+		MOV.L R6, R1
+	._line	301
+		BSR _mag_read
+	._line	302
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",228
+	._line	303
+		MOV.L 08H[R6], R1
+	._line	304
+		FCMP R1, R10
+	._line	305
+		BPZ L44
+	._line	306
+L43:	; if_then_bb
+	._line	307
+		MOV.L R1, R10
+	._line	308
+L44:	; if_break_bb
+	._line	309
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",229
+	._line	310
+		MOV.L 0CH[R6], R2
+	._line	311
+		FCMP R2, R11
+	._line	312
+		BPZ L46
+	._line	313
+L45:	; if_then_bb73
+	._line	314
+		MOV.L R2, R11
+	._line	315
+L46:	; if_break_bb79
+	._line	316
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",230
+	._line	317
+		MOV.L 10H[R6], R3
+	._line	318
+		FCMP R3, R8
+	._line	319
+		BPZ L48
+	._line	320
+L47:	; if_then_bb89
+	._line	321
+		MOV.L R3, R8
+	._line	322
+L48:	; if_break_bb95
+	._line	323
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",231
+	._line	324
+		FCMP R12, R1
+	._line	325
+		BPZ L50
+	._line	326
+L49:	; if_then_bb105
+	._line	327
+		MOV.L R1, R12
+	._line	328
+L50:	; if_break_bb111
+	._line	329
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",232
+	._line	330
+		FCMP R13, R2
+	._line	331
+		BPZ L52
+	._line	332
+L51:	; if_then_bb121
+	._line	333
+		MOV.L R2, R13
+	._line	334
+L52:	; if_break_bb127
+	._line	335
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",233
+	._line	336
+		FCMP R9, R3
+	._line	337
+		BPZ L54
+	._line	338
+L53:	; if_then_bb137
+	._line	339
+		MOV.L R3, R9
+	._line	340
+L54:	; if_break_bb143
+	._line	341
+		MOV.L #00000005H, R1
+	._line	342
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",235
+	._line	343
+		BSR _delay_ms
+	._line	344
+		ADD #01H, R7
+	._line	345
+		BRA L41
+	._line	346
+L55:	; bb154
+	._line	347
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",239
+	._line	348
+		MOV.L R10, R1
+	._line	349
+		FADD R12, R1
+	._line	350
+		FDIV #40000000H, R1
+	._line	351
+		MOV.L R1, 18H[R6]
+	._line	352
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",240
+	._line	353
+		MOV.L R11, R1
+	._line	354
+		FADD R13, R1
+	._line	355
+		FDIV #40000000H, R1
+	._line	356
+		MOV.L R1, 1CH[R6]
+	._line	357
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",241
+	._line	358
+		MOV.L R8, R1
+	._line	359
+		FADD R9, R1
+	._line	360
+		FDIV #40000000H, R1
+	._line	361
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",244
+	._line	362
+		FSUB R12, R10
+	._line	363
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",241
+	._line	364
+		MOV.L R1, 20H[R6]
+	._line	365
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",244
+	._line	366
+		FDIV #40000000H, R10
+	._line	367
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",245
+	._line	368
+		FSUB R13, R11
+	._line	369
+		FDIV #40000000H, R11
+	._line	370
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",248
+	._line	371
+		MOV.L R10, R1
+	._line	372
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",246
+	._line	373
+		FSUB R9, R8
+	._line	374
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",248
+	._line	375
+		FADD R11, R1
+	._line	376
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",246
+	._line	377
+		FDIV #40000000H, R8
+	._line	378
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",248
+	._line	379
+		FADD R8, R1
+	._line	380
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",249
+	._line	381
+		FDIV #40400000H, R1
+	._line	382
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",251
+	._line	383
+		MOV.L R1, R2
+	._line	384
+		FDIV R10, R2
+	._line	385
+		MOV.L R2, 24H[R6]
+	._line	386
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",252
+	._line	387
+		MOV.L R1, R2
+	._line	388
+		FDIV R11, R2
+	._line	389
+		MOV.L R2, 28H[R6]
+	._line	390
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",254
+	._line	391
+		MOV.L R1, R2
+	._line	392
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",253
+	._line	393
+		FDIV R8, R1
+	._line	394
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",254
+	._line	395
+		FMUL R2, R2
+	._line	396
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",253
+	._line	397
+		MOV.L R1, 2CH[R6]
+	._line	398
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",254
+	._line	399
+		MOV.L R2, 30H[R6]
+	._line	400
+		MOV.L #00000000H, R1
+	._line	401
+		.LINE  "D:\Templates\LabratorioAutomzione\AHRS\src\mag.c",256
+	._line	402
+		RTSD #20H, R6-R13
+	._line	403
+		.swsection	W,stuff
+	._line	404
+L30:
+	._line	405
+		.switch		L21-L31
+	._line	406
+		.switch		L22-L31
+	._line	407
+		.switch		L23-L31
+	._line	408
+		.switch		L24-L31
+	._line	409
+		.switch		L25-L31
+	._line	410
+		.switch		L26-L31
+	._line	411
+		.switch		L27-L31
+	._line	412
+		.switch		L28-L31
+	._line	413
+		.SECTION	W,ROMDATA,ALIGN=4
+	._line	414
+		.SECTION	W_1,ROMDATA
+	._line	415
+		.SECTION	W_2,ROMDATA,ALIGN=2
+	._ltype	e,d,'  '
+	._error	0,0
+	._ltype	e,e,'  '
+	._line	416
+		.END
+	._ltype	d,d,'  '
+;%% Thu May 09 13:07:09 2019

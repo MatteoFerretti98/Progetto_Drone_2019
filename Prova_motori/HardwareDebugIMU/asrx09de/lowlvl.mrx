@@ -1,0 +1,115 @@
+	._ltype	e,d,'  '
+	._lang	"MAC","0.00.00.000","REV.F"
+	._file	'../generate/r_bsp/board/rdkrx63n/lowlvl.src'
+;%% macrx V.0.00.00.000  DS-PC
+;%% COPYRIGHT(C) 2007 Renesas Technology Corp.
+;%% and Renesas Solutions Corp., All Rights Reserved.
+;%%  Thu May 09 13:07:09 2019
+	._ltype	e,e,'  '
+	._line	1
+;-----------------------------------------------------------------------
+	._line	2
+;
+	._line	3
+; FILE :lowlvl.src
+	._line	4
+; DATE :Wed, Jul 01, 2009
+	._line	5
+; DESCRIPTION :Program of Low level
+	._line	6
+; CPU TYPE :RX
+	._line	7
+;
+	._line	8
+;-----------------------------------------------------------------------
+	._line	9
+                .GLB    _charput
+	._line	10
+                .GLB    _charget
+	._line	11
+
+	._line	12
+FC2E0           .EQU    00084080h
+	._line	13
+FE2C0           .EQU    00084090h
+	._line	14
+DBGSTAT         .EQU    000840C0h
+	._line	15
+RXFL0EN         .EQU    00001000h
+	._line	16
+TXFL0EN         .EQU    00000100h
+	._line	17
+
+	._line	18
+                .SECTION P,CODE
+	._line	19
+
+	._line	20
+;-----------------------------------------------------------------------
+	._line	21
+; _charput:
+	._line	22
+;-----------------------------------------------------------------------
+	._line	23
+_charput:
+	._line	24
+                .STACK  _charput = 00000000h
+	._line	25
+__C2ESTART:     MOV.L   #TXFL0EN,R3
+	._line	26
+                MOV.L   #DBGSTAT,R4
+	._line	27
+__TXLOOP:       MOV.L   [R4],R5
+	._line	28
+                AND     R3,R5
+	._line	29
+                BNZ     __TXLOOP
+	._line	30
+__WRITEFC2E0:   MOV.L   #FC2E0,R2
+	._line	31
+                MOV.L   R1,[R2]
+	._line	32
+__CHARPUTEXIT:  RTS
+	._line	33
+
+	._line	34
+;-----------------------------------------------------------------------
+	._line	35
+; _charget:
+	._line	36
+;-----------------------------------------------------------------------
+	._line	37
+_charget:
+	._line	38
+                .STACK  _charget = 00000000h
+	._line	39
+__E2CSTART:     MOV.L   #RXFL0EN,R3
+	._line	40
+                MOV.L   #DBGSTAT,R4
+	._line	41
+__RXLOOP:       MOV.L   [R4],R5
+	._line	42
+                AND     R3,R5
+	._line	43
+                BZ      __RXLOOP
+	._line	44
+__READFE2C0:    MOV.L   #FE2C0,R2
+	._line	45
+                MOV.L   [R2],R1
+	._line	46
+__CHARGETEXIT:  RTS
+	._line	47
+
+	._line	48
+;-----------------------------------------------------------------------
+	._line	49
+
+	._line	50
+; End of conditional code
+	._ltype	e,d,'  '
+	._error	0,0
+	._ltype	e,e,'  '
+	._line	51
+                .END
+	._ltype	d,d,'  '
+;%% Thu May 09 13:07:09 2019
