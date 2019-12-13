@@ -1,5 +1,24 @@
 -cpu=rx600
--include="C:\Program Files (x86)\Renesas\RX\2_8_0\include","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_bsp\board\rdkrx63n","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_bsp\board","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_bsp","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_bsp\board\user","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_bsp\mcu\rx63n","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_bsp\mcu","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_glyph\src\glyph\fonts","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_glyph\src\glyph\drivers","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_glyph\src\glyph","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_glyph\src","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_glyph","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_riic_rx600\src","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_riic_rx600","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_rspi_rx600\src","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_rspi_rx600","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_switches\src","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate\r_switches","C:\Users\Matteo\Documents\GitHub\Progetto_Drone_2019\Prova_motori\generate"
+-include="C:\Program Files (x86)\Renesas\RX\2_8_0\include"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_bsp\board\rdkrx63n"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_bsp\board"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_bsp"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_bsp\board\user"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_bsp\mcu\rx63n"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_bsp\mcu"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_glyph\src\glyph\fonts"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_glyph\src\glyph\drivers"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_glyph\src\glyph"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_glyph\src"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_glyph"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_riic_rx600\src"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_riic_rx600"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_rspi_rx600\src"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_rspi_rx600"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_switches\src"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate\r_switches"
+-include="C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\generate" 
 -lang=c99
 -utf8
 -nomessage
