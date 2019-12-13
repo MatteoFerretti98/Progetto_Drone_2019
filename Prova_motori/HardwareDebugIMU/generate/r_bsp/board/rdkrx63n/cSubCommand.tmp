@@ -1,0 +1,13 @@
+-cpu=rx600
+-fpu
+-include="C:\PROGRA~2\Renesas\RX\2_8_0\include","D:\Templates\LabratorioAutomzione\AHRS\generate\r_glyph","D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp\mcu","D:\Templates\LabratorioAutomzione\AHRS\generate\r_riic_rx600","D:\Templates\LabratorioAutomzione\AHRS\generate","D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp\board","D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp\board\user","D:\Templates\LabratorioAutomzione\AHRS\generate\r_glyph\src","D:\Templates\LabratorioAutomzione\AHRS\generate\r_riic_rx600\src","D:\Templates\LabratorioAutomzione\AHRS\generate\r_rspi_rx600\src","D:\Templates\LabratorioAutomzione\AHRS\generate\r_rspi_rx600","D:\Templates\LabratorioAutomzione\AHRS\generate\r_glyph\src\glyph","D:\Templates\LabratorioAutomzione\AHRS\src\eMPL","D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp\board\rdkrx63n","D:\Templates\LabratorioAutomzione\AHRS\generate\r_glyph\src\glyph\fonts","D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp\mcu\rx63n","D:\Templates\LabratorioAutomzione\AHRS\src","D:\Templates\LabratorioAutomzione\AHRS\generate\r_bsp","D:\Templates\LabratorioAutomzione\AHRS\generate\r_glyph\src\glyph\drivers","D:\Templates\LabratorioAutomzione\AHRS\generate"
+-define=EMPL_TARGET_RENESAS,DROTEK_IMU_10DOF_V2,MPU6050
+-lang=c99
+-utf8
+-nomessage
+-output=obj
+-obj_path="generate/r_bsp/board/rdkrx63n"
+-debug
+-outcode=utf8
+-optimize=0
+-nologo 
