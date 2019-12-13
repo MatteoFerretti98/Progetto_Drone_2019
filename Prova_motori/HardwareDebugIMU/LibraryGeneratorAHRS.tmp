@@ -1,0 +1,6 @@
+-cpu=rx600
+-fpu
+-lang=c99
+-head=runtime,math,mathf,stdio,stdlib,string,new
+-output="AHRS.lib"
+-nologo
