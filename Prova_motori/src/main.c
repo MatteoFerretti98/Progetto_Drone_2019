@@ -99,6 +99,8 @@ vl53l1x sensore;
 vl53l1x* temp;
 uint16_t distanza;
 
+//ferretti gay
+
 void initialize()
 {
 	temp = &sensore;
