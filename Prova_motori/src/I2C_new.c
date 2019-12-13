@@ -1,4 +1,24 @@
+/******************************************************************************
+ * Author: Ferretti Matteo
+ ******************************************************************************/
+/******************************************************************************
+* File Name: I2C_new.c
+* Version: 1.2
+* Description: I2C communication for Altimeter and IMU
+*******************************************************************************/
+/*******************************************************************************
+* History
+* 			DD.MM.YYYY     Version     Description
+*			22.01.2018     1.01        Revisione della versione di Sebastian Giles
+* 										da parte di Omar Cocchairella.
+*			10.01.2019     1.01.1      Martin Breccia commento della versione
+* 										di Omar Cocchairella.
+* 			13.12.2019	   1.2.0	   Implement I2C communication for both sensor
+* 										(altimeter and IMU)
+*******************************************************************************/
+
 #include "I2C_new.h"
+#include "i2c.h"
 
 #define MASTER_IIC_ADDRESS_LO	0x20	/* Master address low bits [7:0] */
 #define MASTER_IIC_ADDRESS_HI	0x00	/* Master address high bits [2:0] */

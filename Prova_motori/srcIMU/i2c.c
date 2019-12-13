@@ -3,6 +3,7 @@
 * Version: 1.01.1
 * Description: file contenente funzioni relative all'i2c.
 *******************************************************************************/
+
 /*******************************************************************************
 * History
 * 			DD.MM.YYYY     Version     Description
