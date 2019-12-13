@@ -29,8 +29,8 @@
 #define MOTOR_4 4
 #define MOTOR_PWM_SIGNAL_PERIOD_UP 20000.00	//20ms
 #define MOTOR_ARM_UP 950	//Duty cycle 4.75% to arm up the motor
-#define MOTOR_MIN_UP 1200	//Min value of duty cycle - 6% (min speed)
-#define MOTOR_MAX_UP 3000	//Max value of duty cycle - 15% (Max speed)
+#define MOTOR_MIN_UP 1200	//Min value of duty cycle - 6%  Duty (min speed)
+#define MOTOR_MAX_UP 2000	//Max value of duty cycle - 10% Duty (Max speed)
 
 void Motors_Init();
 void Motors_On();

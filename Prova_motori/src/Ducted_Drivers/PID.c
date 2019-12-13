@@ -27,7 +27,7 @@ void PID_Init(PID_config* conf, float kp, float kd, float ki, float dt, float ou
 /*************************************************************
  *Function name: PID_Compute
  *Description:   Calculate new output value
- *Arguments:     two float variables to indicate the input from the altitude sensor and the desired altitude value, a pointer 'conf' to PID_Config struct
+ *Arguments:     two float variables to indicate the input from the sensors and the desired value
  *Return value:  float variable
  ************************************************************/
 float PID_Compute(float input, float setPoint, PID_config* conf)
