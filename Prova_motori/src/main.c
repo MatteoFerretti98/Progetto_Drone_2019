@@ -1,3 +1,22 @@
+ /******************************************************************************
+* File Name: main.c
+* Version: 2.0
+* Description: file 'main' quadrotor
+*******************************************************************************/
+
+/*******************************************************************************
+* Authors:
+* Alessandro De Toni,
+* Angelo D'Agostino Bonomi,
+* Matteo Ferretti,
+* Simone Di Rado
+*******************************************************************************/
+/*******************************************************************************
+* History
+*			DD.MM.YYYY     Version     Description
+*			03.12.2018     1.0         IMU File creation (Ragaini Davide)
+*			16.12.2019	   2.0 		   Merge of IMU's and altimeter's codes
+*******************************************************************************/
 
 //general includes
 #include <stdint.h>
@@ -20,80 +39,8 @@
 #include "CMT.h"
 #include "PrintOnScreen.h"
 #include "SetupAHRS.h"
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
- /******************************************************************************
-* File Name: Main.c
-* Version: 1.0
-* Description: File main sistema A.H.R.S.
-*******************************************************************************/
-/*******************************************************************************
-* Author: Ragaini Davide
-*******************************************************************************/
-/*******************************************************************************
-* History
-*			DD.MM.YYYY     Version     Description
-*			03.12.2018     1.0         Creazione File
-*******************************************************************************/
-/*
 
 
-
-
-main(void)
-{
-	/*Dichiarazioni strutture dati utilizzate.*/
-	//AHRS_out ahrs;
-	/***************************************************************************************
-	* extern struct timerClocks timers
-	* Description: Avremmo potuto utilizzare per la struttura dati "timerClocks", nel file "CMT.h",
-	* 				il typedef e dichiarare nel corrente main la struttura dati (come fatto per le altre stutture dati).
-	* 				Per compatibilità, abbiamo deciso di lasciare invariata la libreria "CMT.h"
-	* 				(poichè è libreria standatd della renesas) in caso di import del
-	* 				codice del sistema AHRS in un altro progetto.
-	* 				In tal caso basterebbe dichiarare la struttura come "extern" lasciando invariato il "CMT.h" del
-	* 				nuovo progetto.
-	**************************************************************************************/
-	//extern struct timerClocks timers;
-
-	/* funzione di setup dello schermo, CMT, accelerometro, giroscopio, magnetometro e calibrazione magnetometro.*/
-	//Setup_MARG(&ahrs);
-
-	/*while (1)
-	{
-		/********************
- 	 	* La frequenza di lettura va impostata in base alla frequenza del mpu e magnetometro.
- 	 	* Consultare i rispettivi file imu.c e mag.c.
- 	 	*
- 	 	* Esempio:
- 	 	* La frequenza attuale del mpu nel file imu.c è 200Hz, mentre del magnetometro è 220Hz.
- 	 	* 1/200 = 0.005 s = 5mS
- 	 	* ********************/
-		/*if(timers.timer_5mS)
-		{
-			Read_MARG(&ahrs);
-			RealTimeChart(&ahrs);
-
-			timers.timer_5mS=0;
-
-			/*************
-		 	 * Frequenza di stampa su schermo dei dati.
-		 	 * Lo schermo ha un suo tempo di aggiornamento dello schermo.
-		 	 * Aumentare la frequenza oltre i 100mS è sconsigliato.
-		 	 *************/
-			/*if(timers.timer_100mS)
-			{
-				Print_ABS(&ahrs);
-				Print_Angoli(&ahrs);
-				Print_VelAng(&ahrs);
-				//Print_Temp(&ahrs);
-
-				timers.timer_100mS = 0;
-			}
-		}
-	}
-}// End of Main
- */
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -114,7 +61,6 @@ void initialize();
 void display_results (uint16_t);
 
 /*******************************************************************************
-
  Global variables
  *******************************************************************************/
 
@@ -163,6 +109,9 @@ union {
 // Structure containing timer flags
 extern struct timerClocks timers;
 
+
+
+
 /* Create PID structure used f+or PID properties */
 PID_config z_axis_PID;
 PID_config Yaw_PID;
@@ -184,7 +133,7 @@ vl53l1x sensore;
 vl53l1x* temp;
 uint16_t distanza;
 
-void initialize()
+void Altimeter_init()
 {
 	temp = &sensore;
 	lcd_display(LCD_LINE1, "****TEST****");
@@ -215,12 +164,24 @@ void display_results (uint16_t distanzam)
 // Structure containing timer flags
 extern struct timerClocks timers;
 
+
+
 void main(void) {
-	/* One time initialize instructions */
 
+	/* One time initialization instructions */
 
-	Setup();
-	initialize();
+	/*IMU*/
+
+	/*Structure used by IMU for initialization*/
+	 AHRS_out ahrs;
+	 /* LCD, CMT, accelerometer, gyroscope, magnetometer setup and calibration*/
+	 Setup_MARG(&ahrs);
+
+	 /* Altimeter */
+
+	 Setup_Motor_PID();
+	 Altimeter_init();
+
 	while(!timers.timer_2000mS) {
 			//lcd_display(LCD_LINE2, " 2s to arm "); // time necessary to arm motor1 and motor2
 	}
@@ -232,20 +193,38 @@ void main(void) {
 		if (timers.timer_1mS) {
 			timers.timer_1mS = 0;
 			Callback_1ms();								//Operations to do every 1ms
+
 			if (timers.timer_5mS) {
-				timers.timer_5mS = 0;
+				Read_MARG(&ahrs);
+				RealTimeChart(&ahrs);
+				/************************************************************
+				 * Frequenza di stampa su schermo dei dati.
+				 * Lo schermo ha un suo tempo di aggiornamento dello schermo.
+				 * Aumentare la frequenza oltre i 100mS è sconsigliato.
+				 ************************************************************/
+				timers.timer_5mS=0;
 				Callback_5ms();							// Operations to do every 5ms
+
 				if (timers.timer_10mS) {
 					timers.timer_10mS = 0;
 					Callback_10ms();					// Operations to do every 10ms
+
 					if (timers.timer_20mS) {
 						timers.timer_20mS = 0;
 						//Callback_20ms();				// Operations to do every 20ms
 					}
+
 					if (timers.timer_50mS) {
 						timers.timer_50mS = 0;
 						Callback_50ms();				// Operations to do every 50ms
+
 						if (timers.timer_100mS) {
+
+							Print_ABS(&ahrs);
+							Print_Angoli(&ahrs);
+							Print_VelAng(&ahrs);
+							//Print_Temp(&ahrs);
+
 							timers.timer_100mS = 0;
 							Callback_100ms();			// Operations to do every 100ms
 							if (timers.timer_500mS) {
@@ -268,13 +247,17 @@ void main(void) {
 
 } /* End function main() */
 
-void Setup() {
-	/* Initialize LCD */
-	lcd_initialize();
-	/* Clear LCD */
+void Setup_Motor_PID() {
+
+	//TODO: maybe we should move the IMU PIDs to a new function
+
+	/*TODO: no need to initialize LCD, Setup() does the work*/
+	//lcd_initialize();
 	lcd_clear();
+
 	/* Display message on LCD */
-	//lcd_display(LCD_LINE2, "    SETUP   ");
+	lcd_display(LCD_LINE2, "    SETUP   ");
+
 	/* Initialize motors */
 	Motors_Init();
 	/* Turn on motors relay */
@@ -284,8 +267,11 @@ void Setup() {
 	Motor_Arm(MOTOR_2);
 	Motor_Arm(MOTOR_3);
 	Motor_Arm(MOTOR_4);
+
+	/*TODO: maybe no need to initialize CMT, Setup() does the work*/
 	/* Setup Compare Match Timer */
-	CMT_init();
+	//CMT_init();
+
 	// Initialize PID structures used for PID properties
 	// with their respective coefficents for proportional,
 	// derivative and integrative
