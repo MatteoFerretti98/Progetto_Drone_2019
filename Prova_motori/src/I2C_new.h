@@ -42,7 +42,8 @@ int i2c_init();
  *******************************************************************************/
 int i2c_write(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 					 uint8_t* source_buff,uint8_t send_num_byte);
-
+int i2c_write(uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
+					 uint8_t *source_buff);
 /******************************************************************************
  * Function name: i2c_read
  * Description  : Reads a specified number of bytes starting from the specfied
@@ -64,5 +65,6 @@ int i2c_write(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
  ******************************************************************************/
 int i2c_read(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 					uint8_t* dest_buff,uint8_t send_num_byte);
-
+int i2c_read (uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
+					 uint8_t *dest_buff);
 #endif

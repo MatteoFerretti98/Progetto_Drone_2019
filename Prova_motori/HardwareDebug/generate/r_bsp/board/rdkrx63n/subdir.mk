@@ -43,7 +43,7 @@ generate/r_bsp/board/rdkrx63n/sbrk.d \
 generate/r_bsp/board/rdkrx63n/vecttbl.d 
 
 # Each subdirectory must supply rules for building sources it contributes
-generate/r_bsp/board/rdkrx63n/%.obj: ../generate/r_bsp/board/rdkrx63n/%.c generate/r_bsp/board/rdkrx63n/Compiler.sub
+generate/r_bsp/board/rdkrx63n/%.obj: ../generate/r_bsp/board/rdkrx63n/%.c 
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
 	@echo generate\r_bsp\board\rdkrx63n\cDepSubCommand.tmp=

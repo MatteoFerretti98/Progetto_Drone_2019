@@ -19,7 +19,7 @@ src/S12ADC.d \
 src/main.d 
 
 # Each subdirectory must supply rules for building sources it contributes
-src/%.obj: ../src/%.c src/Compiler.sub
+src/%.obj: ../src/%.c 
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
 	@echo src\cDepSubCommand.tmp=

@@ -39,6 +39,7 @@ int i2c_init()
 	return R_RIIC_Init(&riic_master_config);
 } //END - i2c_init(..)
 
+//Function for Altimeter
 int i2c_read (uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 					 uint8_t *dest_buff, uint8_t send_num_byte)
 {
@@ -64,6 +65,26 @@ int i2c_read (uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 	return ret;
 } //END - i2c_read(..)
 
+//Function for IMU
+int i2c_read (uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
+					 uint8_t *dest_buff)
+{
+	 /* Storage for the slave address and target register. */
+	uint8_t     addr_and_register[2];
+	riic_ret_t  ret = RIIC_OK;
+
+	addr_and_register[0] = slave_addr<<1;
+	addr_and_register[1] = register_number;
+
+	ret |= R_RIIC_MasterTransmitHead(CHANNEL_0, addr_and_register, 2);
+
+	/* Now read the data from the target register into the destination buffer. */
+	ret |= R_RIIC_MasterReceive(CHANNEL_0, slave_addr<<1, dest_buff, num_bytes);
+
+	return ret;
+}
+
+//Function for altimeter
 int i2c_write(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 					 uint8_t *source_buff, uint8_t send_num_byte)
 {
@@ -88,3 +109,22 @@ int i2c_write(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 
 	return ret;
 } //END - i2c_write(..)
+
+//Function for IMU
+int i2c_write(uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
+					 uint8_t *source_buff)
+{
+	/* Storage for the slave address and target register. */
+	uint8_t     addr_and_register[2];
+	riic_ret_t  ret = RIIC_OK;
+
+	addr_and_register[0] = slave_addr<<1;
+	addr_and_register[1] = register_number;
+
+	ret |= R_RIIC_MasterTransmitHead(CHANNEL_0, addr_and_register, 2);
+
+	/* Now write the data from the source buffer into the target register. */
+	ret |= R_RIIC_MasterTransmit(CHANNEL_0, source_buff, num_bytes);
+
+	return ret;
+}
