@@ -33,7 +33,7 @@
  * min(int a, int b)
  */
 #if defined EMPL_TARGET_STM32F4
-#include "i2c.h"
+#include "I2C_new.h"
 #include "main.h"
 #include "log.h"
 #include "board-st_discovery.h"
@@ -50,7 +50,7 @@
 /* definito dal gruppo 6*/
 
 #include "machine.h" //for "min" function
-#include "i2c.h"
+#include "I2C_new.h"
 #include "CMT.h"
 
 #define log_i printf

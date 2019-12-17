@@ -31,7 +31,7 @@ generate/r_glyph/src/glyph/fonts/font_x5x7.d \
 generate/r_glyph/src/glyph/fonts/font_x6x13.d 
 
 # Each subdirectory must supply rules for building sources it contributes
-generate/r_glyph/src/glyph/fonts/%.obj: ../generate/r_glyph/src/glyph/fonts/%.c 
+generate/r_glyph/src/glyph/fonts/%.obj: ../generate/r_glyph/src/glyph/fonts/%.c generate/r_glyph/src/glyph/fonts/Compiler.sub
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
 	@echo generate\r_glyph\src\glyph\fonts\cDepSubCommand.tmp=

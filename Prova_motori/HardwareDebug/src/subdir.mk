@@ -4,25 +4,22 @@
 
 # Add inputs and outputs from these tool invocations to the build variables
 C_SRCS += \
-../src/Altimetro.c \
 ../src/I2C_new.c \
 ../src/S12ADC.c \
 ../src/main.c 
 
 COMPILER_OBJS += \
-src/Altimetro.obj \
 src/I2C_new.obj \
 src/S12ADC.obj \
 src/main.obj 
 
 C_DEPS += \
-src/Altimetro.d \
 src/I2C_new.d \
 src/S12ADC.d \
 src/main.d 
 
 # Each subdirectory must supply rules for building sources it contributes
-src/%.obj: ../src/%.c 
+src/%.obj: ../src/%.c src/Compiler.sub
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
 	@echo src\cDepSubCommand.tmp=

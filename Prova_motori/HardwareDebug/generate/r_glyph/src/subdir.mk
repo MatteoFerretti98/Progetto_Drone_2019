@@ -16,7 +16,7 @@ generate/r_glyph/src/r_glyph.d \
 generate/r_glyph/src/r_glyph_register.d 
 
 # Each subdirectory must supply rules for building sources it contributes
-generate/r_glyph/src/%.obj: ../generate/r_glyph/src/%.c 
+generate/r_glyph/src/%.obj: ../generate/r_glyph/src/%.c generate/r_glyph/src/Compiler.sub
 	@echo 'Scanning and building file: $<'
 	@echo 'Invoking: Scanner and Compiler'
 	@echo generate\r_glyph\src\cDepSubCommand.tmp=

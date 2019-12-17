@@ -9,16 +9,19 @@ RM := rm -rf *.sni *.dbg *.lst *.lis *.lpp *.map *.x *.lbp *.bls *.libelf *.rel 
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include generate/r_glyph/src/glyph/fonts/subdir.mk
--include src/subdir.mk
--include src/Ducted_Drivers/subdir.mk
+-include src/IMU/eMPL/subdir.mk
 -include generate/r_riic_rx600/src/subdir.mk
 -include generate/r_glyph/src/glyph/subdir.mk
--include src/LowLevelDrivers/subdir.mk
+-include src/Altimeter/LowLevelDrivers/subdir.mk
+-include src/Altimeter/subdir.mk
+-include generate/r_bsp/board/rdkrx63n/subdir.mk
+-include src/IMU/subdir.mk
+-include src/subdir.mk
 -include generate/r_glyph/src/subdir.mk
 -include generate/r_rspi_rx600/src/subdir.mk
 -include generate/r_switches/src/subdir.mk
--include generate/r_bsp/board/rdkrx63n/subdir.mk
 -include generate/r_glyph/src/glyph/drivers/subdir.mk
+-include src/Altimeter/Ducted_Drivers/subdir.mk
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(strip $(C_DEPS)),)
@@ -124,16 +127,19 @@ Prova_motori.x: Prova_motori.abs
 clean:
 	-$(RM) $(LINKER_OUTPUT_OUTPUTS) $(LIBRARY_GENERATOR_OUTPUTTYPE_OUTPUTS)
 	-rm -rf generate/r_glyph/src/glyph/fonts/*.obj generate/r_glyph/src/glyph/fonts/*.d generate/r_glyph/src/glyph/fonts/*.asm generate/r_glyph/src/glyph/fonts/*.p generate/r_glyph/src/glyph/fonts/*.pp generate/r_glyph/src/glyph/fonts/*.src generate/r_glyph/src/glyph/fonts/*.jmp generate/r_glyph/src/glyph/fonts/*.lst generate/r_glyph/src/glyph/fonts/*.prn generate/r_glyph/src/glyph/fonts/*.i 
-	-rm -rf src/*.obj src/*.d src/*.asm src/*.p src/*.pp src/*.src src/*.jmp src/*.lst src/*.prn src/*.i 
-	-rm -rf src/Ducted_Drivers/*.obj src/Ducted_Drivers/*.d src/Ducted_Drivers/*.asm src/Ducted_Drivers/*.p src/Ducted_Drivers/*.pp src/Ducted_Drivers/*.src src/Ducted_Drivers/*.jmp src/Ducted_Drivers/*.lst src/Ducted_Drivers/*.prn src/Ducted_Drivers/*.i 
+	-rm -rf src/IMU/eMPL/*.obj src/IMU/eMPL/*.d src/IMU/eMPL/*.asm src/IMU/eMPL/*.p src/IMU/eMPL/*.pp src/IMU/eMPL/*.src src/IMU/eMPL/*.jmp src/IMU/eMPL/*.lst src/IMU/eMPL/*.prn src/IMU/eMPL/*.i 
 	-rm -rf generate/r_riic_rx600/src/*.obj generate/r_riic_rx600/src/*.d generate/r_riic_rx600/src/*.asm generate/r_riic_rx600/src/*.p generate/r_riic_rx600/src/*.pp generate/r_riic_rx600/src/*.src generate/r_riic_rx600/src/*.jmp generate/r_riic_rx600/src/*.lst generate/r_riic_rx600/src/*.prn generate/r_riic_rx600/src/*.i 
 	-rm -rf generate/r_glyph/src/glyph/*.obj generate/r_glyph/src/glyph/*.d generate/r_glyph/src/glyph/*.asm generate/r_glyph/src/glyph/*.p generate/r_glyph/src/glyph/*.pp generate/r_glyph/src/glyph/*.src generate/r_glyph/src/glyph/*.jmp generate/r_glyph/src/glyph/*.lst generate/r_glyph/src/glyph/*.prn generate/r_glyph/src/glyph/*.i 
-	-rm -rf src/LowLevelDrivers/*.obj src/LowLevelDrivers/*.d src/LowLevelDrivers/*.asm src/LowLevelDrivers/*.p src/LowLevelDrivers/*.pp src/LowLevelDrivers/*.src src/LowLevelDrivers/*.jmp src/LowLevelDrivers/*.lst src/LowLevelDrivers/*.prn src/LowLevelDrivers/*.i 
+	-rm -rf src/Altimeter/LowLevelDrivers/*.obj src/Altimeter/LowLevelDrivers/*.d src/Altimeter/LowLevelDrivers/*.asm src/Altimeter/LowLevelDrivers/*.p src/Altimeter/LowLevelDrivers/*.pp src/Altimeter/LowLevelDrivers/*.src src/Altimeter/LowLevelDrivers/*.jmp src/Altimeter/LowLevelDrivers/*.lst src/Altimeter/LowLevelDrivers/*.prn src/Altimeter/LowLevelDrivers/*.i 
+	-rm -rf src/Altimeter/*.obj src/Altimeter/*.d src/Altimeter/*.asm src/Altimeter/*.p src/Altimeter/*.pp src/Altimeter/*.src src/Altimeter/*.jmp src/Altimeter/*.lst src/Altimeter/*.prn src/Altimeter/*.i 
+	-rm -rf generate/r_bsp/board/rdkrx63n/*.obj generate/r_bsp/board/rdkrx63n/*.d generate/r_bsp/board/rdkrx63n/*.asm generate/r_bsp/board/rdkrx63n/*.p generate/r_bsp/board/rdkrx63n/*.pp generate/r_bsp/board/rdkrx63n/*.src generate/r_bsp/board/rdkrx63n/*.jmp generate/r_bsp/board/rdkrx63n/*.lst generate/r_bsp/board/rdkrx63n/*.prn generate/r_bsp/board/rdkrx63n/*.i 
+	-rm -rf src/IMU/*.obj src/IMU/*.d src/IMU/*.asm src/IMU/*.p src/IMU/*.pp src/IMU/*.src src/IMU/*.jmp src/IMU/*.lst src/IMU/*.prn src/IMU/*.i 
+	-rm -rf src/*.obj src/*.d src/*.asm src/*.p src/*.pp src/*.src src/*.jmp src/*.lst src/*.prn src/*.i 
 	-rm -rf generate/r_glyph/src/*.obj generate/r_glyph/src/*.d generate/r_glyph/src/*.asm generate/r_glyph/src/*.p generate/r_glyph/src/*.pp generate/r_glyph/src/*.src generate/r_glyph/src/*.jmp generate/r_glyph/src/*.lst generate/r_glyph/src/*.prn generate/r_glyph/src/*.i 
 	-rm -rf generate/r_rspi_rx600/src/*.obj generate/r_rspi_rx600/src/*.d generate/r_rspi_rx600/src/*.asm generate/r_rspi_rx600/src/*.p generate/r_rspi_rx600/src/*.pp generate/r_rspi_rx600/src/*.src generate/r_rspi_rx600/src/*.jmp generate/r_rspi_rx600/src/*.lst generate/r_rspi_rx600/src/*.prn generate/r_rspi_rx600/src/*.i 
 	-rm -rf generate/r_switches/src/*.obj generate/r_switches/src/*.d generate/r_switches/src/*.asm generate/r_switches/src/*.p generate/r_switches/src/*.pp generate/r_switches/src/*.src generate/r_switches/src/*.jmp generate/r_switches/src/*.lst generate/r_switches/src/*.prn generate/r_switches/src/*.i 
-	-rm -rf generate/r_bsp/board/rdkrx63n/*.obj generate/r_bsp/board/rdkrx63n/*.d generate/r_bsp/board/rdkrx63n/*.asm generate/r_bsp/board/rdkrx63n/*.p generate/r_bsp/board/rdkrx63n/*.pp generate/r_bsp/board/rdkrx63n/*.src generate/r_bsp/board/rdkrx63n/*.jmp generate/r_bsp/board/rdkrx63n/*.lst generate/r_bsp/board/rdkrx63n/*.prn generate/r_bsp/board/rdkrx63n/*.i 
 	-rm -rf generate/r_glyph/src/glyph/drivers/*.obj generate/r_glyph/src/glyph/drivers/*.d generate/r_glyph/src/glyph/drivers/*.asm generate/r_glyph/src/glyph/drivers/*.p generate/r_glyph/src/glyph/drivers/*.pp generate/r_glyph/src/glyph/drivers/*.src generate/r_glyph/src/glyph/drivers/*.jmp generate/r_glyph/src/glyph/drivers/*.lst generate/r_glyph/src/glyph/drivers/*.prn generate/r_glyph/src/glyph/drivers/*.i 
+	-rm -rf src/Altimeter/Ducted_Drivers/*.obj src/Altimeter/Ducted_Drivers/*.d src/Altimeter/Ducted_Drivers/*.asm src/Altimeter/Ducted_Drivers/*.p src/Altimeter/Ducted_Drivers/*.pp src/Altimeter/Ducted_Drivers/*.src src/Altimeter/Ducted_Drivers/*.jmp src/Altimeter/Ducted_Drivers/*.lst src/Altimeter/Ducted_Drivers/*.prn src/Altimeter/Ducted_Drivers/*.i 
 	@echo
 	@echo 'Clean complete.'
 

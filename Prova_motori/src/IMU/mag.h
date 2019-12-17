@@ -19,7 +19,7 @@
 #ifndef SRC_MAG_H_  /* Multiple inclusion prevention. */
 #define SRC_MAG_H_
 
-#include "i2c.h"
+#include "I2C_new.h"
 #include "CMT.h"
 #include "r_riic_rx600_master.h"
 
