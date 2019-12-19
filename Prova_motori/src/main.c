@@ -114,7 +114,7 @@ extern struct timerClocks timers;
 
 
 
-/* Create PID structure used f+or PID properties */
+/* Create PID structure used for PID properties */
 PID_config z_axis_PID;
 PID_config Yaw_PID;
 PID_config Pitch_PID;
@@ -315,6 +315,12 @@ void Callback_50ms(){
 		distanza = Read(temp);
 		float distanza_metri = (float)distanza/1000;
 
+		/*gets the angles measured by IMU*/
+		currentState.key.angle.pitch=ahrs.ahrs_data.PitchDeg;
+		currentState.key.angle.roll=ahrs.ahrs_data.RollDeg;
+		currentState.key.angle.yaw=ahrs.ahrs_data.YawDeg;
+
+
 		//calculates the altitude value when pitch and roll are not null
 		if (currentState.key.angle.pitch!=0||currentState.key.angle.roll!=0)
 			{
@@ -336,16 +342,13 @@ void Callback_50ms(){
 		/*********************************************************************************************
 		 * CODE FOR IMU PIDs
 
-		  TODO: here we need to get IMU's measures
-
 		  desiredState.key.angle.pitch = pitchValue;
 		  desiredState.key.angle.roll = rollValue;
 		  desiredState.key.angle.yaw = yawValue;
 
-		  TODO: instead of pitch, roll, yaw as the first arguments we need to pass the angles found by IMU
-		  outValue_pitch = PID_Compute(pitch,  desiredState.key.angle.pitch, &Pitch_PID);
-		  outValue_roll = PID_Compute(roll,  desiredState.key.angle.roll, &Roll_PID);
-		  outValue_yaw = PID_Compute(yaw,  desiredState.key.angle.yaw,  &Yaw_PID);
+		  outValue_pitch = PID_Compute(currentState.key.angle.pitch,  desiredState.key.angle.pitch, &Pitch_PID);
+		  outValue_roll = PID_Compute(currentState.key.angle.roll,  desiredState.key.angle.roll, &Roll_PID);
+		  outValue_yaw = PID_Compute(currentState.key.angle.yaw,  desiredState.key.angle.yaw,  &Yaw_PID);
 
 		/*****************************************************************************************************/
 
