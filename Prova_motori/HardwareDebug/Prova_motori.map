@@ -1,4 +1,4 @@
-Renesas Optimizing Linker (W2.08.00 )             18-Dec-2019 11:49:29
+Renesas Optimizing Linker (W2.08.00 )             19-Dec-2019 12:08:26
 
 *** Options ***
 
@@ -75,9 +75,9 @@ B_2
 R_2
                                   000014ec  000014f9         e   2
 B
-                                  000014fc  00001c0f       714   4
+                                  000014fc  00001cab       7b0   4
 R
-                                  00001c10  00003b23      1f14   4
+                                  00001cac  00003bfb      1f50   4
 $ADDR_C_FF7FFFE8
                                   ff7fffe8  ff7fffff        18   1
 C_1
@@ -85,29 +85,29 @@ C_1
 C_2
                                   fff8356c  fff8377b       210   2
 C
-                                  fff8377c  fff83937       1bc   4
+                                  fff8377c  fff8398f       214   4
 C$DSEC
-                                  fff83938  fff8395b        24   4
+                                  fff83990  fff839b3        24   4
 C$BSEC
-                                  fff8395c  fff83973        18   4
+                                  fff839b4  fff839cb        18   4
 C$VECT
-                                  fff83974  fff83d73       400   4
+                                  fff839cc  fff83dcb       400   4
 L
-                                  fff83d74  fff84100       38d   4
+                                  fff83dcc  fff841b0       3e5   4
 D
-                                  fff84104  fff86017      1f14   4
+                                  fff841b4  fff86103      1f50   4
 D_1
-                                  fff86018  fff8606f        58   1
+                                  fff86104  fff8615b        58   1
 D_2
-                                  fff86070  fff8607d         e   2
+                                  fff8615c  fff86169         e   2
 P
-                                  fff8607e  fff90a4b      a9ce   1
+                                  fff8616a  fff91262      b0f9   1
 W
-                                  fff90a4c  fff90a4c         0   4
+                                  fff91264  fff91264         0   4
 W_1
-                                  fff90a4c  fff90a53         8   1
+                                  fff91264  fff9126b         8   1
 W_2
-                                  fff90a54  fff90a77        24   2
+                                  fff9126c  fff9128f        24   2
 $ADDR_C_FFFFFF80
                                   ffffff80  ffffff8f        10   1
 FIXEDVECT

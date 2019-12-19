@@ -27,6 +27,8 @@
 #include "platform.h"
 #include "s12adc.h"
 #include "I2C_new.h"
+
+//Altimeter includes
 #include "Ducted_Drivers/Motor.h"
 #include "Ducted_Drivers/PID.h"
 #include "LowLevelDrivers/I2C.h"
@@ -133,33 +135,8 @@ vl53l1x sensore;
 vl53l1x* temp;
 uint16_t distanza;
 
-void Altimeter_init()
-{
-	temp = &sensore;
-	lcd_display(LCD_LINE1, "****TEST****");
-	lcd_display(LCD_LINE2, "Sens:VL53L1X");
-	//lcd_display(LCD_LINE3, "-------------");
-	i2c_init();
-	Sensor_Init(temp);
-	setTimeout(500, temp);
-	init(temp);
-
-	lcd_display(LCD_LINE4, "***SHORT****");
-	stopContinuous(temp);
-	setDistanceMode(Short, temp);
-	setMeasurementTimingBudget(20000, temp);
-	startContinuous(30, temp);
-}
-
-void display_results (uint16_t distanzam)
-{
-    char result_string[20];
-    sprintf(result_string, "D:  %d  mm", distanza);
-
-    /* Update the display LINE 7 */
-    lcd_display(LCD_LINE6, (const uint8_t *)result_string);
-} /* End function display_results() */
-
+/*Structure used by IMU for initialization*/
+AHRS_out ahrs;
 
 // Structure containing timer flags
 extern struct timerClocks timers;
@@ -172,8 +149,6 @@ void main(void) {
 
 	/*IMU*/
 
-	/*Structure used by IMU for initialization*/
-	 AHRS_out ahrs;
 	 /* LCD, CMT, accelerometer, gyroscope, magnetometer setup and calibration*/
 	 Setup_MARG(&ahrs);
 
@@ -247,6 +222,34 @@ void main(void) {
 
 } /* End function main() */
 
+void Altimeter_init()
+{
+	temp = &sensore;
+	lcd_display(LCD_LINE1, "****TEST****");
+	lcd_display(LCD_LINE2, "Sens:VL53L1X");
+	//lcd_display(LCD_LINE3, "-------------");
+	i2c_init();
+	Sensor_Init(temp);
+	setTimeout(500, temp);
+	init(temp);
+
+	lcd_display(LCD_LINE4, "***SHORT****");
+	stopContinuous(temp);
+	setDistanceMode(Short, temp);
+	setMeasurementTimingBudget(20000, temp);
+	startContinuous(30, temp);
+}
+
+void display_results (uint16_t distanzam)
+{
+    char result_string[20];
+    sprintf(result_string, "D:  %d  mm", distanza);
+
+    /* Update the display LINE 7 */
+    lcd_display(LCD_LINE6, (const uint8_t *)result_string);
+} /* End function display_results() */
+
+
 void Setup_Motor_PID() {
 
 	//TODO: maybe we should move the IMU PIDs to a new function
@@ -311,6 +314,16 @@ void Callback_50ms(){
 
 		distanza = Read(temp);
 		float distanza_metri = (float)distanza/1000;
+
+		//calculates the altitude value when pitch and roll are not null
+		if (currentState.key.angle.pitch!=0||currentState.key.angle.roll!=0)
+			{
+				float hpitch =distanza_metri*cos(currentState.key.angle.pitch);
+				float hroll =distanza_metri*cos(currentState.key.angle.pitch);
+
+				distanza_metri=sqrt(pow(hpitch,2)+pow(hroll,2));
+			}
+
 		display_results(distanza_metri);
 
 		desiredState.key.abs.pos.z = altitudeValue;

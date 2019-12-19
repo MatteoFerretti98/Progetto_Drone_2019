@@ -100,6 +100,16 @@ void getYPR(MAG_data*, IMU_temp*, AHRS_data*);
  * Return value : Restituisce su schermo i dati della calibrazione.
  **************************************************************************************/
 void calibrationYPR(char*, MAG_data*);
+/***************************************************************************************
+ * Function name: calibrationYPR1
+ * Description  : Funzione di calibrazione del magnetometro e stampa su schermo dei parametri;
+ * 				  al suo termine si prema SW1 per continuare.
+ * Arguments    : Ammette puntatore a char e puntatore a struttura dati AHRS.
+ * Return value : Restituisce su schermo i dati della calibrazione di default.
+ *
+ *
+ ***************************************************************************************/
+void calibrationYPR1(char*, MAG_data*);
 
 
 #endif

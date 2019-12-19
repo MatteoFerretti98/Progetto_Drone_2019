@@ -14,9 +14,9 @@
 
 
 
-#include "SetupAHRS.h"
+#include "../../../Progetto_Drone_2019/Prova_motori/src/IMU/SetupAHRS.h"
 #include "platform.h"
-#define set 2
+
 //Routine di setup dell'imu
 
 
@@ -42,11 +42,11 @@ void Setup_MARG(AHRS_out* ahrs)
 	mag_init(&ahrs->mag);
 
 
-
+// chiede di premere o lo sw1 o lo sw2 in base alla scelta dei parametri desiderati
 	while( PORT4.PIDR.BIT.B0 && PORT4.PIDR.BIT.B1){
 
 	}
-
+// se premuto sw1 parte una nuova calibrazione
 	if(!(PORT4.PIDR.BIT.B0)){
 
 		lcd_initialize();
@@ -59,10 +59,11 @@ void Setup_MARG(AHRS_out* ahrs)
 		lcd_display(LCD_LINE4,"Calibrazione");
 		lcd_display(LCD_LINE5,"Magnetometro");
 
-		calibrationYPR(msg, &ahrs->mag);
+		calibrationYPR(msg, &ahrs->mag);//calibrazione nuova
 	}
-	else if (!(PORT4.PIDR.BIT.B1))calibrationYPR1(msg, &ahrs->mag);
-	else calibrationYPR1(msg, &ahrs->mag);
+	else if (!(PORT4.PIDR.BIT.B1)) //se viene premuto lo sw2 partono i calori di default
+		calibrationYPR1(msg, &ahrs->mag);
+	else calibrationYPR1(msg, &ahrs->mag); // nel caso in cui ci siano errori parte in default la calibrazione dei valori già calcolati
 
 
 }

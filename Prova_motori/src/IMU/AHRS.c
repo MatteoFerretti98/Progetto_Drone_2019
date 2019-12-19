@@ -16,8 +16,7 @@
 * 										di Omar Cocchairella.
 *******************************************************************************/
 
-#include "AHRS.h"
-#include "math.h"
+#include "../../../Progetto_Drone_2019/Prova_motori/src/IMU/AHRS.h"
 
 #define PI 3.1415926536
 
@@ -42,8 +41,40 @@ void getQuat(float* qa, float* qb, float* qc, float* qd){
 	*qc=q2;
 	*qd=q3;
 }
+void calibrationYPR1(char* msg, MAG_data* mag_data)// calibrazione che fa partire i valori già trovati
+{
+	sprintf(msg, "%f",mag_data->scale[0]);
+		lcd_display(LCD_LINE1, (uint8_t*)msg);
+		sprintf(msg, "%f",mag_data->scale[1]);
+		lcd_display(LCD_LINE2, (uint8_t*)msg);
+		sprintf(msg, "%f",mag_data->scale[2]);
+		lcd_display(LCD_LINE3, (uint8_t*)msg);
+		sprintf(msg, "%.3f",mag_data->bias[0]);
+		lcd_display(LCD_LINE4, (uint8_t*)msg);
+		sprintf(msg, "%.3f",mag_data->bias[1]);
+		lcd_display(LCD_LINE5, (uint8_t*)msg);
+		sprintf(msg, "%.3f",mag_data->bias[2]);
+		lcd_display(LCD_LINE6, (uint8_t*)msg);
+		sprintf(msg, "%.3f",mag_data->ABS);
+		lcd_display(LCD_LINE7, (uint8_t*)msg);
 
-void calibrationYPR(char* msg, MAG_data* mag_data){
+		lcd_display(LCD_LINE8,"PRESS SW1 ");
+			while(PORT4.PIDR.BIT.B0);
+
+			//lcd_clear();
+
+			sprintf(msg,"");
+			lcd_display(LCD_LINE1, (uint8_t*)msg);
+			lcd_display(LCD_LINE2, (uint8_t*)msg);
+			lcd_display(LCD_LINE3, (uint8_t*)msg);
+			lcd_display(LCD_LINE4, (uint8_t*)msg);
+			lcd_display(LCD_LINE5, (uint8_t*)msg);
+			lcd_display(LCD_LINE6, (uint8_t*)msg);
+			lcd_display(LCD_LINE7, (uint8_t*)msg);
+}
+
+void calibrationYPR(char* msg, MAG_data* mag_data) //calibrazione che calcola nuovi valori
+{
 	//lcd_display(LCD_LINE7, "Calibration");
 	magcal(mag_data);
 	sprintf(msg, "%f",mag_data->scale[0]);
