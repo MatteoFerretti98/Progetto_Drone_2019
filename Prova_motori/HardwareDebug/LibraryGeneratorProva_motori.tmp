@@ -1,5 +1,5 @@
 -cpu=rx600
 -lang=c99
--head=runtime,stdio,stdlib,string,new
+-head=runtime,math,stdio,stdlib,string,new
 -output="Prova_motori.lib"
 -nologo

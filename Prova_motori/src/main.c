@@ -19,24 +19,23 @@
 *******************************************************************************/
 
 //general includes
+#include <CMT.h>
+#include <CMT.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <machine.h>
 #include "platform.h"
 #include "s12adc.h"
-
-//altimeter includes
+#include "I2C_new.h"
 #include "Ducted_Drivers/Motor.h"
 #include "Ducted_Drivers/PID.h"
-#include "LowLevelDrivers/CMT.h"
 #include "LowLevelDrivers/I2C.h"
 #include "Ducted_Drivers/lcd_buffer.h"
 #include "Altimetro.h"
 #include "Ducted_Drivers/map.h"
-#include "I2C_new.h"
+
 
 //IMU includes
-#include "CMT.h"
 #include "PrintOnScreen.h"
 #include "SetupAHRS.h"
 
@@ -47,7 +46,7 @@
 /*******************************************************************************
  Prototypes for local functions
  *******************************************************************************/
-void Setup();
+
 void Callback_1ms();
 void Callback_5ms();
 void Callback_10ms();
@@ -57,8 +56,9 @@ void Callback_100ms();
 void Callback_500ms();
 void Callback_1000ms();
 void Fallback();
-void initialize();
+void Altimeter_init();
 void display_results (uint16_t);
+void Setup_Motor_PID();
 
 /*******************************************************************************
  Global variables

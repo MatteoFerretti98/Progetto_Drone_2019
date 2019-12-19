@@ -40,7 +40,7 @@ int i2c_init()
 } //END - i2c_init(..)
 
 //Function for Altimeter
-int i2c_read (uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
+int i2c_read_Alt (uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 					 uint8_t *dest_buff, uint8_t send_num_byte)
 {
 	 /* Storage for the slave address and target register. */
@@ -66,7 +66,7 @@ int i2c_read (uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 } //END - i2c_read(..)
 
 //Function for IMU
-int i2c_read (uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
+int i2c_read_IMU (uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
 					 uint8_t *dest_buff)
 {
 	 /* Storage for the slave address and target register. */
@@ -85,7 +85,7 @@ int i2c_read (uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
 }
 
 //Function for altimeter
-int i2c_write(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
+int i2c_write_Alt(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 					 uint8_t *source_buff, uint8_t send_num_byte)
 {
 	/* Storage for the slave address and target register. */
@@ -111,7 +111,7 @@ int i2c_write(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 } //END - i2c_write(..)
 
 //Function for IMU
-int i2c_write(uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
+int i2c_write_IMU(uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
 					 uint8_t *source_buff)
 {
 	/* Storage for the slave address and target register. */

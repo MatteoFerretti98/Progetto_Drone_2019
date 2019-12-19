@@ -40,9 +40,9 @@ int i2c_init();
  *
  * Return value : int - 0 if OK
  *******************************************************************************/
-int i2c_write(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
+int i2c_write_Alt(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 					 uint8_t* source_buff,uint8_t send_num_byte);
-int i2c_write(uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
+int i2c_write_IMU(uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
 					 uint8_t *source_buff);
 /******************************************************************************
  * Function name: i2c_read
@@ -63,8 +63,8 @@ int i2c_write(uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
  *
  * Return value : int - 0 if OK
  ******************************************************************************/
-int i2c_read(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
+int i2c_read_Alt(uint8_t slave_addr, uint16_t register_number, uint8_t num_bytes,
 					uint8_t* dest_buff,uint8_t send_num_byte);
-int i2c_read (uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
+int i2c_read_IMU(uint8_t slave_addr, uint8_t register_number, uint8_t num_bytes,
 					 uint8_t *dest_buff);
 #endif

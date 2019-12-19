@@ -20,6 +20,7 @@
 Includes   <System Includes> , "Project Includes"
 *******************************************************************************/
 #include "mag.h"
+#include "I2C_new.h"
 
 #define HMC5983_ADDRESS 0x1E
 #define HMC5983_WRITE	0x3C
@@ -133,7 +134,7 @@ int mag_init(MAG_data* mag_data){
 
 	// leggiamo il registro identificativo e verifichiamo che abbia
 	// il valore costante come da datasheet
-	if(i2c_read(HMC5983_ADDRESS, HMC5983_ID_A, 1, &tmp))
+	if(i2c_read_IMU(HMC5983_ADDRESS, HMC5983_ID_A, 1, &tmp))
 		return 0x2;
 	if(tmp != HMC5983_ID_A_VAL)
 		return 0x3;
@@ -141,18 +142,18 @@ int mag_init(MAG_data* mag_data){
 
 	// abilitiamo la continuous mode
 	tmp = 0;
-	if(i2c_write(HMC5983_ADDRESS, HMC5983_MODE, 1, &tmp))
+	if(i2c_write_IMU(HMC5983_ADDRESS, HMC5983_MODE, 1, &tmp))
 		return 0x4;
 	//scarico registro CONF A
-	if(i2c_read(HMC5983_ADDRESS, HMC5983_CONF_A, 1, &tmp))
+	if(i2c_read_IMU(HMC5983_ADDRESS, HMC5983_CONF_A, 1, &tmp))
 		return 0x4;
 	//imposto frequenza a 220 Hz
 	tmp |= 0x1C;
 	//carico il registro modificato
-	if(i2c_write(HMC5983_ADDRESS, HMC5983_CONF_A, 1, &tmp))
+	if(i2c_write_IMU(HMC5983_ADDRESS, HMC5983_CONF_A, 1, &tmp))
 		return 0x5;
 	//scarico registro CONF B
-	if(i2c_read(HMC5983_ADDRESS, HMC5983_CONF_B, 1, &tmp))
+	if(i2c_read_IMU(HMC5983_ADDRESS, HMC5983_CONF_B, 1, &tmp))
 		return 0x6;
 	tmp = tmp >> 5;
 	switch(tmp) {
@@ -175,6 +176,8 @@ int mag_init(MAG_data* mag_data){
 	mag_data->bias[2]  = 216.660;
 	mag_data->ABS 	 = 205438.578;
 
+
+
 	return 0x0;
 
 }// FINE - mag_init(..)
@@ -182,10 +185,10 @@ int mag_init(MAG_data* mag_data){
 int mag_read_raw(MAG_data* mag_data){
 	uint8_t tmp[6];
 
-	if(i2c_read(HMC5983_ADDRESS, HMC5983_OUT_X_MSB, 6, tmp))
-		return 0x1;
+	if(i2c_read_IMU(HMC5983_ADDRESS, HMC5983_OUT_X_MSB, 6, tmp))
+		return 0x1;	mag_data->raw[0] = (tmp[0] << 8) | tmp[1];
 
-	mag_data->raw[0] = (tmp[0] << 8) | tmp[1];
+
 	mag_data->raw[2] = (tmp[2] << 8) | tmp[3];
 	mag_data->raw[1] = (tmp[4] << 8) | tmp[5];
 
@@ -219,7 +222,7 @@ int magcal(MAG_data* mag_data)
 			mag_max[3] = {-32767, -32767, -32767},
 			mag_min[3] = {32767, 32767, 32767};
 
-	delay_ms(4000);
+	ms_delay(4000);
 
 	for(ii = 0; ii < sample_count; ii++) {
 
@@ -232,7 +235,7 @@ int magcal(MAG_data* mag_data)
 		if(mag_data->y < mag_min[1]) mag_min[1] = mag_data->y;
 		if(mag_data->z < mag_min[2]) mag_min[2] = mag_data->z;
 
-		delay_ms(5);
+		ms_delay(5);
 	}
 
 	// Get hard iron correction

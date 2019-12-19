@@ -189,7 +189,7 @@ void writeReg(uint16_t reg, uint8_t value, vl53l1x *sens)
   Wire.write(value);
   last_status = Wire.endTransmission();*/
 
-  sens->last_status= i2c_write(VL53L1X_ADDRESS, reg, 1, &value, 3);
+  sens->last_status= i2c_write_Alt(VL53L1X_ADDRESS, reg, 1, &value, 3);
 
 }
 
@@ -207,7 +207,7 @@ void writeReg16Bit(uint16_t reg, uint16_t value, vl53l1x *sens)
   data_buffer[1]= value & 0xFF;
 
 
-  sens->last_status= i2c_write(VL53L1X_ADDRESS, reg, 2, data_buffer,3);
+  sens->last_status= i2c_write_Alt(VL53L1X_ADDRESS, reg, 2, data_buffer,3);
 }
 
 // Write a 32-bit register
@@ -228,7 +228,7 @@ void writeReg32Bit(uint16_t reg, uint32_t value, vl53l1x *sens)
   data_buffer[2]= (value>>8) & 0xFF;
   data_buffer[3]= value & 0xFF;
 
-  sens->last_status= i2c_write(VL53L1X_ADDRESS, reg, 4, data_buffer, 3);
+  sens->last_status= i2c_write_Alt(VL53L1X_ADDRESS, reg, 4, data_buffer, 3);
 }
 
 //Read an 8-bit register
@@ -245,7 +245,7 @@ uint8_t readReg(uint16_t reg, vl53l1x *sens)
   value = Wire.read();*/
 
 
-  sens->last_status = i2c_read (VL53L1X_ADDRESS, reg, 2, &value, 3);
+  sens->last_status = i2c_read_Alt (VL53L1X_ADDRESS, reg, 2, &value, 3);
 
 
   return value;
@@ -267,7 +267,7 @@ uint16_t readReg16Bit(uint16_t reg, vl53l1x *sens)
   value |=           Wire.read();      // value low byte
 */
   uint8_t data_buffer[2] = {0,0};
-  sens->last_status = i2c_read(VL53L1X_ADDRESS, reg, 2, data_buffer, 3);
+  sens->last_status = i2c_read_Alt(VL53L1X_ADDRESS, reg, 2, data_buffer, 3);
   value = (uint16_t)data_buffer[0]<<8;
   value |= (uint16_t)data_buffer[1];
 
@@ -292,7 +292,7 @@ uint32_t readReg32Bit(uint16_t reg, vl53l1x *sens)
   value |=           Wire.read();       // value lowest byte
 */
   uint8_t data_buffer[4];
-  sens->last_status = i2c_read (VL53L1X_ADDRESS, reg, 4, data_buffer, 3);
+  sens->last_status = i2c_read_Alt (VL53L1X_ADDRESS, reg, 4, data_buffer, 3);
   value = (uint32_t)data_buffer[0]<<24;
   value |= (uint32_t)data_buffer[1]<<16;
   value |= (uint32_t)data_buffer[2]<<8;

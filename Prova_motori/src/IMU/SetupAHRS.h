@@ -74,7 +74,7 @@ void Read_MARG(AHRS_out* ahrs);
  * Arguments    :
  * Return value :
  **************************************************************************************/
-void Centro_di_massa(AHRS_out* ahrs);
+//void Centro_di_massa(AHRS_out* ahrs);
 
 
 #endif /* SRC_SETUPAHRS_H_ */

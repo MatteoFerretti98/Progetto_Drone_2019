@@ -19,8 +19,8 @@
 #ifndef SRC_MAG_H_  /* Multiple inclusion prevention. */
 #define SRC_MAG_H_
 
+#include <CMT.h>
 #include "I2C_new.h"
-#include "CMT.h"
 #include "r_riic_rx600_master.h"
 
 #ifdef DROTEK_IMU_10DOF_V2  /* Multiple inclusion prevention. */

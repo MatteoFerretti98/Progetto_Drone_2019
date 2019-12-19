@@ -16,28 +16,56 @@
 
 #include "SetupAHRS.h"
 #include "platform.h"
-
+#define set 2
 //Routine di setup dell'imu
+
+
 void Setup_MARG(AHRS_out* ahrs)
 {
 	char msg[12];
 
 	lcd_initialize();
 	lcd_clear();
+	lcd_display(LCD_LINE1,"OH MAAAAN   ");
+	lcd_display(LCD_LINE2," PRESS SW1  ");
+	lcd_display(LCD_LINE3,"  FOR NEW   ");
+	lcd_display(LCD_LINE4,"CALIBRATION ");
+	lcd_display(LCD_LINE6," PRESS SW2  ");
+	lcd_display(LCD_LINE7,"FOR DEFAULT ");
+	lcd_display(LCD_LINE8,"  PARAMS    ");
 
-	lcd_display(LCD_LINE1," IMU SETUP ");
-	lcd_display(LCD_LINE2," IN CORSO ");
+
+
 
 	CMT_init();
 	imu_init(&ahrs->sens);
 	mag_init(&ahrs->mag);
 
-	lcd_display(LCD_LINE4,"Calibrazione");
-	lcd_display(LCD_LINE5,"Magnetometro");
 
-	calibrationYPR(msg, &ahrs->mag);
+
+	while( PORT4.PIDR.BIT.B0 && PORT4.PIDR.BIT.B1){
+
+	}
+
+	if(!(PORT4.PIDR.BIT.B0)){
+
+		lcd_initialize();
+			lcd_clear();
+
+
+		lcd_display(LCD_LINE1," IMU SETUP ");
+		lcd_display(LCD_LINE2," IN CORSO ");
+
+		lcd_display(LCD_LINE4,"Calibrazione");
+		lcd_display(LCD_LINE5,"Magnetometro");
+
+		calibrationYPR(msg, &ahrs->mag);
+	}
+	else if (!(PORT4.PIDR.BIT.B1))calibrationYPR1(msg, &ahrs->mag);
+	else calibrationYPR1(msg, &ahrs->mag);
+
+
 }
-
 
 
 // Funzione di lettura dei dati dell' MARG filtrati
@@ -51,8 +79,8 @@ void Read_MARG(AHRS_out* ahrs)
 
 
 // Centro di massa
-void Centro_di_massa(AHRS_out* ahrs)
+/*void Centro_di_massa(AHRS_out* ahrs)
 {
 
-}
+}*/
 

@@ -20,7 +20,7 @@
 
 #include "stddef.h"
 #include "eMPL/inv_mpu.h" //libreria Invensense adattata per renesas rx
-#include "i2c.h"
+#include "I2C_new.h"
 
 typedef struct {
 	float accRoll;

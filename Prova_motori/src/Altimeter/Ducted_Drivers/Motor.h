@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include "support_functions.h"
 #include "../LowLevelDrivers/MTU_C3.h"
+#include "../LowLevelDrivers/MTU_C4.h"
 
 /*  -----------------------------------------------------------------------------------------------------
  * Description:	4 channels motor driver.
