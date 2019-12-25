@@ -1,17 +1,17 @@
 /******************************************************************************
+ *Author: Omar Cocchairella
+ ******************************************************************************/
+/*******************************************************************************
 * File Name: imu.h
 * Version: 1.01.1
-* Description: Header file per imu.c
-*******************************************************************************/
-/*******************************************************************************
-* Author: Omar Cocchairella
+* Description: Header for the imu.c class
 *******************************************************************************/
 /*******************************************************************************
 * History
 * 			DD.MM.YYYY     Version     Description
-			22.01.2018     1.01        Revisione della versione di Sebastian Giles
+*			22.01.2018     1.01        Revisione della versione di Sebastian Giles
 * 										da parte di Omar Cocchairella.
-			10.01.2019     1.01.1      Martin Breccia commento della versione
+*			10.01.2019     1.01.1      Martin Breccia commento della versione
 * 										di Omar Cocchairella.
 *******************************************************************************/
 

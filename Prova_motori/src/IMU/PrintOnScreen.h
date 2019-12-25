@@ -1,17 +1,15 @@
 /******************************************************************************
+* Author: Ragaini Davide
+ ******************************************************************************/
+/*******************************************************************************
 * File Name: PrintOnScreen.h
 * Version: 1.0
-* Description: Stampa su schermo integrato al microcontrollore dei dati.
-*				Non è necessaria al fine del sistema di orientamento.
-*				Da utilizzare in caso di test del codice sistema di orientamento.
+* Description: Header for the PrintOnScreen.c class
 *******************************************************************************/
 /*******************************************************************************
- * Author: Ragaini Davide
- *******************************************************************************/
-/*******************************************************************************
 * History
-*			DD.MM.YYYY     Version     Description
-*			13.03.2019     1.0         First Release.
+* 			DD.MM.YYYY     Version     Description
+*			13.04.2019     1.0         First Release.
 *******************************************************************************/
 
 

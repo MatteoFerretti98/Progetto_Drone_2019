@@ -1,19 +1,18 @@
-/***************************************************************************
-* Implementation of Madgwick's IMU and AHRS algorithms.
-* See: http://www.x-io.co.uk/node/8#open_source_ahrs_and_imu_algorithms
-*
-* Date			Author          Notes
-* 29/09/2011	SOH Madgwick    Initial release
-* 02/10/2011	SOH Madgwick	Optimized for reduced CPU load
-* 19/02/2012	SOH Madgwick	Magnetometer measurement is normalized
-**************************************************************************/
+/******************************************************************************
+ *Author: Omar Cocchairella
+ ******************************************************************************/
 /*******************************************************************************
-* History
-* 			DD.MM.YYYY     Version     Description
-*			22.01.2018     1.01        Revisione della versione di Sebastian Giles
-* 										da parte di Omar Cocchairella.
-*			10.01.2019     1.01.1      Ragaini Davide commento della versione
-* 										di Omar Cocchairella.
+* File Name    : lcd_buffer.h
+* Version      : 1.02.02
+* Description  : Header for AHRS.h class
+*******************************************************************************/
+/*******************************************************************************
+* History : DD.MM.YYYY     Version     Description
+*         : 29.09.2011     1.00        First release
+*         : 02.10.2011	   1.01		   Optimised for reduced CPU load (di SOH Madgwick)
+*         : 19.02.2012	   1.01.01	   Magnetometer measurement is normalised (di SOH Madgwick)
+*         : 22.01.2018     1.02        Revisione della versione di Sebastian Giles da parte di Omar Cocchairella.
+*         : 13.04.2019     1.02.02      Ragaini Davide commento della versione di Omar Cocchairella.
 *******************************************************************************/
 
 

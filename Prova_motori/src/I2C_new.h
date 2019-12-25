@@ -1,3 +1,21 @@
+/******************************************************************************
+ *Author: Ferretti Matteo
+ ******************************************************************************/
+/******************************************************************************
+* File Name: I2C_new.c
+* Version: 1.2
+* Description: Header for the I2C_new.c class
+*******************************************************************************/
+/*******************************************************************************
+* History
+* 			DD.MM.YYYY     Version     Description
+*			22.01.2018     1.01        Revisione della versione di Sebastian Giles
+* 										da parte di Omar Cocchairella.
+*			10.01.2019     1.01.1      Martin Breccia commento della versione
+* 										di Omar Cocchairella.
+* 			13.12.2019	   1.2.0	   Implement I2C communication for both sensor
+* 										(altimeter and IMU)
+*******************************************************************************/
 #ifndef _I2C_new_H_
 #define _I2C_new_H_
 
