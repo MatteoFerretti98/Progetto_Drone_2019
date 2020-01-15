@@ -135,91 +135,8 @@ vl53l1x* temp;
 uint16_t distanza;
 
 /*Structure used by IMU for initialization*/
-AHRS_out ahrs;
+AHRS_out ahrs;	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-// Structure containing timer flags
-extern struct timerClocks timers;
-
-
-
-void main(void) {
-
-	/* One time initialization instructions */
-
-	/*IMU*/
-
-	 /* LCD, CMT, accelerometer, gyroscope, magnetometer setup and calibration*/
-	 Setup_MARG(&ahrs);
-
-	 /* Altimeter */
-
-	 Setup_Motor_PID();
-	 Altimeter_init();
-
-	while(!timers.timer_2000mS) {
-			//lcd_display(LCD_LINE2, " 2s to arm "); // time necessary to arm motor1 and motor2
-	}
-	timers.timer_2000mS = 0;
-
-	/* Endless loop*/
-	while (1) {
-
-		if (timers.timer_1mS) {
-			timers.timer_1mS = 0;
-			Callback_1ms();								//Operations to do every 1ms
-
-			if (timers.timer_5mS) {
-				Read_MARG(&ahrs);
-				RealTimeChart(&ahrs);
-				/************************************************************
-				 * Frequenza di stampa su schermo dei dati.
-				 * Lo schermo ha un suo tempo di aggiornamento dello schermo.
-				 * Aumentare la frequenza oltre i 100mS è sconsigliato.
-				 ************************************************************/
-				timers.timer_5mS=0;
-				Callback_5ms();							// Operations to do every 5ms
-
-				if (timers.timer_10mS) {
-					timers.timer_10mS = 0;
-					Callback_10ms();					// Operations to do every 10ms
-
-					if (timers.timer_20mS) {
-						timers.timer_20mS = 0;
-						//Callback_20ms();				// Operations to do every 20ms
-					}
-
-					if (timers.timer_50mS) {
-						timers.timer_50mS = 0;
-						Callback_50ms();				// Operations to do every 50ms
-
-						if (timers.timer_100mS) {
-
-							Print_ABS(&ahrs);
-							Print_Angoli(&ahrs);
-							Print_VelAng(&ahrs);
-							//Print_Temp(&ahrs);
-
-							timers.timer_100mS = 0;
-							Callback_100ms();			// Operations to do every 100ms
-							if (timers.timer_500mS) {
-								timers.timer_500mS = 0;
-								Callback_500ms();		// Operations to do every half a second
-								if (timers.timer_1000mS) {
-									timers.timer_1000mS = 0;
-									Callback_1000ms();	// Operations to do every second
-								}
-							}
-						}
-
-					}
-				}
-			}
-		}
-	}
-	// Shutdown everything
-	Fallback();
-
-} /* End function main() */
 
 void Altimeter_init()
 {
@@ -248,14 +165,101 @@ void display_results (uint16_t distanzam)
     lcd_display(LCD_LINE6, (const uint8_t *)result_string);
 } /* End function display_results() */
 
+// Structure containing timer flags
+extern struct timerClocks timers;
+
+void main(void) {
+
+	/* One time initialization instructions */
+	CMT_init();
+	/*IMU*/
+	lcd_initialize();
+	lcd_clear();
+	 /* LCD, CMT, accelerometer, gyroscope, magnetometer setup and calibration*/
+
+
+	 /* Altimeter */
+
+	 Setup_Motor_PID();
+	 Altimeter_init();
+
+	 Setup_MARG(&ahrs);
+	while(!timers.timer_2000mS) {
+			//lcd_display(LCD_LINE2, " 2s to arm "); // time necessary to arm motor1 and motor2
+	}
+	timers.timer_2000mS = 0;
+
+	/* Endless loop*/
+	while (1) {
+
+		if (timers.timer_1mS) {
+			timers.timer_1mS = 0;
+			Callback_1ms();								//Operations to do every 1ms
+
+			if (timers.timer_5mS) {
+				Read_MARG(&ahrs);	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+				RealTimeChart(&ahrs);
+				/************************************************************
+				 * Frequenza di stampa su schermo dei dati.
+				 * Lo schermo ha un suo tempo di aggiornamento dello schermo.
+				 * Aumentare la frequenza oltre i 100mS è sconsigliato.
+				 ************************************************************/
+				timers.timer_5mS=0;
+				Callback_5ms();							// Operations to do every 5ms
+
+				if (timers.timer_10mS) {
+					timers.timer_10mS = 0;
+					Callback_10ms();					// Operations to do every 10ms
+
+					if (timers.timer_20mS) {
+						timers.timer_20mS = 0;
+						//Callback_20ms();				// Operations to do every 20ms
+					}
+
+					if (timers.timer_50mS) {
+						timers.timer_50mS = 0;
+						Callback_50ms();				// Operations to do every 50ms
+
+						if (timers.timer_100mS) {
+
+							/*Print_ABS(&ahrs);		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+							Print_Angoli(&ahrs);
+							Print_VelAng(&ahrs);*/
+
+							//Print_Temp(&ahrs);
+
+							timers.timer_100mS = 0;
+							Callback_100ms();			// Operations to do every 100ms
+							if (timers.timer_500mS) {
+								timers.timer_500mS = 0;
+								Callback_500ms();		// Operations to do every half a second
+								if (timers.timer_1000mS) {
+									timers.timer_1000mS = 0;
+									Callback_1000ms();	// Operations to do every second
+								}
+							}
+						}
+
+					}
+				}
+			}
+		}
+	}
+	// Shutdown everything
+	Fallback();
+
+} /* End function main() */
+
+
+
 
 void Setup_Motor_PID() {
 
 	//TODO: maybe we should move the IMU PIDs to a new function
 
 	/*TODO: no need to initialize LCD, Setup() does the work*/
-	//lcd_initialize();
-	lcd_clear();
+	//lcd_initialize(); //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+	//lcd_clear();	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 	/* Display message on LCD */
 	lcd_display(LCD_LINE2, "    SETUP   ");
@@ -272,7 +276,7 @@ void Setup_Motor_PID() {
 
 	/*TODO: maybe no need to initialize CMT, Setup() does the work*/
 	/* Setup Compare Match Timer */
-	//CMT_init();
+	//CMT_init();		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 	// Initialize PID structures used for PID properties
 	// with their respective coefficents for proportional,
@@ -315,9 +319,9 @@ void Callback_50ms(){
 		float distanza_metri = (float)distanza/1000;
 
 		/*gets the angles measured by IMU*/
-		currentState.key.angle.pitch=ahrs.ahrs_data.PitchDeg;
+		/*currentState.key.angle.pitch=ahrs.ahrs_data.PitchDeg;		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 		currentState.key.angle.roll=ahrs.ahrs_data.RollDeg;
-		currentState.key.angle.yaw=ahrs.ahrs_data.YawDeg;
+		currentState.key.angle.yaw=ahrs.ahrs_data.YawDeg;*/
 
 
 		//calculates the altitude value when pitch and roll are not null

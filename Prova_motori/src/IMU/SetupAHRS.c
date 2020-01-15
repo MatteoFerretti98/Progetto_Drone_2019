@@ -24,8 +24,8 @@ void Setup_MARG(AHRS_out* ahrs)
 {
 	char msg[12];
 
-	lcd_initialize();
-	lcd_clear();
+	//lcd_initialize();
+	//lcd_clear();
 	lcd_display(LCD_LINE1,"OH MAAAAN   ");
 	lcd_display(LCD_LINE2," PRESS SW1  ");
 	lcd_display(LCD_LINE3,"  FOR NEW   ");
@@ -37,7 +37,7 @@ void Setup_MARG(AHRS_out* ahrs)
 
 
 
-	CMT_init();
+	//CMT_init();
 	imu_init(&ahrs->sens);
 	mag_init(&ahrs->mag);
 
@@ -49,7 +49,7 @@ void Setup_MARG(AHRS_out* ahrs)
 // se premuto sw1 parte una nuova calibrazione
 	if(!(PORT4.PIDR.BIT.B0)){
 
-		lcd_initialize();
+		//lcd_initialize();
 			lcd_clear();
 
 
