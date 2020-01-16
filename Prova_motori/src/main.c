@@ -135,21 +135,16 @@ vl53l1x* temp;
 uint16_t distanza;
 
 /*Structure used by IMU for initialization*/
-AHRS_out ahrs;	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+AHRS_out ahrs;
 
 
 void Altimeter_init()
 {
 	temp = &sensore;
-	lcd_display(LCD_LINE1, "****TEST****");
-	lcd_display(LCD_LINE2, "Sens:VL53L1X");
-	//lcd_display(LCD_LINE3, "-------------");
 	i2c_init();
 	Sensor_Init(temp);
 	setTimeout(500, temp);
 	init(temp);
-
-	lcd_display(LCD_LINE4, "***SHORT****");
 	stopContinuous(temp);
 	setDistanceMode(Short, temp);
 	setMeasurementTimingBudget(20000, temp);
@@ -158,11 +153,18 @@ void Altimeter_init()
 
 void display_results (uint16_t distanzam)
 {
-    char result_string[20];
+	lcd_display(LCD_LINE1, "****TEST****");
+	lcd_display(LCD_LINE2, "Sens:VL53L1X");
+	lcd_display(LCD_LINE3, "-------------");
+	lcd_display(LCD_LINE4, "***SHORT****");
+
+	char result_string[20];
     sprintf(result_string, "D:  %d  mm", distanza);
 
-    /* Update the display LINE 7 */
+    /* Update the display LINE 6 */
     lcd_display(LCD_LINE6, (const uint8_t *)result_string);
+
+    lcd_display(LCD_LINE8, "-------------");
 } /* End function display_results() */
 
 // Structure containing timer flags
@@ -172,17 +174,15 @@ void main(void) {
 
 	/* One time initialization instructions */
 	CMT_init();
-	/*IMU*/
+
 	lcd_initialize();
 	lcd_clear();
-	 /* LCD, CMT, accelerometer, gyroscope, magnetometer setup and calibration*/
-
 
 	 /* Altimeter */
-
 	 Setup_Motor_PID();
 	 Altimeter_init();
-
+	 /*IMU*/
+	 /* LCD, CMT, accelerometer, gyroscope, magnetometer setup and calibration*/
 	 Setup_MARG(&ahrs);
 	while(!timers.timer_2000mS) {
 			//lcd_display(LCD_LINE2, " 2s to arm "); // time necessary to arm motor1 and motor2
@@ -197,8 +197,10 @@ void main(void) {
 			Callback_1ms();								//Operations to do every 1ms
 
 			if (timers.timer_5mS) {
-				Read_MARG(&ahrs);	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-				RealTimeChart(&ahrs);
+
+				//Read_MARG(&ahrs);	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+				//RealTimeChart(&ahrs);
+
 				/************************************************************
 				 * Frequenza di stampa su schermo dei dati.
 				 * Lo schermo ha un suo tempo di aggiornamento dello schermo.
@@ -255,12 +257,6 @@ void main(void) {
 
 void Setup_Motor_PID() {
 
-	//TODO: maybe we should move the IMU PIDs to a new function
-
-	/*TODO: no need to initialize LCD, Setup() does the work*/
-	//lcd_initialize(); //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-	//lcd_clear();	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
 	/* Display message on LCD */
 	lcd_display(LCD_LINE2, "    SETUP   ");
 
@@ -314,6 +310,8 @@ void Callback_20ms(){
 
 float outValue_alt;	// Temporary storage for PID results
 void Callback_50ms(){
+
+
 
 		distanza = Read(temp);
 		float distanza_metri = (float)distanza/1000;
