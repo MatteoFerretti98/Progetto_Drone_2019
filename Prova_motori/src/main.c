@@ -283,12 +283,10 @@ void Setup_Motor_PID() {
 	desiredState.key.motor_diff_us = 0; // variable to control the rotation
 	desiredState.key.abs.pos.z = 0.20;
 
-	/*************************************************************
-	 * TODO here we need to implements kp, ki, kd for IMUs PID
-	PID_Init(&Pitch_PID, kpPITCH, kdPITCH, kiPITCH, dt, 0, 1);
-	PID_Init(&Roll_PID, kpROLL, kdROLL, kiROLL, dt, 0, 1);
-	PID_Init(&Yaw_PID,  kpYAW, kdYAW, kiYAW, dt, 0, 1);
-	**************************************************************/
+	/*IMUs PID: they need to be calibrated, right now Kp and Kd are set to 1*/
+	PID_Init(&Pitch_PID, 1, 1, 0, dt, 0, 1);
+	PID_Init(&Roll_PID, 1, 1, 0, dt, 0, 1);
+	PID_Init(&Yaw_PID,  1, 1, 0, dt, 0, 1);
 }
 
 void Callback_1ms(){
@@ -309,6 +307,9 @@ void Callback_20ms(){
 
 
 float outValue_alt;	// Temporary storage for PID results
+float outValue_pitch;
+float outValue_roll;
+float outValue_yaw;
 void Callback_50ms(){
 
 
@@ -340,8 +341,7 @@ void Callback_50ms(){
 		char result_string3[15];
 		outValue_alt = PID_Compute(distanza_metri, desiredState.key.abs.pos.z, &z_axis_PID);
 
-		/*********************************************************************************************
-		 * CODE FOR IMU PIDs
+		/* computing IMU PIDs results*/
 
 		  desiredState.key.angle.pitch = pitchValue;
 		  desiredState.key.angle.roll = rollValue;
@@ -350,8 +350,6 @@ void Callback_50ms(){
 		  outValue_pitch = PID_Compute(currentState.key.angle.pitch,  desiredState.key.angle.pitch, &Pitch_PID);
 		  outValue_roll = PID_Compute(currentState.key.angle.roll,  desiredState.key.angle.roll, &Roll_PID);
 		  outValue_yaw = PID_Compute(currentState.key.angle.yaw,  desiredState.key.angle.yaw,  &Yaw_PID);
-
-		/*****************************************************************************************************/
 
 		//sprintf(result_string2,"%5.2f",outValue_alt);
 		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
