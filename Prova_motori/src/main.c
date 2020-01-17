@@ -60,6 +60,7 @@ void Fallback();
 void Altimeter_init();
 void display_results (uint16_t);
 void Setup_Motor_PID();
+float* SpeedCompute (float virtualInputs[4], float b, float l, float d);
 
 /*******************************************************************************
  Global variables
@@ -92,7 +93,10 @@ struct physicalState {
 	//struct dynamic Kalman;
 
 	struct angles angle;
-	float avg_motor_us;
+	float avg_motor1_us;
+	float avg_motor2_us;
+	float avg_motor3_us;
+	float avg_motor4_us;
 	float motor_diff_us;
 	float x_servo_deg;
 	float y_servo_deg;
@@ -306,10 +310,11 @@ void Callback_20ms(){
 }
 
 
-float outValue_alt;	// Temporary storage for PID results
+/*float outValue_alt;
 float outValue_pitch;
 float outValue_roll;
-float outValue_yaw;
+float outValue_yaw;*/
+float virtualInputs [4]; // Temporary storage for PID results
 void Callback_50ms(){
 
 
@@ -334,34 +339,43 @@ void Callback_50ms(){
 
 		display_results(distanza_metri);
 
-		desiredState.key.abs.pos.z = altitudeValue;
 
-		/* Setting motor speed based on altitude */
-		char result_string2[15];
-		char result_string3[15];
-		outValue_alt = PID_Compute(distanza_metri, desiredState.key.abs.pos.z, &z_axis_PID);
+
+		/* Setting desired values */
+		desiredState.key.abs.pos.z = altitudeValue;
+		desiredState.key.angle.pitch = pitchValue;
+		desiredState.key.angle.roll = rollValue;
+		desiredState.key.angle.yaw = yawValue;
+
 
 		/* computing IMU PIDs results*/
 
-		  desiredState.key.angle.pitch = pitchValue;
-		  desiredState.key.angle.roll = rollValue;
-		  desiredState.key.angle.yaw = yawValue;
+		virtualInputs[0] = PID_Compute(distanza_metri, desiredState.key.abs.pos.z, &z_axis_PID);
+		virtualInputs[1] = PID_Compute(currentState.key.angle.pitch,  desiredState.key.angle.pitch, &Pitch_PID);
+		virtualInputs[2] = PID_Compute(currentState.key.angle.roll,  desiredState.key.angle.roll, &Roll_PID);
+		virtualInputs[3] = PID_Compute(currentState.key.angle.yaw,  desiredState.key.angle.yaw,  &Yaw_PID);
 
-		  outValue_pitch = PID_Compute(currentState.key.angle.pitch,  desiredState.key.angle.pitch, &Pitch_PID);
-		  outValue_roll = PID_Compute(currentState.key.angle.roll,  desiredState.key.angle.roll, &Roll_PID);
-		  outValue_yaw = PID_Compute(currentState.key.angle.yaw,  desiredState.key.angle.yaw,  &Yaw_PID);
+		float* Speeds;
+
+		//computes motor speeds (B1 is for 4-cell battery, if you use a 3-cell, change it with B2)
+		Speeds = SpeedCompute (virtualInputs, B1, L, D);
 
 		//sprintf(result_string2,"%5.2f",outValue_alt);
 		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
-		desiredState.key.avg_motor_us = map(outValue_alt, 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
+
+		//converts the speed in a measure that can be read by the motors
+		desiredState.key.avg_motor1_us = map(*(Speeds+0), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
+		desiredState.key.avg_motor2_us = map(*(Speeds+1), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
+		desiredState.key.avg_motor3_us = map(*(Speeds+2), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
+		desiredState.key.avg_motor4_us = map(*(Speeds+3), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
 		//sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
 		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 		// Write new results to motors and servos
 		//******************************************************************************************
-		Motor_Write_up(MOTOR_1, desiredState.key.avg_motor_us + desiredState.key.motor_diff_us);
-		Motor_Write_up(MOTOR_2, desiredState.key.avg_motor_us - desiredState.key.motor_diff_us);
-		Motor_Write_up(MOTOR_3, desiredState.key.avg_motor_us + desiredState.key.motor_diff_us);
-		Motor_Write_up(MOTOR_4, desiredState.key.avg_motor_us - desiredState.key.motor_diff_us);
+		Motor_Write_up(MOTOR_1, desiredState.key.avg_motor1_us);
+		Motor_Write_up(MOTOR_2, desiredState.key.avg_motor2_us);
+		Motor_Write_up(MOTOR_3, desiredState.key.avg_motor3_us);
+		Motor_Write_up(MOTOR_4, desiredState.key.avg_motor4_us);
 		//*******************************************************************************************
 }
 
@@ -392,3 +406,24 @@ void Fallback() {
 		nop();
 }
 
+/******************************************************************
+ *Function name: SpeedCompute
+ *Description  : Computes the speed that each motor has to generate to reach the desired attitude
+ *Arguments    :
+ * @param virtualInputs
+ * @param b thrust coefficient
+ * @param l distance between motor and center of the drone
+ * @param d drag coefficient
+ * @return array of the speeds
+ */
+float* SpeedCompute (float virtualInputs [], float b, float l, float d)
+{
+	static float Speeds[4];
+
+	Speeds[0] = (1/4*b)*virtualInputs[0] - (1/2*b)*virtualInputs[2] - (1/4*d)*virtualInputs[3];
+	Speeds[0] = (1/4*b)*virtualInputs[0] - (1/2*b)*virtualInputs[1] + (1/4*d)*virtualInputs[3];
+	Speeds[0] = (1/4*b)*virtualInputs[0] + (1/2*b)*virtualInputs[2] - (1/4*d)*virtualInputs[3];
+	Speeds[0] = (1/4*b)*virtualInputs[0] + (1/2*b)*virtualInputs[1] + (1/4*d)*virtualInputs[3];
+
+	return Speeds;
+}
