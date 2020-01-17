@@ -198,8 +198,8 @@ void main(void) {
 
 			if (timers.timer_5mS) {
 
-				//Read_MARG(&ahrs);	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-				//RealTimeChart(&ahrs);
+				Read_MARG(&ahrs);
+				RealTimeChart(&ahrs);
 
 				/************************************************************
 				 * Frequenza di stampa su schermo dei dati.
@@ -224,9 +224,9 @@ void main(void) {
 
 						if (timers.timer_100mS) {
 
-							/*Print_ABS(&ahrs);		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+							Print_ABS(&ahrs);
 							Print_Angoli(&ahrs);
-							Print_VelAng(&ahrs);*/
+							Print_VelAng(&ahrs);
 
 							//Print_Temp(&ahrs);
 
@@ -272,7 +272,7 @@ void Setup_Motor_PID() {
 
 	/*TODO: maybe no need to initialize CMT, Setup() does the work*/
 	/* Setup Compare Match Timer */
-	//CMT_init();		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+	//CMT_init();
 
 	// Initialize PID structures used for PID properties
 	// with their respective coefficents for proportional,
@@ -317,9 +317,9 @@ void Callback_50ms(){
 		float distanza_metri = (float)distanza/1000;
 
 		/*gets the angles measured by IMU*/
-		/*currentState.key.angle.pitch=ahrs.ahrs_data.PitchDeg;		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+		currentState.key.angle.pitch=ahrs.ahrs_data.PitchDeg;
 		currentState.key.angle.roll=ahrs.ahrs_data.RollDeg;
-		currentState.key.angle.yaw=ahrs.ahrs_data.YawDeg;*/
+		currentState.key.angle.yaw=ahrs.ahrs_data.YawDeg;
 
 
 		//calculates the altitude value when pitch and roll are not null
