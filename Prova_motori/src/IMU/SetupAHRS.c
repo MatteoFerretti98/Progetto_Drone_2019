@@ -26,11 +26,11 @@ void Setup_MARG(AHRS_out* ahrs)
 
 	//lcd_initialize();
 	//lcd_clear();
-	lcd_display(LCD_LINE1,"OH MAAAAN   ");
-	lcd_display(LCD_LINE2," PRESS SW1  ");
+	lcd_display(LCD_LINE1,"  SETUP IMU ");
+	lcd_display(LCD_LINE2,"  PRESS SW1 ");
 	lcd_display(LCD_LINE3,"  FOR NEW   ");
 	lcd_display(LCD_LINE4,"CALIBRATION ");
-	lcd_display(LCD_LINE6," PRESS SW2  ");
+	lcd_display(LCD_LINE6,"  PRESS SW2 ");
 	lcd_display(LCD_LINE7,"FOR DEFAULT ");
 	lcd_display(LCD_LINE8,"  PARAMS    ");
 
