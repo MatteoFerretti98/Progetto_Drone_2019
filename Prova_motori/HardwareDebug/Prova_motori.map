@@ -1,4 +1,4 @@
-Renesas Optimizing Linker (W2.08.00 )             17-Jan-2020 18:49:25
+Renesas Optimizing Linker (W2.08.00 )             19-Jan-2020 20:17:22
 
 *** Options ***
 
@@ -30,7 +30,6 @@ Renesas Optimizing Linker (W2.08.00 )             17-Jan-2020 18:49:25
 -input=".\generate/r_switches/src\r_switches.obj"
 -input=".\src/Altimeter\Altimetro.obj"
 -input=".\src/Altimeter/Ducted_Drivers\Motor.obj"
--input=".\src/Altimeter/Ducted_Drivers\PID.obj"
 -input=".\src/Altimeter/Ducted_Drivers\map.obj"
 -input=".\src/Altimeter/LowLevelDrivers\I2C.obj"
 -input=".\src/Altimeter/LowLevelDrivers\MTU_C3.obj"
@@ -45,6 +44,7 @@ Renesas Optimizing Linker (W2.08.00 )             17-Jan-2020 18:49:25
 -input=".\src/IMU/eMPL\inv_mpu.obj"
 -input=".\src/IMU\imu.obj"
 -input=".\src/IMU\mag.obj"
+-input=".\src\PID.obj"
 -input=".\src\S12ADC.obj"
 -input=".\src\main.obj"
 -library=".\Prova_motori.lib"

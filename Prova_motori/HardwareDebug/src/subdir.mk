@@ -6,18 +6,21 @@
 C_SRCS += \
 ../src/CMT.c \
 ../src/I2C_new.c \
+../src/PID.c \
 ../src/S12ADC.c \
 ../src/main.c 
 
 COMPILER_OBJS += \
 src/CMT.obj \
 src/I2C_new.obj \
+src/PID.obj \
 src/S12ADC.obj \
 src/main.obj 
 
 C_DEPS += \
 src/CMT.d \
 src/I2C_new.d \
+src/PID.d \
 src/S12ADC.d \
 src/main.d 
 

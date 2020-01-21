@@ -23,13 +23,13 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <machine.h>
+#include <PID.h>
 #include "platform.h"
 #include "s12adc.h"
 #include "I2C_new.h"
 
 //Altimeter includes
 #include "Ducted_Drivers/Motor.h"
-#include "Ducted_Drivers/PID.h"
 #include "LowLevelDrivers/I2C.h"
 #include "Ducted_Drivers/lcd_buffer.h"
 #include "Altimetro.h"
@@ -89,9 +89,9 @@ struct physicalState {
 	//struct dynamic accel;
 	//struct dynamic gyro;
 	//struct dynamic magn;
-	struct dynamic abs;
 	//struct dynamic Kalman;
 
+	struct dynamic abs;
 	struct angles angle;
 	float avg_motor1_us;
 	float avg_motor2_us;
@@ -113,8 +113,6 @@ union {
 
 // Structure containing timer flags
 extern struct timerClocks timers;
-
-
 
 
 /* Create PID structure used for PID properties */
@@ -182,14 +180,17 @@ void main(void) {
 	lcd_initialize();
 	lcd_clear();
 
-	 /* Altimeter */
+	/*arms the motors, initializes PIDs*/
 	 Setup_Motor_PID();
+
+	 /* Altimeter */
 	 Altimeter_init();
+
 	 /*IMU*/
 	 /* LCD, CMT, accelerometer, gyroscope, magnetometer setup and calibration*/
 	 Setup_MARG(&ahrs);
 	while(!timers.timer_2000mS) {
-			//lcd_display(LCD_LINE2, " 2s to arm "); // time necessary to arm motor1 and motor2
+			//lcd_display(LCD_LINE2, " 2s to arm "); // time necessary to arm motor 1, 2, 3 and 4
 	}
 	timers.timer_2000mS = 0;
 

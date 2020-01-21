@@ -39,8 +39,6 @@ src/main.obj src/main.d: C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motor
 C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\src\Altimeter\Ducted_Drivers/../LowLevelDrivers/MTU_C3.h:
 src/main.obj src/main.d: C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\src\Altimeter\Ducted_Drivers/../LowLevelDrivers/MTU_C4.h
 C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\src\Altimeter\Ducted_Drivers/../LowLevelDrivers/MTU_C4.h:
-src/main.obj src/main.d: C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\src\Altimeter\Ducted_Drivers/PID.h
-C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\src\Altimeter\Ducted_Drivers/PID.h:
 src/main.obj src/main.d: C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\src\Altimeter\LowLevelDrivers/I2C.h
 C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\src\Altimeter\LowLevelDrivers/I2C.h:
 src/main.obj src/main.d: C:\Users\Alessandro\git\Progetto_Drone_2019\Prova_motori\src\Altimeter\Ducted_Drivers/lcd_buffer.h
