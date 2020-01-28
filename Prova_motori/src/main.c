@@ -27,6 +27,7 @@
 #include "platform.h"
 #include "s12adc.h"
 #include "I2C_new.h"
+#include <r_switches.h>
 
 //Altimeter includes
 #include "Ducted_Drivers/Motor.h"
@@ -65,6 +66,7 @@ float* SpeedCompute (float virtualInputs[4], float b, float l, float d);
 /*******************************************************************************
  Global variables
  *******************************************************************************/
+double motor_switch = false;
 
 struct axis {
 	float x;
@@ -176,6 +178,14 @@ void main(void) {
 
 	/* One time initialization instructions */
 	CMT_init();
+
+	/* Dichiarazione switch 1 e 2*/
+	PORT4.PODR.BIT.B0=0;
+	PORT4.PDR.BIT.B0=0;
+	PORT4.PMR.BIT.B0=0;
+	PORT4.PODR.BIT.B4=0;
+	PORT4.PDR.BIT.B4=0;
+	PORT4.PMR.BIT.B4=0;
 
 	lcd_initialize();
 	lcd_clear();
@@ -364,8 +374,6 @@ void Callback_50ms(){
 		//sprintf(result_string2,"%5.2f",outValue_alt);
 		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
 
-		//Ahah
-
 		//converts the speed in a measure that can be read by the motors
 		desiredState.key.avg_motor1_us = map(*(Speeds+0), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
 		desiredState.key.avg_motor2_us = map(*(Speeds+1), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
@@ -374,12 +382,27 @@ void Callback_50ms(){
 		//sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
 		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 		// Write new results to motors and servos
+
+		while((1 != PORT4.PIDR.BIT.B0)||(motor_switch==true)) //Wait for SW1 to be pressed
+		{
+			motor_switch=true;
 		//******************************************************************************************
-		Motor_Write_up(MOTOR_1, desiredState.key.avg_motor1_us);
-		Motor_Write_up(MOTOR_2, desiredState.key.avg_motor2_us);
-		Motor_Write_up(MOTOR_3, desiredState.key.avg_motor3_us);
-		Motor_Write_up(MOTOR_4, desiredState.key.avg_motor4_us);
+			Motor_Write_up(MOTOR_1, desiredState.key.avg_motor1_us);
+			Motor_Write_up(MOTOR_2, desiredState.key.avg_motor2_us);
+			Motor_Write_up(MOTOR_3, desiredState.key.avg_motor3_us);
+			Motor_Write_up(MOTOR_4, desiredState.key.avg_motor4_us);
 		//*******************************************************************************************
+		}
+		while((1 != PORT4.PIDR.BIT.B4)||(motor_switch==false))
+		{
+			motor_switch=false;
+		//******************************************************************************************
+			Motor_Write_up(MOTOR_1, 0);
+			Motor_Write_up(MOTOR_2, 0);
+			Motor_Write_up(MOTOR_3, 0);
+			Motor_Write_up(MOTOR_4, 0);
+		//******************************************************************************************
+		}
 }
 
 void Callback_100ms(){
