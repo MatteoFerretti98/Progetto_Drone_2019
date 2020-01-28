@@ -364,6 +364,8 @@ void Callback_50ms(){
 		//sprintf(result_string2,"%5.2f",outValue_alt);
 		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
 
+		//Ahah
+
 		//converts the speed in a measure that can be read by the motors
 		desiredState.key.avg_motor1_us = map(*(Speeds+0), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
 		desiredState.key.avg_motor2_us = map(*(Speeds+1), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
