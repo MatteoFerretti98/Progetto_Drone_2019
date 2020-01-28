@@ -179,7 +179,7 @@ void main(void) {
 	/* One time initialization instructions */
 	CMT_init();
 
-	/* Dichiarazione switch 1 e 2*/
+	/* Dichiarazione switch 1 e 3*/
 	PORT4.PODR.BIT.B0=0;
 	PORT4.PDR.BIT.B0=0;
 	PORT4.PMR.BIT.B0=0;
