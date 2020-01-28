@@ -383,7 +383,7 @@ void Callback_50ms(){
 		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 		// Write new results to motors and servos
 
-		while((1 != PORT4.PIDR.BIT.B0)||(motor_switch==true)) //Wait for SW1 to be pressed
+		while((1 != PORT4.PIDR.BIT.B0)||(motor_switch==true)) //Press SW1 to send the pwm signal to the ESC
 		{
 			motor_switch=true;
 		//******************************************************************************************
@@ -393,7 +393,7 @@ void Callback_50ms(){
 			Motor_Write_up(MOTOR_4, desiredState.key.avg_motor4_us);
 		//*******************************************************************************************
 		}
-		while((1 != PORT4.PIDR.BIT.B4)||(motor_switch==false))
+		while((1 != PORT4.PIDR.BIT.B4)||(motor_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
 		{
 			motor_switch=false;
 		//******************************************************************************************
