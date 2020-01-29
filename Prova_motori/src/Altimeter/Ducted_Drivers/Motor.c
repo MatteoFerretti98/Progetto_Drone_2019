@@ -108,13 +108,37 @@ void Motor_Write_up(int channel, float up)
 
 /*************************************************************
  *Function name: Motors_Off
- *Description  : Stop MTU3 count
+ *Description  : Sends a 0% duty to the motors
+ *Arguments    : none
+ *Return value : none
+ */
+void Motors_Off () {
+	Motor_Write_up(MOTOR_1, 0);
+	Motor_Write_up(MOTOR_2, 0);
+	Motor_Write_up(MOTOR_3, 0);
+	Motor_Write_up(MOTOR_4, 0);
+}
+
+/*************************************************************
+ *Function name: Start_MTU
+ *Description  : Starts MTU3 and MTU4 count
  *Arguments    : none
  *Return value : none
  ************************************************************/
-
-void Motors_Off()
+void StartCount_MTUs()
 {
-	HaltCount_MTU_U0_C3();	//Stop MTU3 count
-	HaltCount_MTU_U0_C4(); //Stop MTU4 count
+	StartCount_MTU_U0_C3();	//Starts MTU3 count
+	StartCount_MTU_U0_C4(); //Starts MTU4 count
+}
+
+/*************************************************************
+ *Function name: Stop_MTU
+ *Description  : Stops MTU3 and MTU4 count
+ *Arguments    : none
+ *Return value : none
+ ************************************************************/
+void HaltCount_MTUs()
+{
+	HaltCount_MTU_U0_C3();	//Stops MTU3 count
+	HaltCount_MTU_U0_C4(); //Stops MTU4 count
 }

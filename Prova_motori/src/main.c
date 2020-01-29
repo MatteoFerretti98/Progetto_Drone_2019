@@ -196,11 +196,13 @@ void main(void) {
 	 /* Altimeter */
 	 Altimeter_init();
 
-	 /*IMU*/
+	 /* IMU */
 	 /* LCD, CMT, accelerometer, gyroscope, magnetometer setup and calibration*/
 	 Setup_MARG(&ahrs);
-	while(!timers.timer_2000mS) {
-			//lcd_display(LCD_LINE2, " 2s to arm "); // time necessary to arm motor 1, 2, 3 and 4
+
+	 /* necessary time to arm motor 1, 2, 3 and 4 */
+	 while(!timers.timer_2000mS) {
+			//lcd_display(LCD_LINE2, " 2s to arm ");
 	}
 	timers.timer_2000mS = 0;
 
@@ -209,24 +211,15 @@ void main(void) {
 
 		if (timers.timer_1mS) {
 			timers.timer_1mS = 0;
-			Callback_1ms();								//Operations to do every 1ms
+			//Callback_1ms();								//Operations to do every 1ms
 
 			if (timers.timer_5mS) {
-
-				Read_MARG(&ahrs);
-				RealTimeChart(&ahrs);
-
-				/************************************************************
-				 * Frequenza di stampa su schermo dei dati.
-				 * Lo schermo ha un suo tempo di aggiornamento dello schermo.
-				 * Aumentare la frequenza oltre i 100mS è sconsigliato.
-				 ************************************************************/
 				timers.timer_5mS=0;
 				Callback_5ms();							// Operations to do every 5ms
 
 				if (timers.timer_10mS) {
 					timers.timer_10mS = 0;
-					Callback_10ms();					// Operations to do every 10ms
+					//Callback_10ms();					// Operations to do every 10ms
 
 					if (timers.timer_20mS) {
 						timers.timer_20mS = 0;
@@ -239,20 +232,16 @@ void main(void) {
 
 						if (timers.timer_100mS) {
 
-							Print_ABS(&ahrs);
-							Print_Angoli(&ahrs);
-							Print_VelAng(&ahrs);
-
-							//Print_Temp(&ahrs);
-
 							timers.timer_100mS = 0;
 							Callback_100ms();			// Operations to do every 100ms
+
 							if (timers.timer_500mS) {
 								timers.timer_500mS = 0;
-								Callback_500ms();		// Operations to do every half a second
+								//Callback_500ms();		// Operations to do every half a second
+
 								if (timers.timer_1000mS) {
 									timers.timer_1000mS = 0;
-									Callback_1000ms();	// Operations to do every second
+									//Callback_1000ms();	// Operations to do every second
 								}
 							}
 						}
@@ -308,7 +297,17 @@ void Callback_1ms(){
 
 }
 
+
+/*************************************************************
+ *Function name: Callback_5ms()
+ *Description:   collects IMU data
+ *Arguments:     none
+ *Return value:  none
+ ************************************************************/
 void Callback_5ms(){
+
+	Read_MARG(&ahrs);
+	RealTimeChart(&ahrs);
 
 }
 
@@ -325,7 +324,14 @@ void Callback_20ms(){
 float outValue_pitch;
 float outValue_roll;
 float outValue_yaw;*/
-float virtualInputs [4]; // Temporary storage for PID results
+
+/*************************************************************
+ *Function name: Callback_50ms()
+ *Description:   Core function of this program, computes and updates
+ 	 	 	 	 the right speed that every motor needs to rotate with
+ *Arguments:     none
+ *Return value:  none
+ ************************************************************/
 void Callback_50ms(){
 
 
@@ -361,6 +367,8 @@ void Callback_50ms(){
 
 		/* computing IMU PIDs results*/
 
+		float virtualInputs [4]; // Temporary storage for PID results
+
 		virtualInputs[0] = PID_Compute(distanza_metri, desiredState.key.abs.pos.z, &z_axis_PID);
 		virtualInputs[1] = PID_Compute(currentState.key.angle.pitch,  desiredState.key.angle.pitch, &Pitch_PID);
 		virtualInputs[2] = PID_Compute(currentState.key.angle.roll,  desiredState.key.angle.roll, &Roll_PID);
@@ -381,12 +389,12 @@ void Callback_50ms(){
 		desiredState.key.avg_motor4_us = map(*(Speeds+3), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
 		//sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
 		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
-		// Write new results to motors and servos
 
 		if((1 != PORT4.PIDR.BIT.B0)||(motor_switch==true)) //Press SW1 to send the pwm signal to the ESC
 		{
 			motor_switch=true;
 		//******************************************************************************************
+			// writes new results to motors and servos
 			Motor_Write_up(MOTOR_1, desiredState.key.avg_motor1_us);
 			Motor_Write_up(MOTOR_2, desiredState.key.avg_motor2_us);
 			Motor_Write_up(MOTOR_3, desiredState.key.avg_motor3_us);
@@ -397,15 +405,29 @@ void Callback_50ms(){
 		{
 			motor_switch=false;
 		//******************************************************************************************
-			Motor_Write_up(MOTOR_1, 0);
-			Motor_Write_up(MOTOR_2, 0);
-			Motor_Write_up(MOTOR_3, 0);
-			Motor_Write_up(MOTOR_4, 0);
+			Motors_Off();
+			HaltCount_MTUs();
 		//******************************************************************************************
 		}
 }
 
+/*************************************************************
+ *Function name: Callback_100ms()
+ *Description:   Prints IMU measures on the screen
+ *Arguments:     none
+ *Return value:  none
+ ************************************************************/
 void Callback_100ms(){
+
+	/************************************************************
+	 * The screen has his own time of updating, increasing the update
+	 * frequency over 1/100ms is not recommended
+	 ************************************************************/
+
+	Print_ABS(&ahrs);
+	Print_Angoli(&ahrs);
+	Print_VelAng(&ahrs);
+	//Print_Temp(&ahrs);
 
 }
 
@@ -417,20 +439,6 @@ void Callback_1000ms(){
 
 }
 
-void Fallback() {
-	lcd_display(LCD_LINE2, "  Fallback  ");
-	lcd_display(LCD_LINE3, " condition! ");
-
-	/* Turn off motors */
-	Motor_Write_up(MOTOR_1, 0);
-	Motor_Write_up(MOTOR_2, 0);
-	Motor_Write_up(MOTOR_3, 0);
-	Motor_Write_up(MOTOR_4, 0);
-	Motors_Off();
-
-	while(1)
-		nop();
-}
 
 /******************************************************************
  *Function name: SpeedCompute
@@ -452,4 +460,18 @@ float* SpeedCompute (float virtualInputs [], float b, float l, float d)
 	Speeds[0] = (1/4*b)*virtualInputs[0] + (1/2*b)*virtualInputs[1] + (1/4*d)*virtualInputs[3];
 
 	return Speeds;
+}
+
+
+void Fallback() {
+
+	lcd_display(LCD_LINE2, "  Fallback  ");
+	lcd_display(LCD_LINE3, " condition! ");
+
+	/* Turn off motors */
+	Motors_Off();
+	HaltCount_MTUs();
+
+	while(1)
+		nop();
 }

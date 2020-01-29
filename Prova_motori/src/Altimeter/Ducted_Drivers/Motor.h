@@ -50,5 +50,8 @@ void Motor_Arm(int channel);
 void Motor_Write_PWM(int channel, float value);
 void Motor_Write_up(int channel, float us);
 void Motors_Off();
+void StartCount_MTUs();
+void HaltCount_MTUs();
+
 
 #endif /* DUCTED_DRIVERS_MOTOR_H_ */
