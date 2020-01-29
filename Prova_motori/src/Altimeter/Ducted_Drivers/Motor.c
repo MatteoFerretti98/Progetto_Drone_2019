@@ -26,19 +26,7 @@ void Motors_Init()
 	Set_MTU_U0_C4();
 	Set_MTU_U0_C3();
 }
-/*************************************************************
- *Function name: Motors_On
- *Description:   Start MTU3 count
- *Arguments:     none
- *Return value:  none
- ************************************************************/
 
-void Motors_On()
-{
-	//Start MTU4 and MTU3 count
-	StartCount_MTU_U0_C4();
-	StartCount_MTU_U0_C3();
-}
 /*************************************************************
  *Function name: Motor_Arm
  *Description  : Recalls Motor_Write_up function based to the select motor

@@ -15,8 +15,8 @@ void Sensor_Init(vl53l1x* sens)
 	sens->saved_vhv_init = 0;
 	sens->saved_vhv_timeout = 0;
 	sens->distance_mode = Unknown;
-	//sens->fast_osc_frequency = readReg16Bit(OSC_MEASURED__FAST_OSC__FREQUENCY, sens); //QUI SCRIVE, CON IL READ PERO' NO
-	//sens->osc_calibrate_val = readReg16Bit(RESULT__OSC_CALIBRATE_VAL, sens); //IDEM
+	//sens->fast_osc_frequency = readReg16Bit(OSC_MEASURED__FAST_OSC__FREQUENCY, sens);
+	//sens->osc_calibrate_val = readReg16Bit(RESULT__OSC_CALIBRATE_VAL, sens);
 
 }
 
@@ -50,10 +50,13 @@ void setAddress(uint8_t new_addr, vl53l1x* sens)
 }
 
 
-// Initialize sensor using settings taken mostly from VL53L1_DataInit() and
-// VL53L1_StaticInit().
-// If io_2v8 (optional) is true or not given, the sensor is configured for 2V8
-// mode.
+/***************************************************************************
+ *Function name: init(vl53l1x* sens)
+ *Description:   Initialize sensor using settings taken mostly from VL53L1_DataInit() and VL53L1_StaticInit().
+ 	 	 	 	 If io_2v8 (optional) is true or not given, the sensor is configured for 2V8 mode.
+ *Arguments:     vl53l1x structure with some crucial parameters for altimeter
+ *Return value:  none
+ ************************************************************/
 bool init(vl53l1x* sens)
 {
 	bool io_2v8 = true;

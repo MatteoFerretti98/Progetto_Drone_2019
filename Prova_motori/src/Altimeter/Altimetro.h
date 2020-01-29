@@ -128,7 +128,7 @@ typedef struct {
 	//attributi pubblici
 
 	uint16_t regAddr;
-	enum DistanceMode distance_mode; //NB ci va anche enum
+	enum DistanceMode distance_mode;
     RangingData ranging_data;
 	int last_status;
 

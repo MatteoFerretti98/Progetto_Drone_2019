@@ -45,7 +45,6 @@
 #define D 0.08 //drag coefficient TODO: needs to be calculated properly (it is the drag coefficient of the propeller)
 
 void Motors_Init();
-void Motors_On();
 void Motor_Arm(int channel);
 void Motor_Write_PWM(int channel, float value);
 void Motor_Write_up(int channel, float us);

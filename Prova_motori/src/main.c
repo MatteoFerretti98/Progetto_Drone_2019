@@ -267,7 +267,7 @@ void Setup_Motor_PID() {
 	/* Initialize motors */
 	Motors_Init();
 	/* Turn on motors relay */
-	Motors_On();
+	StartCount_MTUs();
 	/* Send arm signal to motors */
 	Motor_Arm(MOTOR_1);
 	Motor_Arm(MOTOR_2);
