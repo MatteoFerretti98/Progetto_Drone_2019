@@ -179,10 +179,7 @@ void main(void) {
 	/* One time initialization instructions */
 	CMT_init();
 
-	/* Dichiarazione switch 1 e 3*/
-	PORT4.PODR.BIT.B0=0;
-	PORT4.PDR.BIT.B0=0;
-	PORT4.PMR.BIT.B0=0;
+	/* Dichiarazione switch 3*/
 	PORT4.PODR.BIT.B4=0;
 	PORT4.PDR.BIT.B4=0;
 	PORT4.PMR.BIT.B4=0;
@@ -267,7 +264,9 @@ void Setup_Motor_PID() {
 	/* Initialize motors */
 	Motors_Init();
 	/* Turn on motors relay */
+	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 	StartCount_MTUs();
+	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 	/* Send arm signal to motors */
 	Motor_Arm(MOTOR_1);
 	Motor_Arm(MOTOR_2);
@@ -390,9 +389,10 @@ void Callback_50ms(){
 		//sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
 		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 
-		if((1 != PORT4.PIDR.BIT.B0)||(motor_switch==true)) //Press SW1 to send the pwm signal to the ESC
+		if((1 != PORT4.PIDR.BIT.B4)||(motor_switch==true)) //Press SW3 to send the pwm signal to the ESC
 		{
 			motor_switch=true;
+			StartCount_MTUs();
 		//******************************************************************************************
 			// writes new results to motors and servos
 			Motor_Write_up(MOTOR_1, desiredState.key.avg_motor1_us);
@@ -401,7 +401,7 @@ void Callback_50ms(){
 			Motor_Write_up(MOTOR_4, desiredState.key.avg_motor4_us);
 		//*******************************************************************************************
 		}
-		if((1 != PORT4.PIDR.BIT.B4)||(motor_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
+		else if((1 != PORT4.PIDR.BIT.B4)||(motor_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
 		{
 			motor_switch=false;
 		//******************************************************************************************
