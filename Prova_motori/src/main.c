@@ -389,9 +389,17 @@ void Callback_50ms(){
 		//sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
 		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 
-		if((1 != PORT4.PIDR.BIT.B4)||(motor_switch==true)) //Press SW3 to send the pwm signal to the ESC
+		if((1 != PORT4.PIDR.BIT.B4)&&(motor_switch==true)) //Press SW3 to send the pwm signal to the ESC
+		{
+			motor_switch=false;
+		}
+		else if((1 != PORT4.PIDR.BIT.B4)&&(motor_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
 		{
 			motor_switch=true;
+		}
+
+		if(motor_switch==true) //Press SW3 to send the pwm signal to the ESC
+		{
 			StartCount_MTUs();
 		//******************************************************************************************
 			// writes new results to motors and servos
@@ -401,9 +409,8 @@ void Callback_50ms(){
 			Motor_Write_up(MOTOR_4, desiredState.key.avg_motor4_us);
 		//*******************************************************************************************
 		}
-		else if((1 != PORT4.PIDR.BIT.B4)||(motor_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
+		else if(motor_switch==false) //Press SW3 to stop the pwm signal sending to the ESC
 		{
-			motor_switch=false;
 		//******************************************************************************************
 			Motors_Off();
 			HaltCount_MTUs();
