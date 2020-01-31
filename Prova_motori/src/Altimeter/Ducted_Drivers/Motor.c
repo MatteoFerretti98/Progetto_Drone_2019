@@ -10,9 +10,9 @@
 * History : DD.MM.YYYY     Version     Description
 *         : 03.02.2018     1.00        First release
 *         : 06.12.2018	   2.00		   Update
+*         : 31.01.2020	   2.10		   Added Motor_Switch and changed some functions for MTUs
 *******************************************************************************/
 #include "Motor.h"
-
 /*************************************************************
  *Function name: Motors_Init
  *Description:   Set all parameter needed by MTU3 unit
@@ -80,6 +80,7 @@ void Motor_Write_PWM(int channel, float value)
 			break;
 	}
 }
+
 /*************************************************************
  *Function name: Motor_Write_up
  *Description  : Recalls Motor_Write_PWM function calculating the duty cycle value
