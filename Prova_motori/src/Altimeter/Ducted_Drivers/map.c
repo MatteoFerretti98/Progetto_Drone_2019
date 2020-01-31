@@ -9,7 +9,7 @@
 /*******************************************************************************
 * History : DD.MM.YYYY     Version     Description
 *         : 03.02.2018     1.00        First release
-*         : 06.12.2018	   2.00		   Update
+*         : 06.12.2018	   2.00		   Converts the speed in a measure that can be read by the motors
 *******************************************************************************/
 inline float map(float val, float from_src, float to_src, float from_dst, float to_dst)
 {
