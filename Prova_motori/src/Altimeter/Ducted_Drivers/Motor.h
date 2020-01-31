@@ -39,8 +39,8 @@
 #define MOTOR_ARM_UP 950	//Duty cycle 4.75% to arm up the motor
 #define MOTOR_MIN_UP 1200	//Min value of duty cycle - 6%  Duty (min speed)
 #define MOTOR_MAX_UP 2000	//Max value of duty cycle - 10% Duty (Max speed)
-#define B1 5.03 //thrust coefficient 4-cell battery
-#define B2 2.714 //thrust coefficient 3-cell battery
+#define B4c 0.000001163 //thrust coefficient 4-cell battery
+#define B3c 0.000001162 //thrust coefficient 3-cell battery
 #define L 33.75 //distance between motor and drone center
 #define D 0.08 //drag coefficient TODO: needs to be calculated properly (it is the drag coefficient of the propeller)
 

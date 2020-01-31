@@ -180,9 +180,9 @@ void main(void) {
 	CMT_init();
 
 	/* Dichiarazione switch 3*/
-	PORT4.PODR.BIT.B4=0;
-	PORT4.PDR.BIT.B4=0;
-	PORT4.PMR.BIT.B4=0;
+	PORT4.PODR.BIT.B4 =0;
+	PORT4.PDR.BIT.B4 =0;
+	PORT4.PMR.BIT.B4 =0;
 
 	lcd_initialize();
 	lcd_clear();
@@ -376,7 +376,7 @@ void Callback_50ms(){
 		float* Speeds;
 
 		//computes motor speeds (B1 is for 4-cell battery, if you use a 3-cell, change it with B2)
-		Speeds = SpeedCompute (virtualInputs, B1, L, D);
+		Speeds = SpeedCompute (virtualInputs, B4c, L, D);
 
 		//sprintf(result_string2,"%5.2f",outValue_alt);
 		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
