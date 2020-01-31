@@ -359,7 +359,7 @@ void Callback_50ms(){
 		float* Speeds;
 
 		//computes motor speeds (B1 is for 4-cell battery, if you use a 3-cell, change it with B2)
-		Speeds = SpeedCompute (virtualInputs, B1, L, D);
+		Speeds = SpeedCompute (virtualInputs, B4, L, D);
 
 		//sprintf(result_string2,"%5.2f",outValue_alt);
 		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
