@@ -52,7 +52,6 @@ void Setup_MARG(AHRS_out* ahrs)
 		//lcd_initialize();
 			lcd_clear();
 
-
 		lcd_display(LCD_LINE1," IMU SETUP ");
 		lcd_display(LCD_LINE2," IN CORSO ");
 
