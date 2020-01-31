@@ -139,6 +139,7 @@ uint16_t distanza;
 /*Structure used by IMU for initialization*/
 AHRS_out ahrs;
 
+char result_string2[20];
 
 void Altimeter_init()
 {
@@ -155,18 +156,18 @@ void Altimeter_init()
 
 void display_results (uint16_t distanzam)
 {
-	lcd_display(LCD_LINE1, "****TEST****");
-	lcd_display(LCD_LINE2, "Sens:VL53L1X");
-	lcd_display(LCD_LINE3, "-------------");
-	lcd_display(LCD_LINE4, "***SHORT****");
+	//lcd_display(LCD_LINE1, "****TEST****");
+	//lcd_display(LCD_LINE2, "Sens:VL53L1X");
+	//lcd_display(LCD_LINE3, "-------------");
+	//lcd_display(LCD_LINE4, "***SHORT****");
 
 	char result_string[20];
-    sprintf(result_string, "D:  %d  mm", distanza);
+    //sprintf(result_string, "D:  %d  mm", distanza);
 
     /* Update the display LINE 6 */
-    lcd_display(LCD_LINE6, (const uint8_t *)result_string);
+    //lcd_display(LCD_LINE6, (const uint8_t *)result_string);
 
-    lcd_display(LCD_LINE8, "-------------");
+    //lcd_display(LCD_LINE8, "-------------");
 } /* End function display_results() */
 
 // Structure containing timer flags
@@ -359,8 +360,17 @@ void Callback_50ms(){
 		float* Speeds;
 
 		//computes motor speeds (B1 is for 4-cell battery, if you use a 3-cell, change it with B2)
-		Speeds = SpeedCompute (virtualInputs, B4, L, D);
+		Speeds = SpeedCompute (virtualInputs, B_4, L, D);
+		sprintf(result_string2,"%5.2f",*(Speeds));
+		lcd_display(LCD_LINE1,(const uint8_t *) result_string2);
+		sprintf(result_string2,"%5.2f",*(Speeds+1));
+		lcd_display(LCD_LINE2,(const uint8_t *) result_string2);
 
+		sprintf(result_string2,"%5.2f",*(Speeds+2));
+		lcd_display(LCD_LINE3,(const uint8_t *) result_string2);
+
+		sprintf(result_string2,"%5.2f",*(Speeds+3));
+		lcd_display(LCD_LINE4,(const uint8_t *) result_string2);
 		//sprintf(result_string2,"%5.2f",outValue_alt);
 		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
 
@@ -372,6 +382,14 @@ void Callback_50ms(){
 		//sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
 		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 		// Write new results to motors and servos
+		sprintf(result_string2,"%5.2f",desiredState.key.avg_motor1_us);
+		lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
+		sprintf(result_string2,"%5.2f",desiredState.key.avg_motor2_us);
+		lcd_display(LCD_LINE6,(const uint8_t *) result_string2);
+		sprintf(result_string2,"%5.2f",desiredState.key.avg_motor3_us);
+		lcd_display(LCD_LINE7,(const uint8_t *) result_string2);
+		sprintf(result_string2,"%5.2f",desiredState.key.avg_motor4_us);
+		lcd_display(LCD_LINE8,(const uint8_t *) result_string2);
 		//******************************************************************************************
 		Motor_Write_up(MOTOR_1, desiredState.key.avg_motor1_us);
 		Motor_Write_up(MOTOR_2, desiredState.key.avg_motor2_us);
@@ -421,10 +439,10 @@ float* SpeedCompute (float virtualInputs [], float b, float l, float d)
 {
 	static float Speeds[4];
 
-	Speeds[0] = (1/4*b)*virtualInputs[0] - (1/2*b)*virtualInputs[2] - (1/4*d)*virtualInputs[3];
-	Speeds[0] = (1/4*b)*virtualInputs[0] - (1/2*b)*virtualInputs[1] + (1/4*d)*virtualInputs[3];
-	Speeds[0] = (1/4*b)*virtualInputs[0] + (1/2*b)*virtualInputs[2] - (1/4*d)*virtualInputs[3];
-	Speeds[0] = (1/4*b)*virtualInputs[0] + (1/2*b)*virtualInputs[1] + (1/4*d)*virtualInputs[3];
+	Speeds[0] = (1/(4*b))*virtualInputs[0] - (1/(2*b*L))*virtualInputs[2] - (1/(4*d))*virtualInputs[3];
+	Speeds[1] = (1/(4*b))*virtualInputs[0] - (1/(2*b*L))*virtualInputs[1] + (1/(4*d))*virtualInputs[3];
+	Speeds[2] = (1/(4*b))*virtualInputs[0] + (1/(2*b*L))*virtualInputs[2] - (1/(4*d))*virtualInputs[3];
+	Speeds[3] = (1/(4*b))*virtualInputs[0] + (1/(2*b*L))*virtualInputs[1] + (1/(4*d))*virtualInputs[3];
 
 	return Speeds;
 }
