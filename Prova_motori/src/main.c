@@ -439,10 +439,10 @@ float* SpeedCompute (float virtualInputs [], float b, float l, float d)
 {
 	static float Speeds[4];
 
-	Speeds[0] = (1/(4*b))*virtualInputs[0] - (1/(2*b*L))*virtualInputs[2] - (1/(4*d))*virtualInputs[3];
-	Speeds[1] = (1/(4*b))*virtualInputs[0] - (1/(2*b*L))*virtualInputs[1] + (1/(4*d))*virtualInputs[3];
-	Speeds[2] = (1/(4*b))*virtualInputs[0] + (1/(2*b*L))*virtualInputs[2] - (1/(4*d))*virtualInputs[3];
-	Speeds[3] = (1/(4*b))*virtualInputs[0] + (1/(2*b*L))*virtualInputs[1] + (1/(4*d))*virtualInputs[3];
+	Speeds[0] = sqrt((1/(4*b))*virtualInputs[0] - (1/(2*b*L))*virtualInputs[2] - (1/(4*d))*virtualInputs[3]);
+	Speeds[1] = sqrt((1/(4*b))*virtualInputs[0] - (1/(2*b*L))*virtualInputs[1] + (1/(4*d))*virtualInputs[3]);
+	Speeds[2] = sqrt((1/(4*b))*virtualInputs[0] + (1/(2*b*L))*virtualInputs[2] - (1/(4*d))*virtualInputs[3]);
+	Speeds[3] = sqrt((1/(4*b))*virtualInputs[0] + (1/(2*b*L))*virtualInputs[1] + (1/(4*d))*virtualInputs[3]);
 
 	return Speeds;
 }
