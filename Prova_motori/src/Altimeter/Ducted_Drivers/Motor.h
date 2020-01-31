@@ -43,6 +43,8 @@
 #define B_3 0.000001162 //thrust coefficient 3-cell battery
 #define L 33.75 //distance between motor and drone center
 #define D 0.08 //drag coefficient TODO: needs to be calculated properly (it is the drag coefficient of the propeller)
+#define MOTOR_MAX_SPEED_3 860685.198 //1/(4*B_3)+1/(2*L*B_3)+1/(4*D)
+#define MOTOR_MAX_SPEED_4 859845.228 //1/(4*B_4)+1/(2*L*B_3)+1/(4*D)
 
 void Motors_Init();
 void Motors_On();

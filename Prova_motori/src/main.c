@@ -359,7 +359,7 @@ void Callback_50ms(){
 
 		float* Speeds;
 
-		//computes motor speeds (B1 is for 4-cell battery, if you use a 3-cell, change it with B2)
+		//computes motor speeds (B_4 is for 4-cell battery, if you use a 3-cell, change it with B_3)
 		Speeds = SpeedCompute (virtualInputs, B_4, L, D);
 		sprintf(result_string2,"%5.2f",*(Speeds));
 		lcd_display(LCD_LINE1,(const uint8_t *) result_string2);
@@ -375,10 +375,10 @@ void Callback_50ms(){
 		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
 
 		//converts the speed in a measure that can be read by the motors
-		desiredState.key.avg_motor1_us = map(*(Speeds+0), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
-		desiredState.key.avg_motor2_us = map(*(Speeds+1), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
-		desiredState.key.avg_motor3_us = map(*(Speeds+2), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
-		desiredState.key.avg_motor4_us = map(*(Speeds+3), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
+		desiredState.key.avg_motor1_us = map(*(Speeds+0), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
+		desiredState.key.avg_motor2_us = map(*(Speeds+1), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
+		desiredState.key.avg_motor3_us = map(*(Speeds+2), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
+		desiredState.key.avg_motor4_us = map(*(Speeds+3), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
 		//sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
 		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 		// Write new results to motors and servos

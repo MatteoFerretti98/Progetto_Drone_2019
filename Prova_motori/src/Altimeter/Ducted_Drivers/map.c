@@ -4,7 +4,7 @@
 /*******************************************************************************
 * File Name    : map.c
 * Version      : 2.00
-* Description  : Calculate the distance for the altimeter
+* Description  : Converts the speed in a measure that can be read by the motors
 *******************************************************************************/
 /*******************************************************************************
 * History : DD.MM.YYYY     Version     Description
