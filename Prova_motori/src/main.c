@@ -67,7 +67,7 @@ float* SpeedCompute (float virtualInputs[4], float b, float l, float d);
  Global variables
  *******************************************************************************/
 double motor_switch = false;
-
+int cont=0;
 struct axis {
 	float x;
 	float y;
@@ -311,7 +311,15 @@ void Callback_5ms(){
 }
 
 void Callback_10ms(){
-
+	if((1 != PORT4.PIDR.BIT.B4)&&(motor_switch==true)) //Press SW3 to send the pwm signal to the ESC
+			{
+				motor_switch=false;
+			}
+			else if((1 != PORT4.PIDR.BIT.B4)&&(motor_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
+			{
+				motor_switch=true;
+				cont++;
+			}
 }
 
 void Callback_20ms(){
@@ -377,7 +385,6 @@ void Callback_50ms(){
 
 		//computes motor speeds (B1 is for 4-cell battery, if you use a 3-cell, change it with B2)
 		Speeds = SpeedCompute (virtualInputs, B_4, L, D);
-
 		//sprintf(result_string2,"%5.2f",outValue_alt);
 		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
 
@@ -389,18 +396,11 @@ void Callback_50ms(){
 		//sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
 		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 
-		if((1 != PORT4.PIDR.BIT.B4)&&(motor_switch==true)) //Press SW3 to send the pwm signal to the ESC
-		{
-			motor_switch=false;
-		}
-		else if((1 != PORT4.PIDR.BIT.B4)&&(motor_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
-		{
-			motor_switch=true;
-		}
+
 
 		if(motor_switch==true) //Press SW3 to send the pwm signal to the ESC
 		{
-			StartCount_MTUs();
+			if(cont>=2)	StartCount_MTUs();
 		//******************************************************************************************
 			// writes new results to motors and servos
 			Motor_Write_up(MOTOR_1, desiredState.key.avg_motor1_us);
@@ -412,8 +412,13 @@ void Callback_50ms(){
 		else if(motor_switch==false) //Press SW3 to stop the pwm signal sending to the ESC
 		{
 		//******************************************************************************************
-			Motors_Off();
-			HaltCount_MTUs();
+			if(cont>=2) HaltCount_MTUs();
+			Motor_Write_up(MOTOR_1, 0);
+			Motor_Write_up(MOTOR_2, 0);
+			Motor_Write_up(MOTOR_3, 0);
+			Motor_Write_up(MOTOR_4, 0);
+			//Motors_Off();
+			//HaltCount_MTUs();
 		//******************************************************************************************
 		}
 }
