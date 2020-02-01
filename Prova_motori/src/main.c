@@ -184,7 +184,7 @@ void main(void) {
 	/* One time initialization instructions */
 	CMT_init();
 
-	/* Dichiarazione switch 3*/
+	/* switch 3 declaration */
 	PORT4.PODR.BIT.B4 =0;
 	PORT4.PDR.BIT.B4 =0;
 	PORT4.PMR.BIT.B4 =0;
@@ -269,25 +269,18 @@ void Setup_Motor_PID() {
 	/* Initialize motors */
 	Motors_Init();
 	/* Turn on motors relay */
-	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 	StartCount_MTUs();
-	//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 	/* Send arm signal to motors */
 	Motor_Arm(MOTOR_1);
 	Motor_Arm(MOTOR_2);
 	Motor_Arm(MOTOR_3);
 	Motor_Arm(MOTOR_4);
 
-	/*TODO: maybe no need to initialize CMT, Setup() does the work*/
-	/* Setup Compare Match Timer */
-	//CMT_init();
-
 	// Initialize PID structures used for PID properties
 	// with their respective coefficents for proportional,
 	// derivative and integrative
 	PID_Init(&z_axis_PID, 0.7, 0.05, 0.3, dt, 0, 1);
 
-	//variables needed to arm the motors (I think)
 	desiredState.key.motor_diff_us = 0; // variable to control the rotation
 	desiredState.key.abs.pos.z = 0.20;
 
@@ -472,14 +465,48 @@ void Callback_1000ms(){
  */
 float* SpeedCompute (float virtualInputs [], float b, float l, float d)
 {
-	static float Speeds[4];
+	/*static float Speeds[4];
 
 	Speeds[0] = sqrt((1/(4*b))*virtualInputs[0] - (1/(2*l*b))*virtualInputs[2] - (1/(4*d))*virtualInputs[3]);
 	Speeds[1] = sqrt((1/(4*b))*virtualInputs[0] - (1/(2*l*b))*virtualInputs[1] + (1/(4*d))*virtualInputs[3]);
 	Speeds[2] = sqrt((1/(4*b))*virtualInputs[0] + (1/(2*l*b))*virtualInputs[2] - (1/(4*d))*virtualInputs[3]);
 	Speeds[3] = sqrt((1/(4*b))*virtualInputs[0] + (1/(2*l*b))*virtualInputs[1] + (1/(4*d))*virtualInputs[3]);
 
-	return Speeds;
+	return Speeds;*/
+
+	static float Speeds_quad[4];
+	static float Speeds[4];
+
+		Speeds_quad[0] = (1/(4*b))*virtualInputs[0] - (1/(2*l*b))*virtualInputs[2] - (1/(4*d))*virtualInputs[3];
+		Speeds_quad[1] = (1/(4*b))*virtualInputs[0] - (1/(2*l*b))*virtualInputs[1] + (1/(4*d))*virtualInputs[3];
+		Speeds_quad[2] = (1/(4*b))*virtualInputs[0] + (1/(2*l*b))*virtualInputs[2] - (1/(4*d))*virtualInputs[3];
+		Speeds_quad[3] = (1/(4*b))*virtualInputs[0] + (1/(2*l*b))*virtualInputs[1] + (1/(4*d))*virtualInputs[3];
+
+		/*every speed needs to be mapped in a positive range [0, max speed^2], because the mathematical model
+		 *and the control system consider the possibility to invert the rotation, resulting in negative speeds.
+		 *This is out the actual possibilities of our physical system because we cannot invert rotation nor
+		 *calculate a square root of a negative number.*/
+
+		const float abs_speedQuad_MAX = 1/(4*b) + 1/(2*l*b) + 1/(4*d); //maximum reachable squared speed
+
+		float speedQuad_min = -(1/(2*l*b)) - (1/(4*d)); //lower bound for squared speed 0.
+		float speedQuad_Max = 1/(4*b); //upper bound for squared speed 0.
+		Speeds[0] = sqrt(map(Speeds_quad[0], speedQuad_min, speedQuad_Max, 0, abs_speedQuad_MAX));
+
+		speedQuad_min = -(1/(2*l*b)); //lower bound for squared speed 1.
+		speedQuad_Max = 1/(4*b) + 1/(4*d); //upper bound for squared speed 1.
+		Speeds[1] = sqrt(map(Speeds_quad[1], speedQuad_min, speedQuad_Max, 0, abs_speedQuad_MAX));
+
+		speedQuad_min = -(1/(4*d)); //lower bound for squared speed 2.
+		speedQuad_Max = 1/(4*b) + 1/(2*l*b); //upper bound for squared speed 2.
+		Speeds[2] = sqrt(map(Speeds_quad[2], speedQuad_min, speedQuad_Max, 0, abs_speedQuad_MAX));
+
+		//Speeds_quad[3] can't be negative so we just need to make the square root
+		Speeds[3] = sqrt(Speeds_quad[3]);
+
+		return Speeds;
+
+		//TODO: modify costants in motor.h, apply changes to slave2studio, check if it is coeherent with the upper code
 }
 
 

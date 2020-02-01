@@ -34,10 +34,6 @@ void Setup_MARG(AHRS_out* ahrs)
 	lcd_display(LCD_LINE7,"FOR DEFAULT ");
 	lcd_display(LCD_LINE8,"  PARAMS    ");
 
-
-
-
-	//CMT_init();
 	imu_init(&ahrs->sens);
 	mag_init(&ahrs->mag);
 
