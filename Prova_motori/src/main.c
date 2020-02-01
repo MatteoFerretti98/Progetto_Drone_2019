@@ -66,8 +66,12 @@ float* SpeedCompute (float virtualInputs[4], float b, float l, float d);
 /*******************************************************************************
  Global variables
  *******************************************************************************/
-double motor_switch = false;
+/*variables needed to switch on and off the motors.
+one press of SW3 changes motors_On value to the opposite*/
+bool motors_switch = false;
 int cont=0;
+
+//structures used to define the current state and the desired state of our drone
 struct axis {
 	float x;
 	float y;
@@ -103,15 +107,16 @@ struct physicalState {
 	float x_servo_deg;
 	float y_servo_deg;
 };
-union {
+ union {
 	struct physicalState key;
 	float index[sizeof(struct physicalState)];
 } desiredState;	//state variables you want to reach
 
-union {
+ union {
 	struct physicalState key;
 	float index[sizeof(struct physicalState)];
 } currentState;	//current state variables of the DuctedFan
+
 
 // Structure containing timer flags
 extern struct timerClocks timers;
@@ -286,7 +291,7 @@ void Setup_Motor_PID() {
 	desiredState.key.motor_diff_us = 0; // variable to control the rotation
 	desiredState.key.abs.pos.z = 0.20;
 
-	/*IMUs PID: they need to be calibrated, right now Kp and Kd are set to 1*/
+	/*IMUs PID: they need to be tuned properly, right now Kp and Kd are set to 1*/
 	PID_Init(&Pitch_PID, 1, 1, 0, dt, 0, 1);
 	PID_Init(&Roll_PID, 1, 1, 0, dt, 0, 1);
 	PID_Init(&Yaw_PID,  1, 1, 0, dt, 0, 1);
@@ -311,13 +316,14 @@ void Callback_5ms(){
 }
 
 void Callback_10ms(){
-	if((1 != PORT4.PIDR.BIT.B4)&&(motor_switch==true)) //Press SW3 to send the pwm signal to the ESC
+
+	if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==true)) //Press SW3 to send the pwm signal to the ESC
 			{
-				motor_switch=false;
+				motors_switch=false;
 			}
-			else if((1 != PORT4.PIDR.BIT.B4)&&(motor_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
+			else if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
 			{
-				motor_switch=true;
+				motors_switch=true;
 				cont++;
 			}
 }
@@ -383,44 +389,46 @@ void Callback_50ms(){
 
 		float* Speeds;
 
-		//computes motor speeds (B1 is for 4-cell battery, if you use a 3-cell, change it with B2)
+		//computes motor speeds (B_4 is for 4-cell battery, if you use a 3-cell, change it with B_3)
 		Speeds = SpeedCompute (virtualInputs, B_4, L, D);
 		//sprintf(result_string2,"%5.2f",outValue_alt);
 		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
 
 		//converts the speed in a measure that can be read by the motors
-		desiredState.key.avg_motor1_us = map(*(Speeds+0), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
-		desiredState.key.avg_motor2_us = map(*(Speeds+1), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
-		desiredState.key.avg_motor3_us = map(*(Speeds+2), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
-		desiredState.key.avg_motor4_us = map(*(Speeds+3), 0, 1, MOTOR_MIN_UP, MOTOR_MAX_UP);
+		desiredState.key.avg_motor1_us = map(*(Speeds+0), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
+		desiredState.key.avg_motor2_us = map(*(Speeds+1), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
+		desiredState.key.avg_motor3_us = map(*(Speeds+2), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
+		desiredState.key.avg_motor4_us = map(*(Speeds+3), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
 		//sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
 		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 
+		/*************************************************************
+		 Switches On or Off the motors depending on the value of motors_On
+		 ************************************************************/
+		if(motors_switch==true) //Press SW3 to send the pwm signal to the ESC
+			{
+				if(cont>=2)	StartCount_MTUs();
+			//******************************************************************************************
+				// writes new results to motors and servos
+				Motor_Write_up(MOTOR_1, desiredState.key.avg_motor1_us);
+				Motor_Write_up(MOTOR_2, desiredState.key.avg_motor2_us);
+				Motor_Write_up(MOTOR_3, desiredState.key.avg_motor3_us);
+				Motor_Write_up(MOTOR_4, desiredState.key.avg_motor4_us);
+			//*******************************************************************************************
+			}
+			else if(motors_switch==false) //Press SW3 to stop the pwm signal sending to the ESC
+			{
+			//******************************************************************************************
+				if(cont>=2) HaltCount_MTUs();
+				Motor_Write_up(MOTOR_1, 0);
+				Motor_Write_up(MOTOR_2, 0);
+				Motor_Write_up(MOTOR_3, 0);
+				Motor_Write_up(MOTOR_4, 0);
+				//Motors_Off();
+				//HaltCount_MTUs();
+			//******************************************************************************************
+			}
 
-
-		if(motor_switch==true) //Press SW3 to send the pwm signal to the ESC
-		{
-			if(cont>=2)	StartCount_MTUs();
-		//******************************************************************************************
-			// writes new results to motors and servos
-			Motor_Write_up(MOTOR_1, desiredState.key.avg_motor1_us);
-			Motor_Write_up(MOTOR_2, desiredState.key.avg_motor2_us);
-			Motor_Write_up(MOTOR_3, desiredState.key.avg_motor3_us);
-			Motor_Write_up(MOTOR_4, desiredState.key.avg_motor4_us);
-		//*******************************************************************************************
-		}
-		else if(motor_switch==false) //Press SW3 to stop the pwm signal sending to the ESC
-		{
-		//******************************************************************************************
-			if(cont>=2) HaltCount_MTUs();
-			Motor_Write_up(MOTOR_1, 0);
-			Motor_Write_up(MOTOR_2, 0);
-			Motor_Write_up(MOTOR_3, 0);
-			Motor_Write_up(MOTOR_4, 0);
-			//Motors_Off();
-			//HaltCount_MTUs();
-		//******************************************************************************************
-		}
 }
 
 /*************************************************************
@@ -466,10 +474,10 @@ float* SpeedCompute (float virtualInputs [], float b, float l, float d)
 {
 	static float Speeds[4];
 
-	Speeds[0] = (1/4*b)*virtualInputs[0] - (1/2*b)*virtualInputs[2] - (1/4*d)*virtualInputs[3];
-	Speeds[0] = (1/4*b)*virtualInputs[0] - (1/2*b)*virtualInputs[1] + (1/4*d)*virtualInputs[3];
-	Speeds[0] = (1/4*b)*virtualInputs[0] + (1/2*b)*virtualInputs[2] - (1/4*d)*virtualInputs[3];
-	Speeds[0] = (1/4*b)*virtualInputs[0] + (1/2*b)*virtualInputs[1] + (1/4*d)*virtualInputs[3];
+	Speeds[0] = sqrt((1/(4*b))*virtualInputs[0] - (1/(2*l*b))*virtualInputs[2] - (1/(4*d))*virtualInputs[3]);
+	Speeds[1] = sqrt((1/(4*b))*virtualInputs[0] - (1/(2*l*b))*virtualInputs[1] + (1/(4*d))*virtualInputs[3]);
+	Speeds[2] = sqrt((1/(4*b))*virtualInputs[0] + (1/(2*l*b))*virtualInputs[2] - (1/(4*d))*virtualInputs[3]);
+	Speeds[3] = sqrt((1/(4*b))*virtualInputs[0] + (1/(2*l*b))*virtualInputs[1] + (1/(4*d))*virtualInputs[3]);
 
 	return Speeds;
 }
