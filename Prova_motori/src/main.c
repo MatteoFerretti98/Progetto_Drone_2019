@@ -276,10 +276,6 @@ void Setup_Motor_PID() {
 	Motor_Arm(MOTOR_3);
 	Motor_Arm(MOTOR_4);
 
-	/*TODO: maybe no need to initialize CMT, Setup() does the work*/
-	/* Setup Compare Match Timer */
-	//CMT_init();
-
 	// Initialize PID structures used for PID properties
 	// with their respective coefficents for proportional,
 	// derivative and integrative
@@ -437,12 +433,36 @@ void Fallback() {
  */
 float* SpeedCompute (float virtualInputs [], float b, float l, float d)
 {
+
+	static float Speeds_quad[4];
 	static float Speeds[4];
 
-	Speeds[0] = sqrt((1/(4*b))*virtualInputs[0] - (1/(2*b*l))*virtualInputs[2] - (1/(4*d))*virtualInputs[3]);
-	Speeds[1] = sqrt((1/(4*b))*virtualInputs[0] - (1/(2*b*l))*virtualInputs[1] + (1/(4*d))*virtualInputs[3]);
-	Speeds[2] = sqrt((1/(4*b))*virtualInputs[0] + (1/(2*b*l))*virtualInputs[2] - (1/(4*d))*virtualInputs[3]);
-	Speeds[3] = sqrt((1/(4*b))*virtualInputs[0] + (1/(2*b*l))*virtualInputs[1] + (1/(4*d))*virtualInputs[3]);
+		Speeds_quad[0] = (1/(4*b))*virtualInputs[0] - (1/(2*l*b))*virtualInputs[2] - (1/(4*d))*virtualInputs[3];
+		Speeds_quad[1] = (1/(4*b))*virtualInputs[0] - (1/(2*l*b))*virtualInputs[1] + (1/(4*d))*virtualInputs[3];
+		Speeds_quad[2] = (1/(4*b))*virtualInputs[0] + (1/(2*l*b))*virtualInputs[2] - (1/(4*d))*virtualInputs[3];
+		Speeds_quad[3] = (1/(4*b))*virtualInputs[0] + (1/(2*l*b))*virtualInputs[1] + (1/(4*d))*virtualInputs[3];
 
-	return Speeds;
+		/*every speed needs to be mapped in a positive range [0, max speed^2], because the mathematical model
+		 *and the control system consider the possibility to invert the rotation, resulting in negative speeds.
+		 *This is out the actual possibilities of our physical system because we cannot invert rotation nor
+		 *calculate a square root of a negative number.*/
+
+		const float abs_speedQuad_MAX = 1/(4*b) + 1/(2*l*b) + 1/(4*d); //maximum reachable squared speed
+
+		float speedQuad_min = -(1/(2*l*b)) - (1/(4*d)); //lower bound for squared speed 0.
+		float speedQuad_Max = 1/(4*b); //upper bound for squared speed 0.
+		Speeds[0] = sqrt(map(Speeds_quad[0], speedQuad_min, speedQuad_Max, 0, abs_speedQuad_MAX));
+
+		speedQuad_min = -(1/(2*l*b)); //lower bound for squared speed 1.
+		speedQuad_Max = 1/(4*b) + 1/(4*d); //upper bound for squared speed 1.
+		Speeds[1] = sqrt(map(Speeds_quad[1], speedQuad_min, speedQuad_Max, 0, abs_speedQuad_MAX));
+
+		speedQuad_min = -(1/(4*d)); //lower bound for squared speed 2.
+		speedQuad_Max = 1/(4*b) + 1/(2*l*b); //upper bound for squared speed 2.
+		Speeds[2] = sqrt(map(Speeds_quad[2], speedQuad_min, speedQuad_Max, 0, abs_speedQuad_MAX));
+
+		//Speeds_quad[3] can't be negative so we just need to make the square root
+		Speeds[3] = sqrt(Speeds_quad[3]);
+
+		return Speeds;
 }
