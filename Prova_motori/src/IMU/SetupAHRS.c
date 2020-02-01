@@ -38,11 +38,12 @@ void Setup_MARG(AHRS_out* ahrs)
 	mag_init(&ahrs->mag);
 
 
-// chiede di premere o lo sw1 o lo sw2 in base alla scelta dei parametri desiderati
+// Asks to press SW1 or SW2 to choose the desired parameters
 	while( PORT4.PIDR.BIT.B0 && PORT4.PIDR.BIT.B1){
 
 	}
-// se premuto sw1 parte una nuova calibrazione
+
+// Starts a new calibration if you press SW1
 	if(!(PORT4.PIDR.BIT.B0)){
 
 		//lcd_initialize();
@@ -54,29 +55,21 @@ void Setup_MARG(AHRS_out* ahrs)
 		lcd_display(LCD_LINE4,"Calibrazione");
 		lcd_display(LCD_LINE5,"Magnetometro");
 
-		calibrationYPR(msg, &ahrs->mag);//calibrazione nuova
+		calibrationYPR(msg, &ahrs->mag);//new calibration
 	}
-	else if (!(PORT4.PIDR.BIT.B1)) //se viene premuto lo sw2 partono i calori di default
+	else if (!(PORT4.PIDR.BIT.B1)) //case of SW2 pressed. Sets the default values for calibration.
 		calibrationYPR1(msg, &ahrs->mag);
-	else calibrationYPR1(msg, &ahrs->mag); // nel caso in cui ci siano errori parte in default la calibrazione dei valori già calcolati
+	else calibrationYPR(msg, &ahrs->mag); //in case of errors, starts a new calibration
 
 
 }
 
 
-// Funzione di lettura dei dati dell' MARG filtrati
+// Filtered Data (that come from MARG) read function
 void Read_MARG(AHRS_out* ahrs)
 {
 	imu_read(&ahrs->raw, &ahrs->sens, &ahrs->temp);
 	mag_read(&ahrs->mag);
 	getYPR(&ahrs->mag, &ahrs->temp, &ahrs->ahrs_data);
 }
-
-
-
-// Centro di massa
-/*void Centro_di_massa(AHRS_out* ahrs)
-{
-
-}*/
 
