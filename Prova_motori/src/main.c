@@ -340,10 +340,9 @@ float outValue_yaw;*/
  ************************************************************/
 void Callback_50ms(){
 
-
-
+		/*get Altimeter measure*/
 		distanza = Read(temp);
-		float distanza_metri = (float)distanza/1000;
+		float distanza_metri = (float)distanza/1000; //convert in meters
 
 		/*gets the angles measured by IMU*/
 		currentState.key.angle.pitch=ahrs.ahrs_data.PitchDeg;
@@ -384,16 +383,12 @@ void Callback_50ms(){
 
 		//computes motor speeds (B_4 is for 4-cell battery, if you use a 3-cell, change it with B_3)
 		Speeds = SpeedCompute (virtualInputs, B_4, L, D);
-		//sprintf(result_string2,"%5.2f",outValue_alt);
-		//lcd_display(LCD_LINE5,(const uint8_t *) result_string2);
 
 		//converts the speed in a measure that can be read by the motors
 		desiredState.key.avg_motor1_us = map(*(Speeds+0), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
 		desiredState.key.avg_motor2_us = map(*(Speeds+1), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
 		desiredState.key.avg_motor3_us = map(*(Speeds+2), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
 		desiredState.key.avg_motor4_us = map(*(Speeds+3), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
-		//sprintf(result_string3,"%5.2f",desiredState.key.avg_motor_us);
-		//lcd_display(LCD_LINE3,(const uint8_t *) result_string3);
 
 		/*************************************************************
 		 Switches On or Off the motors depending on the value of motors_On
@@ -413,11 +408,7 @@ void Callback_50ms(){
 			{
 			//******************************************************************************************
 				if(cont>=2) HaltCount_MTUs();
-				Motor_Write_up(MOTOR_1, 0);
-				Motor_Write_up(MOTOR_2, 0);
-				Motor_Write_up(MOTOR_3, 0);
-				Motor_Write_up(MOTOR_4, 0);
-				//Motors_Off();
+				Motors_Off();
 				//HaltCount_MTUs();
 			//******************************************************************************************
 			}
@@ -465,14 +456,6 @@ void Callback_1000ms(){
  */
 float* SpeedCompute (float virtualInputs [], float b, float l, float d)
 {
-	/*static float Speeds[4];
-
-	Speeds[0] = sqrt((1/(4*b))*virtualInputs[0] - (1/(2*l*b))*virtualInputs[2] - (1/(4*d))*virtualInputs[3]);
-	Speeds[1] = sqrt((1/(4*b))*virtualInputs[0] - (1/(2*l*b))*virtualInputs[1] + (1/(4*d))*virtualInputs[3]);
-	Speeds[2] = sqrt((1/(4*b))*virtualInputs[0] + (1/(2*l*b))*virtualInputs[2] - (1/(4*d))*virtualInputs[3]);
-	Speeds[3] = sqrt((1/(4*b))*virtualInputs[0] + (1/(2*l*b))*virtualInputs[1] + (1/(4*d))*virtualInputs[3]);
-
-	return Speeds;*/
 
 	static float Speeds_quad[4];
 	static float Speeds[4];
@@ -506,7 +489,6 @@ float* SpeedCompute (float virtualInputs [], float b, float l, float d)
 
 		return Speeds;
 
-		//TODO: modify costants in motor.h, apply changes to slave2studio, check if it is coeherent with the upper code
 }
 
 
