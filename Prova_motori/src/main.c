@@ -213,7 +213,7 @@ void main(void) {
 
 		if (timers.timer_1mS) {
 			timers.timer_1mS = 0;
-			//Callback_1ms();								//Operations to do every 1ms
+			//Callback_1ms();						    //Operations to do every 1ms
 
 			if (timers.timer_5mS) {
 				timers.timer_5mS=0;
@@ -310,11 +310,11 @@ void Callback_5ms(){
 
 void Callback_10ms(){
 
-	if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==true)) //Press SW3 to send the pwm signal to the ESC
+	if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==true)) //Press SW3 to send the pwm signal to the ESCs
 			{
 				motors_switch=false;
 			}
-			else if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
+			else if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==false)) //Press SW3 to stop the pwm signal sent to the ESCs
 			{
 				motors_switch=true;
 				cont++;
@@ -354,7 +354,7 @@ void Callback_50ms(){
 		if (currentState.key.angle.pitch!=0||currentState.key.angle.roll!=0)
 			{
 				float hpitch =distanza_metri*cos(currentState.key.angle.pitch);
-				float hroll =distanza_metri*cos(currentState.key.angle.pitch);
+				float hroll =distanza_metri*cos(currentState.key.angle.roll);
 
 				distanza_metri=sqrt(pow(hpitch,2)+pow(hroll,2));
 			}
