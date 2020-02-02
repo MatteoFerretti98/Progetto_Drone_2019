@@ -200,7 +200,7 @@ void main(void) {
 
 		if (timers.timer_1mS) {
 			timers.timer_1mS = 0;
-			Callback_1ms();								//Operations to do every 1ms
+			//Callback_1ms();								//Operations to do every 1ms
 
 			if (timers.timer_5mS) {
 
@@ -213,11 +213,11 @@ void main(void) {
 				 * Aumentare la frequenza oltre i 100mS è sconsigliato.
 				 ************************************************************/
 				timers.timer_5mS=0;
-				Callback_5ms();							// Operations to do every 5ms
+				//Callback_5ms();							// Operations to do every 5ms
 
 				if (timers.timer_10mS) {
 					timers.timer_10mS = 0;
-					Callback_10ms();					// Operations to do every 10ms
+					//Callback_10ms();					// Operations to do every 10ms
 
 					if (timers.timer_20mS) {
 						timers.timer_20mS = 0;
@@ -237,13 +237,13 @@ void main(void) {
 							//Print_Temp(&ahrs);
 
 							timers.timer_100mS = 0;
-							Callback_100ms();			// Operations to do every 100ms
+							//Callback_100ms();			// Operations to do every 100ms
 							if (timers.timer_500mS) {
 								timers.timer_500mS = 0;
-								Callback_500ms();		// Operations to do every half a second
+								//Callback_500ms();		// Operations to do every half a second
 								if (timers.timer_1000mS) {
 									timers.timer_1000mS = 0;
-									Callback_1000ms();	// Operations to do every second
+									//Callback_1000ms();	// Operations to do every second
 								}
 							}
 						}
@@ -330,7 +330,7 @@ void Callback_50ms(){
 		if (currentState.key.angle.pitch!=0||currentState.key.angle.roll!=0)
 			{
 				float hpitch =distanza_metri*cos(currentState.key.angle.pitch);
-				float hroll =distanza_metri*cos(currentState.key.angle.pitch);
+				float hroll =distanza_metri*cos(currentState.key.angle.roll);
 
 				distanza_metri=sqrt(pow(hpitch,2)+pow(hroll,2));
 			}
