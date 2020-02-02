@@ -31,7 +31,7 @@
 
 //Altimeter includes
 #include "Ducted_Drivers/Motor.h"
-#include "LowLevelDrivers/I2C.h"
+//#include "LowLevelDrivers/I2C.h"
 #include "Ducted_Drivers/lcd_buffer.h"
 #include "Altimetro.h"
 #include "Ducted_Drivers/map.h"
