@@ -163,17 +163,17 @@ void Altimeter_init()
 void display_results (uint16_t distanzam)
 {
 	lcd_display(LCD_LINE1, "****TEST****");
-	lcd_display(LCD_LINE2, "Sens:VL53L1X");
-	lcd_display(LCD_LINE3, "-------------");
-	lcd_display(LCD_LINE4, "***SHORT****");
+	//lcd_display(LCD_LINE6, "Sens:VL53L1X");
+	//lcd_display(LCD_LINE3, "-------------");
+	//lcd_display(LCD_LINE4, "***SHORT****");
 
 	char result_string[20];
     sprintf(result_string, "D:  %d  mm", distanza);
 
     /* Update the display LINE 6 */
-    lcd_display(LCD_LINE6, (const uint8_t *)result_string);
+    lcd_display(LCD_LINE2, (const uint8_t *)result_string);
 
-    lcd_display(LCD_LINE8, "-------------");
+    //lcd_display(LCD_LINE8, "-------------");
 } /* End function display_results() */
 
 // Structure containing timer flags
@@ -310,15 +310,6 @@ void Callback_5ms(){
 
 void Callback_10ms(){
 
-	if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==true)) //Press SW3 to send the pwm signal to the ESC
-			{
-				motors_switch=false;
-			}
-			else if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
-			{
-				motors_switch=true;
-				cont++;
-			}
 }
 
 void Callback_20ms(){
@@ -393,6 +384,15 @@ void Callback_50ms(){
 		/*************************************************************
 		 Switches On or Off the motors depending on the value of motors_On
 		 ************************************************************/
+		if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==true)) //Press SW3 to send the pwm signal to the ESC
+					{
+						motors_switch=false;
+					}
+					else if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
+					{
+						motors_switch=true;
+						cont++;
+					}
 		if(motors_switch==true) //Press SW3 to send the pwm signal to the ESC
 			{
 				if(cont>=2)	StartCount_MTUs();
