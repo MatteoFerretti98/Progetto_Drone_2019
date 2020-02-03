@@ -32,7 +32,7 @@ void Print_ABS(AHRS_out* ahrs)
 	float mq = (ahrs->mag.x * ahrs->mag.x + ahrs->mag.y * ahrs->mag.y + ahrs->mag.z * ahrs->mag.z);
 	float abs = ( mq - ahrs->mag.ABS ) / ahrs->mag.ABS;
 	sprintf(msg,"ABS:%4.3f",abs);
-	lcd_display(LCD_LINE1,(uint8_t*) msg);
+	//lcd_display(LCD_LINE1,(uint8_t*) msg);
 }
 
 
