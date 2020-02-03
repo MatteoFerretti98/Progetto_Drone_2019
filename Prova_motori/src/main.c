@@ -352,8 +352,6 @@ void Callback_50ms(){
 
 		display_results(distanza_metri);
 
-
-
 		/* Setting desired values */
 		desiredState.key.abs.pos.z = altitudeValue;
 		desiredState.key.angle.pitch = pitchValue;
@@ -381,19 +379,20 @@ void Callback_50ms(){
 		desiredState.key.avg_motor3_us = map(*(Speeds+2), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
 		desiredState.key.avg_motor4_us = map(*(Speeds+3), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
 
-		/*************************************************************
-		 Switches On or Off the motors depending on the value of motors_switch
-		 ************************************************************/
+
+		/* changes the state of variable motors_switch */
 		if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==true)) //Press SW3 to send the pwm signal to the ESC
 					{
 						motors_switch=false;
 					}
-					else if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==false)) //Press SW3 to stop the pwm signal sending to the ESC
+					else if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==false)) //Press SW3 to stop the pwm signal sent to the ESC
 					{
 						motors_switch=true;
 						cont++;
 					}
 
+
+		/* Switches On or Off the motors depending on the value of motors_switch */
 		if(motors_switch==true)
 			{
 				if(cont>=2)	StartCount_MTUs();
