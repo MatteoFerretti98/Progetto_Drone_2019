@@ -370,7 +370,7 @@ void Callback_50ms(){
 		desiredState.key.angle.yaw = yawValue;
 
 
-		/* computing IMU PIDs results*/
+		/* computing PIDs results*/
 
 		float virtualInputs [4]; // Temporary storage for PID results
 
@@ -409,7 +409,6 @@ void Callback_50ms(){
 			//******************************************************************************************
 				if(cont>=2) HaltCount_MTUs();
 				Motors_Off();
-				//HaltCount_MTUs();
 			//******************************************************************************************
 			}
 
