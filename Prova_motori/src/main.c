@@ -382,7 +382,7 @@ void Callback_50ms(){
 		desiredState.key.avg_motor4_us = map(*(Speeds+3), 0, MOTOR_MAX_SPEED_4, MOTOR_MIN_UP, MOTOR_MAX_UP);
 
 		/*************************************************************
-		 Switches On or Off the motors depending on the value of motors_On
+		 Switches On or Off the motors depending on the value of motors_switch
 		 ************************************************************/
 		if((1 != PORT4.PIDR.BIT.B4)&&(motors_switch==true)) //Press SW3 to send the pwm signal to the ESC
 					{
@@ -393,24 +393,21 @@ void Callback_50ms(){
 						motors_switch=true;
 						cont++;
 					}
-		if(motors_switch==true) //Press SW3 to send the pwm signal to the ESC
+
+		if(motors_switch==true)
 			{
 				if(cont>=2)	StartCount_MTUs();
-			//******************************************************************************************
+
 				// writes new results to motors and servos
 				Motor_Write_up(MOTOR_1, desiredState.key.avg_motor1_us);
 				Motor_Write_up(MOTOR_2, desiredState.key.avg_motor2_us);
 				Motor_Write_up(MOTOR_3, desiredState.key.avg_motor3_us);
 				Motor_Write_up(MOTOR_4, desiredState.key.avg_motor4_us);
-			//*******************************************************************************************
 			}
-			else if(motors_switch==false) //Press SW3 to stop the pwm signal sending to the ESC
+			else if(motors_switch==false)
 			{
-			//******************************************************************************************
 				if(cont>=2) HaltCount_MTUs();
 				Motors_Off();
-				//HaltCount_MTUs();
-			//******************************************************************************************
 			}
 
 }
